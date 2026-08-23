@@ -10,8 +10,14 @@ reasons:
     text: "HTML, CSS, and Markdown have worked for decades and will keep working. There's no database to secure, no software to update, no security patches to apply. What you build today will still run in 2050 without maintenance."
   - title: "You learn by working"
     text: "Start with plain-language prompts and Markdown, then pick up HTML, CSS, and Git as you go. These aren't \"website skills\"---they're foundational to digitally-engaged humanities work, and you learn them by building something real."
-  - title: "Others can build on it"
-    text: "The structure is visible: content, navigation, design, and reusable components each have a place. Students can learn from how a site is assembled, and colleagues can contribute without everyone arriving with the same technical confidence."
+  - title: "Built for collaboration"
+    text: "Your site is a folder of plain documents, not text sealed inside a system you can't open. A colleague can fix a typo, a student can add an essay, and you can hand the whole thing to whoever comes next---without everyone arriving with the same technical confidence."
+named_parts:
+  title: "Your site is made of parts, and every part has a name."
+  text:
+    - "A pull quote. A gallery. A figure with its caption. A card that links to an essay. Each is a named piece with its own documented options, and your pages are assembled from them rather than written from scratch."
+    - "That naming is what makes a site editable by someone who doesn't write CSS. You don't need to know how a gallery is built in order to ask for one, move it, or take it out---the way an author works with a typesetter without learning to run the press. It is also how somebody else learns your site: the parts are named, so the assembly is legible."
+    - "Every one of those names has a page in the documentation saying what it does and how to place it by hand. You can work that way. Most people describe what they want instead---and check the result against the same page."
 ---
 
 {: .hero-section}
@@ -56,13 +62,7 @@ Digital humanities work should be as open in its process as in its product. Xant
 {% include layout/section-end.html %}
 
 
-## Who is Xanthan for?
-
-**Scholars seeking public engagement.** Move your work beyond paywalls and PDFs. Build research portfolios, multimedia essays, and interactive arguments that reach broader audiences---on a site you control, not a platform that controls you.
-
-**Instructors teaching digital literacy.** Turn class projects into real public scholarship. Students build collectively around shared themes---local history archives, community documentation, thematic collections---learning web fundamentals while creating work that outlasts the semester.
-
-**Students building professional presence.** Create a portfolio that showcases your research, teaching, and digital skills. Own your academic identity rather than scattering it across platforms.
+{% include layout/split-intro.html intro=page.named_parts %}
 
 {% include images/jumbotron.html
   image-path="/assets/images/site/scaffolding-hand.png"
@@ -73,7 +73,7 @@ Digital humanities work should be as open in its process as in its product. Xant
   text="
 
 ## Built for AI Collaboration.
-AI can generate a website from a simple prompt. That's impressive, but impressive but opaque to whoever has to change it next.
+AI can generate a website from a simple prompt. That's impressive, but it's opaque to whoever has to change it next.
 
 Xanthan provides starter sites with amply commented code that give AI a curated context to work inside, and becomes an assistant to human judgement rather than wrestle control away.
 
@@ -82,6 +82,14 @@ Those guardrails make AI more useful, not less. You describe what you want in pl
 [See our AI guide →](docs/using-ai/){: .btn-secondary}
 "
 %}
+
+## Who is Xanthan for?
+
+**Scholars seeking public engagement.** Move your work beyond paywalls and PDFs. Build research portfolios, multimedia essays, and interactive arguments that reach broader audiences---on a site you control, not a platform that controls you.
+
+**Instructors teaching digital literacy.** Turn class projects into real public scholarship. Students build collectively around shared themes---local history archives, community documentation, thematic collections---learning web fundamentals while creating work that outlasts the semester.
+
+**Students building professional presence.** Create a portfolio that showcases your research, teaching, and digital skills. Own your academic identity rather than scattering it across platforms.
 
 {% include layout/section.html style="warm" %}
 

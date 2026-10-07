@@ -45,6 +45,7 @@ replace_refs() {
 }
 
 echo "Updating image references..."
+updated=""
 
 while IFS= read -r line; do
     [ -z "$line" ] && continue
@@ -70,8 +71,17 @@ while IFS= read -r line; do
         continue
     fi
 
+    # The same name converted in two folders: the pass above already
+    # rewrote every reference to it, so don't report it as unused
+    if printf '%s\n' "$updated" | grep -Fxq "$old_file -> $new_file"; then
+        echo "  $old_file → $new_file (same name as above; already updated)"
+        continue
+    fi
+
     echo "  $old_file → $new_file"
     replace_refs "$old_file" "$new_file" || echo "    (no references found — the image may be unused)"
+    updated="$updated
+$old_file -> $new_file"
 done < png_to_jpg_conversions.txt
 
 # The log is used up; optimize-images.sh appends to it, so a stale one would

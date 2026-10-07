@@ -1,3 +1,9 @@
+---
+# Maintainer instructions, not a page on the site. GitHub Pages publishes
+# any README.md as a page (this one appeared at /scripts/); this stops it.
+published: false
+---
+
 # Image Optimization Guide
 
 This guide helps you optimize images for your Xanthan site to improve loading times.

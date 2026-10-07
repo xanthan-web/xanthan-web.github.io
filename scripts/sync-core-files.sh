@@ -101,6 +101,7 @@ cp "$SRC/assets/images/profile/headshot_sketch.png" "$DEST/assets/images/profile
 # --- Image tools --------------------------------------------------------------
 cp "$SRC/scripts/optimize-images.sh"   "$DEST/scripts/optimize-images.sh"
 cp "$SRC/scripts/update-image-refs.sh" "$DEST/scripts/update-image-refs.sh"
+cp "$SRC/scripts/README.md"            "$DEST/scripts/README.md"
 
 # The Optimize Images workflow is what makes those scripts usable without a
 # command line, so a template really should carry it — a site made from the

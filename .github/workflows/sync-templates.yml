@@ -12,6 +12,10 @@ on:
       - 'docs/**'
       - 'scrollstories/**'
       - 'scripts/sync-core-files.sh'
+      # The image tools ship to every template; a fix to them alone should too
+      - 'scripts/optimize-images.sh'
+      - 'scripts/update-image-refs.sh'
+      - '.github/workflows/optimize-images.yml'
       - 'Gemfile'
       - '.gitignore'
       - '_config.yml'

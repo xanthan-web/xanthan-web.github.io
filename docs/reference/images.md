@@ -400,7 +400,7 @@ for you:
 
 | Setting | What it means |
 |---------|---------------|
-| **Folder** | Which folder to work through. `assets/images` covers your site's shared images; an essay's own folder works too, like `essays/my-essay/images` |
+| **Folder** | Which folder to work through. `assets/images` covers your site's shared images; an essay's own folder works too, like `essays/my-essay/images`, and `.` does the whole site |
 | **Longest edge** | The biggest either side is allowed to be. `1600` suits a full-width image; use `2400` for something meant to be looked at closely |
 | **Quality** | JPEG quality out of 100. `85` is a good default. Below about `70` you start to see it |
 | **Actually change the files** | Leave this **unticked** the first time |
@@ -417,13 +417,13 @@ history if you ever want them back.
 
 **It also converts PNGs to JPGs** where that saves a lot and the image has no
 transparency — photographs saved as PNG are often several times larger than they
-need to be. When it does, it updates the references in your pages to match, so
-nothing breaks.
+need to be. When it does, it updates the references to match — in your pages,
+data files and stylesheets — so nothing breaks.
 
 {% include typography/alert.html
 class="info"
 title="Already-optimized images are left alone"
-text="The job skips anything that is already small enough, so running it twice does no harm and running it after adding a few new photographs only touches the new ones."
+text="The job skips anything that is already small enough, and keeps any original that re-compressing would barely shrink, so running it twice does no harm and running it after adding a few new photographs only touches the new ones."
 %}
 
 If you do work at a command line, the same thing runs locally:

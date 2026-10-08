@@ -298,7 +298,9 @@ Two more traps worth ruling out before blaming the code:
 - **A PAT cannot push workflow files without the `workflow` scope.** GitHub
   rejects the entire push, not just that file, so a sync that starts carrying
   anything under `.github/workflows/` fails on all four templates at once. That
-  is why `optimize-images.yml` sits behind `SYNC_WORKFLOW_FILE`, off by default.
+  is why `optimize-images.yml` sits behind `SYNC_WORKFLOW_FILE`: off by default
+  in the script, switched on in `sync-templates.yml` once the token had the scope.
+  If every template job starts failing at the push, check that scope first.
 - **The `SYNC_TOKEN` secret expires.** When it does, every job fails at *checkout* with `Bad credentials`, long before the sync script runs. That went unnoticed for five months once, which is why several templates had drifted so far. If the failure is at checkout, it is the token.
 - **`site.url` and `site.baseurl` come from GitHub Pages.** Neither needs setting in a template's `_config.yml`, and a hardcoded `url` is worse than none: the portfolio starter shipped one pointing at the Xanthan site, so every copy of it advertised Xanthan's address as its own canonical.
 

@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       folder:
-        description: 'Folder to process (relative to the repo root)'
+        description: 'Folder to process, relative to the repo root. Use . for the whole site'
         required: true
         default: 'assets/images'
       max_edge:
@@ -28,11 +28,20 @@ on:
         default: false
 
 permissions:
-  contents: write
+  contents: write   # commit the smaller images
+  actions: write    # start the site's deploy workflow, if it has one (below)
 
 jobs:
   optimize:
     runs-on: ubuntu-latest
+    # Inputs reach the steps through env, not pasted into their commands:
+    # ${{ }} inside run: is substituted before bash parses it, so a folder
+    # name containing quotes or $(...) would run as code.
+    env:
+      FOLDER: ${{ inputs.folder }}
+      MAX_EDGE: ${{ inputs.max_edge }}
+      QUALITY: ${{ inputs.quality }}
+      APPLY: ${{ inputs.apply }}
     steps:
       - name: Check out the site
         uses: actions/checkout@v4
@@ -45,11 +54,21 @@ jobs:
           fi
           convert --version | head -1
 
-      - name: Check the folder exists
+      - name: Check the settings
         run: |
-          if [ ! -d "${{ inputs.folder }}" ]; then
-            echo "::error::No folder called '${{ inputs.folder }}' in this repository."
+          if [ ! -d "$FOLDER" ]; then
+            echo "::error::No folder called '$FOLDER' in this repository."
             echo "Look in the file list for the folder your images are in, and use that path."
+            exit 1
+          fi
+          # The script refuses these too; checking here puts the message on
+          # the run's summary page, where someone using the form will see it
+          if ! [[ "$MAX_EDGE" =~ ^[0-9]+$ ]] || [ "$MAX_EDGE" -eq 0 ]; then
+            echo "::error::Longest edge must be a plain number of pixels, like 1600 (not 1600px or 1,600). You entered '$MAX_EDGE'."
+            exit 1
+          fi
+          if ! [[ "$QUALITY" =~ ^[0-9]+$ ]] || [ "$QUALITY" -lt 1 ] || [ "$QUALITY" -gt 100 ]; then
+            echo "::error::Quality must be a number from 1 to 100, like 85. You entered '$QUALITY'."
             exit 1
           fi
 
@@ -57,16 +76,18 @@ jobs:
         id: optimize
         run: |
           # --recursive so images sitting directly in the folder are included,
-          # not just those in subfolders. --no-backup because git already holds
-          # the originals; a backup copy here would only be committed by mistake.
+          # not just those in subfolders; it never descends into _site/.
+          # --no-backup because git already holds the originals.
           ARGS=(--recursive --no-backup
-                --base-dir "${{ inputs.folder }}"
-                --max-edge "${{ inputs.max_edge }}"
-                --quality "${{ inputs.quality }}")
-          if [ "${{ inputs.apply }}" != "true" ]; then
+                --base-dir "$FOLDER"
+                --max-edge "$MAX_EDGE"
+                --quality "$QUALITY")
+          if [ "$APPLY" != "true" ]; then
             ARGS+=(--preview)
           fi
 
+          # Without pipefail, tee's success hides the script failing
+          set -o pipefail
           bash scripts/optimize-images.sh "${ARGS[@]}" 2>&1 | tee /tmp/out.txt
           # strip the terminal colour codes before this goes in the summary
           sed -i 's/\x1b\[[0-9;]*m//g' /tmp/out.txt
@@ -74,9 +95,9 @@ jobs:
       - name: Update image references after any PNG to JPG conversions
         if: inputs.apply
         run: |
+          # The script removes the log once it has applied it
           if [ -f png_to_jpg_conversions.txt ]; then
-            bash scripts/update-image-refs.sh
-            rm -f png_to_jpg_conversions.txt
+            bash scripts/update-image-refs.sh | tee /tmp/refs.txt
           else
             echo "No PNGs were converted, so no page references needed changing."
           fi
@@ -86,18 +107,31 @@ jobs:
           {
             echo "## Image optimization"
             echo ""
-            if [ "${{ inputs.apply }}" != "true" ]; then
+            if [ "$APPLY" != "true" ]; then
               echo "**Preview only — nothing was changed.**"
               echo ""
               echo "If the numbers below look right, run this again with"
               echo "**Actually change the files** ticked."
             else
-              echo "Folder: \`${{ inputs.folder }}\` · longest edge ${{ inputs.max_edge }}px · quality ${{ inputs.quality }}"
+              echo "Folder: \`$FOLDER\` · longest edge ${MAX_EDGE}px · quality $QUALITY"
             fi
             echo ""
+            changes=$(grep -c '⚙' /tmp/out.txt || true)
+            unchanged=$(grep -cE 'Already (optimized|well compressed)' /tmp/out.txt || true)
+            echo "**$changes image(s) to change, $unchanged already fine.**"
+            echo ""
+            # Only what changes (or needs a look); a big site would otherwise
+            # bury it under hundreds of "Already optimized" lines
             echo '```'
-            tail -n 120 /tmp/out.txt
+            grep -E '^Processing|⚙|⚠|✗' /tmp/out.txt | head -n 500
             echo '```'
+            if [ -f /tmp/refs.txt ]; then
+              echo ""
+              echo "### Updated references to converted PNGs"
+              echo '```'
+              cat /tmp/refs.txt
+              echo '```'
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit the smaller images
@@ -112,11 +146,31 @@ jobs:
           fi
 
           git add -A
-          git commit -m "Optimize images in ${{ inputs.folder }}
+          git commit -m "Optimize images in $FOLDER
 
-          Longest edge ${{ inputs.max_edge }}px, quality ${{ inputs.quality }}.
-          Run from the Actions tab.
-
-          [skip ci]"
+          Longest edge ${MAX_EDGE}px, quality $QUALITY.
+          Run from the Actions tab."
+          # No [skip ci]: a push made with GITHUB_TOKEN can't start other
+          # workflows anyway, and the tag risks skipping the Pages rebuild
           git push
           echo "Committed. Your site will rebuild in a minute or two."
+
+      - name: Rebuild a site that deploys through its own workflow
+        if: inputs.apply
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Sites on GitHub's own Pages builder rebuild on the push above. A
+          # site that deploys through a workflow (actions/deploy-pages) would
+          # not: a push made with GITHUB_TOKEN never starts other workflows.
+          # workflow_dispatch is the exception, so start the deploy that way.
+          # Match a real "uses:" step: matching the name anywhere found this
+          # file's own comments, so every run restarted this job as well.
+          for wf in .github/workflows/*.yml .github/workflows/*.yaml; do
+            [ -f "$wf" ] || continue
+            if grep -qE '^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*actions/deploy-pages' "$wf" \
+               && grep -q 'workflow_dispatch' "$wf"; then
+              gh workflow run "$(basename "$wf")" --ref "$GITHUB_REF_NAME" \
+                && echo "Started $(basename "$wf") to publish the smaller images."
+            fi
+          done

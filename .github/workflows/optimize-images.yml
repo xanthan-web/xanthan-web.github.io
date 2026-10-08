@@ -164,9 +164,12 @@ jobs:
           # site that deploys through a workflow (actions/deploy-pages) would
           # not: a push made with GITHUB_TOKEN never starts other workflows.
           # workflow_dispatch is the exception, so start the deploy that way.
+          # Match a real "uses:" step: matching the name anywhere found this
+          # file's own comments, so every run restarted this job as well.
           for wf in .github/workflows/*.yml .github/workflows/*.yaml; do
             [ -f "$wf" ] || continue
-            if grep -q 'actions/deploy-pages' "$wf" && grep -q 'workflow_dispatch' "$wf"; then
+            if grep -qE '^[[:space:]]*(-[[:space:]]*)?uses:[[:space:]]*actions/deploy-pages' "$wf" \
+               && grep -q 'workflow_dispatch' "$wf"; then
               gh workflow run "$(basename "$wf")" --ref "$GITHUB_REF_NAME" \
                 && echo "Started $(basename "$wf") to publish the smaller images."
             fi

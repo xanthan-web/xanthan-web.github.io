@@ -790,7 +790,7 @@ header-position: center right
 | `botanical` | Line-art engravings, dark lines on white background |
 | `sketch` | Faint line drawings (boosts contrast before inverting) |
 | `woodcut` | Historical color images; preserves natural color |
-| `etching` | Photos → high-contrast silhouette |
+| `etching` | Line art → dark brown lines on a muted sheet (not inverted) |
 
 **All front matter fields:**
 

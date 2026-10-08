@@ -306,10 +306,10 @@ color just for headers.
               Slight darken only, no color transformation.
               Use for manuscripts, illuminations, woodcuts.
 
-   etching    Color photos → high-contrast silhouette + tint.
-              Produces bold shapes, not fine lines.
-              For photos needing a line-art look, pre-process
-              the image and use botanical instead.
+   etching    Ink on paper: dark brown lines on a muted sheet.
+              Not inverted, unlike botanical/sketch, so the
+              marks stay dark instead of glowing pale. Suits
+              line art — maps, plates, engravings.
 
    photo      Color photos kept photographic (default).
               Darkened and desaturated slightly for legibility.
@@ -353,21 +353,36 @@ color just for headers.
 }
 
 /* --- Filter: Etching
-     Pipeline: grayscale → pre-brighten → threshold → post-darken → invert → tint
-     contrast(5+) collapses continuous tone to black/white.
-     Pre-brightness(1.3) shifts which tones fall above threshold.
-     Post-brightness(0.55) controls darkness of the inverted result. --- */
+     Ink on paper: dark brown lines, the sheet left as a muted field.
+
+     Deliberately NOT inverted. botanical and sketch invert their line art and
+     composite with mix-blend-mode: screen, so dark lines come out pale and
+     glowing on the near-black --bg-page-header. That is the right treatment
+     for a specimen plate; it is the wrong one for an etching, where the marks
+     should read as ink. Here the image is kept the way round it was printed
+     and composited normally, so the lines stay dark and the paper carries them.
+
+     The lever is opacity, and it is a genuine trade-off: more opacity means
+     more paper and crisper brown lines, but the hero's title and eyebrow are
+     light-on-dark, and past roughly 0.5 the eyebrow washes out against the
+     sheet. 0.35 keeps both. Pages that want a fuller sheet can raise it per
+     page with the bg-opacity front-matter parameter and darken the title with
+     a heavier --page-header-title-shadow.
+
+     Tune: contrast (2–3) for how hard the lines bite, hue-rotate (340–355)
+     for the brown's warmth, brightness (1.05–1.25) for the paper's tone. --- */
 .page-header-bg--etching {
-  filter: grayscale(1) brightness(1.3) contrast(5) brightness(0.55) invert(1) sepia(0.5) hue-rotate(320deg) saturate(3);
-  mix-blend-mode: screen;
+  filter: grayscale(1) brightness(1.15) contrast(2.2) sepia(1) hue-rotate(348deg) saturate(2.4);
+  mix-blend-mode: normal;
+  opacity: 0.35;
 }
 
 .page-header--section .page-header-bg--etching {
-  opacity: 0.40;
+  opacity: 0.30;
 }
 
 .page-header--banner .page-header-bg--etching {
-  opacity: 0.25;
+  opacity: 0.20;
 }
 
 /* --- Filter: Photo (default)

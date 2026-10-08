@@ -80,7 +80,7 @@ The script will:
 - Process all image subfolders under `assets/images/` in-place (by default)
 - Copy each original it changes into `.image-backups/TIMESTAMP/` first (skip with `--no-backup`)
 - Convert PNG → JPG when the PNG has no transparency — unless a JPG of the same name already exists
-- Turn phone photos the right way up before removing their metadata
+- Turn phone photos the right way up before removing their metadata (camera details, GPS location), but keep the color profile, so iPhone photos and screenshots don't come out dull (a PNG that stays PNG because it has transparency still loses it)
 - Skip images that are already small and within the size limit, and keep any original that re-compressing wouldn't make at least 10% smaller — so running it again never degrades an image
 - Show before/after file sizes
 
@@ -197,6 +197,9 @@ It matches by filename, so if a different PNG with the same name still exists el
 **Images look blurry after optimization**
 - Restore the original: `cp .image-backups/TIMESTAMP/path/to/image.jpg path/to/image.jpg`, or `git checkout -- path/to/image.jpg`
 - Re-run with higher quality: `bash scripts/optimize-images.sh --quality 90`
+
+**"must be a whole number"**
+- Sizes and quality take plain numbers: `--max-edge 2000`, not `2000px` or `2,000`
 
 **Script skipped my images**
 - Images under ~300KB that already fit the size limit are skipped

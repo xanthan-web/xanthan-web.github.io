@@ -48,6 +48,16 @@ is_ignored() {
     [ "$IN_GIT" = true ] && git -C "$PROJECT_ROOT" check-ignore -q "$1" 2>/dev/null
 }
 
+# Stop unless $2 (the value given to option $1) is a whole number from $3 to
+# $4. "2000px", "2,000" or 0 used to reach ImageMagick as a size of 0, which
+# shrinks every image to a single pixel.
+check_number() {
+    if ! [[ "$2" =~ ^[0-9]{1,5}$ ]] || [ "$2" -lt "$3" ] || [ "$2" -gt "$4" ]; then
+        echo -e "${RED}Error: $1 must be a whole number from $3 to $4, with nothing after it — got '$2'${NC}"
+        exit 1
+    fi
+}
+
 # Parse command line arguments
 PREVIEW_MODE=false
 while [[ $# -gt 0 ]]; do
@@ -73,22 +83,26 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --max-edge)
+            check_number --max-edge "$2" 1 20000
             MAX_EDGE="$2"
             MAX_WIDTH=0
             MAX_HEIGHT=0
             shift 2
             ;;
         --width)
+            check_number --width "$2" 1 20000
             MAX_WIDTH="$2"
             MAX_EDGE=0
             shift 2
             ;;
         --height)
+            check_number --height "$2" 0 20000
             MAX_HEIGHT="$2"
             MAX_EDGE=0
             shift 2
             ;;
         --quality)
+            check_number --quality "$2" 1 100
             QUALITY="$2"
             shift 2
             ;;
@@ -107,7 +121,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --folder NAME          Process only a specific subfolder within each base dir"
             echo "  --max-edge N           Limit longest edge to N pixels"
             echo "  --width N              Max width in pixels (default: 1600)"
-            echo "  --height N             Max height in pixels (default: unlimited)"
+            echo "  --height N             Max height in pixels (default: 0, unlimited)"
             echo "  --quality N            JPEG quality 1-100 (default: 85)"
             echo ""
             echo "Examples:"
@@ -229,6 +243,14 @@ fits_limits() {
 # Resize and compress $1 into $2 with the current settings. -auto-orient bakes
 # in a phone photo's rotation before -strip discards the tag that records it;
 # without it, photos taken holding the phone upright come out sideways.
+#
+# -strip also drops the color profile. iPhone photos (Display P3), Mac
+# screenshots and Adobe RGB scans then look dull, because browsers read their
+# colors as plain sRGB. So the original's profile is copied out first and put
+# back afterwards: a kilobyte or so, while camera details and GPS stay gone.
+# This works for JPG and WebP output, including PNGs converted to JPG. A PNG
+# that stays PNG (it has transparency) still loses its profile, because
+# ImageMagick won't write one into a PNG after -strip; those are rarely photos.
 render() {
     local geometry
     if [ "$MAX_EDGE" -gt 0 ]; then
@@ -238,7 +260,12 @@ render() {
     else
         geometry="${MAX_WIDTH}x>"
     fi
-    $MAGICK_CMD "$1" -auto-orient -resize "$geometry" -quality "$QUALITY" -strip "$2"
+    local icc="$WORK_DIR/color.icc" keep_color=()
+    rm -f "$icc"
+    if $MAGICK_CMD "$1" "$icc" 2>/dev/null && [ -s "$icc" ]; then
+        keep_color=(-profile "$icc")
+    fi
+    $MAGICK_CMD "$1" -auto-orient -resize "$geometry" -quality "$QUALITY" -strip "${keep_color[@]}" "$2"
 }
 
 # Copy a file into .image-backups/<stamp>/ under its path in the project,

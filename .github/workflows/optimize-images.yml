@@ -54,11 +54,21 @@ jobs:
           fi
           convert --version | head -1
 
-      - name: Check the folder exists
+      - name: Check the settings
         run: |
           if [ ! -d "$FOLDER" ]; then
             echo "::error::No folder called '$FOLDER' in this repository."
             echo "Look in the file list for the folder your images are in, and use that path."
+            exit 1
+          fi
+          # The script refuses these too; checking here puts the message on
+          # the run's summary page, where someone using the form will see it
+          if ! [[ "$MAX_EDGE" =~ ^[0-9]+$ ]] || [ "$MAX_EDGE" -eq 0 ]; then
+            echo "::error::Longest edge must be a plain number of pixels, like 1600 (not 1600px or 1,600). You entered '$MAX_EDGE'."
+            exit 1
+          fi
+          if ! [[ "$QUALITY" =~ ^[0-9]+$ ]] || [ "$QUALITY" -lt 1 ] || [ "$QUALITY" -gt 100 ]; then
+            echo "::error::Quality must be a number from 1 to 100, like 85. You entered '$QUALITY'."
             exit 1
           fi
 
@@ -76,6 +86,8 @@ jobs:
             ARGS+=(--preview)
           fi
 
+          # Without pipefail, tee's success hides the script failing
+          set -o pipefail
           bash scripts/optimize-images.sh "${ARGS[@]}" 2>&1 | tee /tmp/out.txt
           # strip the terminal colour codes before this goes in the summary
           sed -i 's/\x1b\[[0-9;]*m//g' /tmp/out.txt

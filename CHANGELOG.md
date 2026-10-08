@@ -41,6 +41,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- The Portfolio screenshot on the starter chooser is a fresh capture of the
+  live example, which now opens with the profile block rather than the
+  sidebar. Its alt text describes the live site rather than calling it the
+  starter site, which it never was. Resized to the 1600px the project's own
+  `optimize-images.sh` uses, taking it from 2.1MB to 237KB — a saving every
+  template inherits, since the sync copies the gallery images the docs name.
 - The Portfolio starter site opens with `layout/profile-intro.html` rather than
   the `nav-profile` sidebar. The sidebar's only page was the homepage, so it
   was paying for a permanent column it never used, and on a phone it stacked

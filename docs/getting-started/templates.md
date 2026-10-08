@@ -34,7 +34,7 @@ A personal or professional site for presenting your work, interests, and credent
   image-path="/assets/images/gallery/portfolio-screenshot.png"
   image-position="right"
   image-width="45%"
-  alt-text="Portfolio starter site screenshot"
+  alt-text="The Alexandra Ruiz portfolio site: a photograph, name, and links across the top of the homepage, above cards linking to research, teaching, and CV pages"
   text=portfolio_text
 %}
 

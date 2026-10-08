@@ -47,6 +47,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   starter site, which it never was. Resized to the 1600px the project's own
   `optimize-images.sh` uses, taking it from 2.1MB to 237KB — a saving every
   template inherits, since the sync copies the gallery images the docs name.
+- The homepage argues that the site is made of named parts, in a new
+  `split-intro` band between the reasons grid and the AI section. The
+  component story had only ever appeared as "reusable components each have a
+  place", buried in the fourth of four tiles and in developer vocabulary. The
+  point for a reader who does not write CSS is not reuse, it is that a named
+  thing can be asked for, moved, refused, or recognised a year later — and it
+  is what the AI band means by "a curated context", which that band asserted
+  without ever saying what the context was made of.
+- "Others can build on it" is now "Built for collaboration", and makes the
+  argument through plain documents rather than through a platform. Naming
+  GitHub there explained collaboration as a mechanism the reader has no model
+  for; the tile now says what changes for the people involved.
+- "Who is Xanthan for?" moves below the AI section, which is where the new
+  band needed to sit. It still lands before the closing pair, so the gum
+  section and the call to action stay together.
 - The Portfolio starter site opens with `layout/profile-intro.html` rather than
   the `nav-profile` sidebar. The sidebar's only page was the homepage, so it
   was paying for a permanent column it never used, and on a phone it stacked
@@ -76,6 +91,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   did not. Seedling's closing links now point at Forest.
 
 ### Fixed
+- A doubled phrase in the homepage's AI section ("That's impressive, but
+  impressive but opaque").
 - The `nav-profile` layout no longer reserves a column for a sidebar that is
   not there. It rendered `.left-bar` unconditionally while the include inside
   it checked for data, so a site with an empty `_data/nav-profile.yml` got a

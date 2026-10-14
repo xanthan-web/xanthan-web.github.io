@@ -26,12 +26,13 @@ From zero to a live site in 15 minutes. Choose a template, create your repositor
 
 ## ScrollStories
 
-Xanthan's way to build familiar StoryMaps-style narratives, from files you can edit by hand and ask AI to help revise.
+Give images, maps, and words room to make an argument together. Explore the form, then try a passage of your own.
 
-{% assign ss = site.pages | where_exp: "pg", "pg.path contains 'docs/scrollstories/'" | sort: "title" %}
-{% for pg in ss %}
-- [{{ pg.title }}]({{ pg.url | prepend: site.baseurl }})
-{% endfor %}
+- [What ScrollStories Are]({{ site.baseurl }}/docs/scrollstories/)
+- [Start Your Own Story]({{ site.baseurl }}/docs/scrollstories/start-your-story)
+- [Seedling: A Simple Essay]({{ site.baseurl }}/scrollstories/seedling/)
+- [Forest: Explore the Possibilities]({{ site.baseurl }}/scrollstories/forest/)
+- [Trail: A Story Map]({{ site.baseurl }}/scrollstories/trail/)
 
 ---
 
@@ -43,6 +44,15 @@ Look things up when you need them. Typography, images, colors, navigation, front
 {% for pg in ref %}{% unless pg.path contains 'index' %}
 - [{{ pg.title }}]({{ pg.url | prepend: site.baseurl }})
 {% endunless %}{% endfor %}
+
+### ScrollStory technique guides
+
+Examples, code, and settings for particular effects. The [Component Library]({{ site.baseurl }}/docs/reference/component-library#scrollstory-components) connects these guides to the reusable pieces.
+
+- [Background Scroll Boxes]({{ site.baseurl }}/docs/scrollstories/bg-scrollbox)
+- [Background Switching]({{ site.baseurl }}/docs/scrollstories/bg-switch)
+- [Side-Scrolling Text]({{ site.baseurl }}/docs/scrollstories/side-scroll)
+- [Peekaboo Images]({{ site.baseurl }}/docs/scrollstories/peekaboo)
 
 ---
 

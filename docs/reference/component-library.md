@@ -16,7 +16,7 @@ Every component in Xanthan, with its parameters and copy-paste code. Drop any of
 
 **File:** `layout/editorial-demo.html`
 
-Put a passage beside its source so readers can see how ordinary writing and includes shape a page. Two views use the actual standalone figure and pull quote components. With JavaScript, readers can edit headings, paragraphs, and the include together and see local changes. Without it, both examples and their source remain visible.
+Put a passage beside its source so readers can see how ordinary writing and includes shape a page. Three views use the actual standalone figure, pull quote, and callout components. With JavaScript, readers can edit headings, paragraphs, and the include together and see local changes. Without it, all three examples and their source remain visible.
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
@@ -40,7 +40,7 @@ Use it on a landing page introducing Xanthan, or in a teaching page where studen
 | `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
 | `story-heading` | no | Reading a landscape | Title of the sample passage |
 | `story-heading-level` | no | `2` | Sample heading level, 1–6 |
-| `story-text` | no | Sample landscape paragraph | Opening prose across both views |
+| `story-text` | no | Sample landscape paragraph | Opening prose across all three views |
 | `section-heading` | no | Look closer | Heading following the component |
 | `section-heading-level` | no | Next level after story heading | Section heading level, 1–6 |
 | `section-text` | no | Sample closing paragraph | Prose following the component |
@@ -48,6 +48,8 @@ Use it on a landing page introducing Xanthan, or in a teaching page where studen
 | `alt-text` | no | caption | Description of the image for screen readers |
 | `caption` | no | empty | Initial caption; plain text recommended |
 | `quote-text` | no | Every landscape has a history. | Pull quote from the passage |
+| `note-title` | no | Reading the evidence | Contextual note heading |
+| `note-text` | no | Sample source note | Context set apart from the main prose |
 | `primary-url` | no | empty | Main next-step link |
 | `primary-label` | no | Choose a starter site | Main link label |
 | `secondary-url` | no | empty | Optional second link |
@@ -291,6 +293,7 @@ Colored callout box for tips, warnings, or important information.
 | `class` | no | `info` | `info` (blue), `warning` (yellow), `danger` (red), `success` (green) |
 | `text` | yes | --- | Alert content; supports Markdown |
 | `title` | no | --- | Bold heading at top of alert |
+| `heading-level` | no | `3` | Heading level for the title, 2–6 |
 
 ---
 

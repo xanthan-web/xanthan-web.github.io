@@ -17,6 +17,8 @@ opening:
   alt-text: "Aerial photograph of campus buildings, roads, and open ground."
   caption: "An aerial view makes the campus's paths and open spaces visible."
   quote-text: "Buildings tell one part of a campus's history."
+  note-title: "Reading the photograph"
+  note-text: "An aerial photograph shows routes and buildings, but leaves out the voices of people who used them. Read the view alongside oral histories and other accounts."
   section-heading: "Paths and gathering places"
   section-text: "Tracing the paths between buildings brings everyday journeys into view. The spaces between landmarks become part of the story."
 reasons:
@@ -45,6 +47,8 @@ named_parts:
   alt-text=page.opening.alt-text
   caption=page.opening.caption
   quote-text=page.opening.quote-text
+  note-title=page.opening.note-title
+  note-text=page.opening.note-text
   section-heading=page.opening.section-heading
   section-text=page.opening.section-text
   primary-url="/docs/getting-started/templates"

@@ -1,5 +1,5 @@
 // Editorial demo: enhance a server-rendered passage with local source edits.
-// This recognises only the two displayed examples. It never evaluates Liquid,
+// This recognises only the three displayed examples. It never evaluates Liquid,
 // inserts visitor HTML, or writes the visitor's changes back to the site.
 (function () {
   'use strict';
@@ -116,8 +116,8 @@
       if (demo.hasAttribute('data-demo-ready')) return;
       var tabs = Array.from(demo.querySelectorAll('[data-demo-tab]'));
       var panels = Array.from(demo.querySelectorAll('[data-demo-panel]'));
-      if (tabs.length !== 2 || panels.length !== 2) {
-        console.warn('Editorial demo needs its two tabs and example panels. Showing the static examples.');
+      if (tabs.length !== 3 || panels.length !== 3) {
+        console.warn('Editorial demo needs its three tabs and example panels. Showing the static examples.');
         return;
       }
       var baseurl = (demo.getAttribute('data-baseurl') || '').replace(/\/$/, '');
@@ -131,7 +131,9 @@
         var figure = preview.querySelector('figure');
         var image = preview.querySelector('img');
         var quote = preview.querySelector('.pullquote');
+        var note = preview.querySelector('.alert');
         var allowed = kind === 'quote' ? ['text', 'width'] : ['image-path', 'image-width', 'caption', 'alt-text'];
+        if (kind === 'note') allowed = ['class', 'title', 'heading-level', 'text'];
 
         function update() {
           fitEditor(editor);
@@ -149,6 +151,26 @@
                 var quoteText = document.createElement('p');
                 quoteText.textContent = values.text;
                 quote.replaceChildren(quoteText);
+              } else if (kind === 'note') {
+                if (!values.text || !values.text.trim()) throw new Error('Give the note a text value.');
+                var noteClass = values.class || 'info';
+                if (['info', 'warning', 'danger', 'success'].indexOf(noteClass) === -1) {
+                  throw new Error('Use info, warning, danger, or success for the note class.');
+                }
+                var noteLevel = values['heading-level'] || '3';
+                if (!/^[2-6]$/.test(noteLevel)) throw new Error('Use a heading-level from 2 to 6 for the note.');
+                var noteNodes = [];
+                if (values.title) {
+                  var noteHeading = document.createElement('h' + noteLevel);
+                  noteHeading.className = 'alert-heading';
+                  noteHeading.textContent = values.title;
+                  noteNodes.push(noteHeading);
+                }
+                var noteText = document.createElement('p');
+                noteText.textContent = values.text;
+                noteNodes.push(noteText);
+                note.className = 'alert alert-' + noteClass;
+                note.replaceChildren(...noteNodes);
               } else {
                 var imageUrl = localImage(values['image-path'], baseurl);
                 var imageWidth = percentage(values['image-width'], '40%', 100);

@@ -4,8 +4,13 @@ layout: default
 date: 2026-01-01
 summary: Open, transparent, AI-ready websites for scholars, instructors, and students. Built for public work people can understand, teach, and maintain.
 opening:
-  title: "Turn your research into a place people can explore."
-  text: "Build a portfolio, a collection, or a visual story around your ideas. Start with a complete design, make it your own, and keep the materials in your hands."
+  title: "What is Xanthan?"
+  text: |
+    Xanthan is a framework for publishing academic work on the web. Start with a complete design for a portfolio, a collection, or a visual story, then shape it around your research and your readers.
+
+    Your site is a folder of text files and images that you control. GitHub can publish it for free. Editing a page means changing its text, adding images, and choosing how readers encounter them.
+
+    You can edit those files yourself or describe a change to an AI assistant. Xanthan supplies the named pieces; you make the editorial decisions. The examples below show how ordinary writing and a few instructions become a page.
   story-heading: "Reading a campus"
   story-text: "Buildings tell one part of a campus's history. This essay follows the paths, gathering places, and everyday journeys that give those buildings meaning."
   image-path: "/assets/images/site/default.jpg"
@@ -14,7 +19,6 @@ opening:
   quote-text: "Buildings tell one part of a campus's history."
   section-heading: "Paths and gathering places"
   section-text: "Tracing the paths between buildings brings everyday journeys into view. The spaces between landmarks become part of the story."
-  image-text: "Look at the routes between buildings: they connect spaces where campus life unfolds."
 reasons:
   - title: "You own your content"
     text: "Your site is text files in a repository you control. Move it to any host, take it between institutions, keep it after the grant ends. Hosting on GitHub Pages is free---no ads, no subscription, no terms-of-service surprises."
@@ -43,7 +47,6 @@ named_parts:
   quote-text=page.opening.quote-text
   section-heading=page.opening.section-heading
   section-text=page.opening.section-text
-  image-text=page.opening.image-text
   primary-url="/docs/getting-started/templates"
   secondary-url="/docs/getting-started/gallery"
 %}
@@ -62,14 +65,6 @@ named_parts:
 %}
 
 {% include layout/section-end.html %}
-
-## What is Xanthan?
-Xanthan is not software; it's not a platform. There is nothing to install, no account to create. It is a set of files that make a website on a free, widely used platform, and directions for what to do with them.
-
-GitHub stores files and publishes websites for millions of people, it will turn your copy into an acessible site running from your own account. From then on, editing the site means editing simple text files.
-
-So this is low-tech, not no-tech. You will open text files and click buttons on a website. You will not write code, run a server, manage a database, or install anything.
-
 
 {% include layout/section.html style="alt" %}
 

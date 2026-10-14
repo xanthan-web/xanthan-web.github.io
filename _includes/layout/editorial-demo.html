@@ -1,9 +1,9 @@
 {% comment %}
   Editorial Demo — a landing-page opening with a rendered passage beside its include.
 
-  The initial examples use the real figure, pullquote, and figure-wrap includes.
-  JavaScript adds three keyboard-accessible views and a small, local source editor.
-  Without JavaScript, all three examples and their source remain readable.
+  The initial examples use the real figure and pullquote includes.
+  JavaScript adds two keyboard-accessible views and a small, local source editor.
+  Without JavaScript, both examples and their source remain readable.
 
   Heading / introduction:
     - heading:             string, required — opening statement
@@ -14,11 +14,10 @@
   Story / image:
     - story-heading:       string, default "Reading a landscape" — sample passage title
     - story-heading-level: integer 1–6, default 2 — sample heading level
-    - story-text:          string, default below — opening prose across the three views
+    - story-text:          string, default below — opening prose across both views
     - section-heading:     string, default "Look closer" — next section of the passage
     - section-heading-level: integer 1–6, default next level — section heading level
     - section-text:         string, default below — prose following the component
-    - image-text:           string, default below — passage beside the figure-wrap image
     - image-path:          string, required — sample image; site-root or relative path
     - alt-text:            string, default caption — image description for screen readers
     - caption:             string, default empty — initial caption; use plain text here
@@ -49,7 +48,6 @@
 {% if section_heading_level < 1 %}{% assign section_heading_level = 1 %}{% endif %}
 {% if section_heading_level > 6 %}{% assign section_heading_level = 6 %}{% endif %}
 {% assign section_text = include.section-text | default: 'Each view makes different relationships visible. The images and words give readers a way into the argument.' %}
-{% assign image_text = include.image-text | default: 'Look at the detail in this photograph while reading the passage beside it.' %}
 {% assign story_heading_marks = '######' | slice: 0, story_heading_level %}
 {% assign section_heading_marks = '######' | slice: 0, section_heading_level %}
 {% assign alt_text = include.alt-text | default: include.caption | default: '' %}
@@ -57,7 +55,6 @@
 {% assign source_alt = alt_text | replace: '\', '\\' | replace: '"', '\"' %}
 {% assign source_caption = include.caption | replace: '\', '\\' | replace: '"', '\"' %}
 {% assign source_quote = quote_text | replace: '\', '\\' | replace: '"', '\"' %}
-{% assign source_text = image_text | replace: '\', '\\' | replace: '"', '\"' %}
 {% capture figure_source %}{{ story_heading_marks }} {{ story_heading }}
 
 {{ story_text }}
@@ -84,22 +81,6 @@
 {{ section_heading_marks }} {{ section_heading }}
 
 {{ section_text }}{% endcapture %}
-{% capture wrap_source %}{{ story_heading_marks }} {{ story_heading }}
-
-{{ story_text }}
-
-{% raw %}{% include images/figure-wrap.html{% endraw %}
-  image-path="{{ source_path }}"
-  image-position="right"
-  image-width="45%"
-  caption="{{ source_caption }}"
-  alt-text="{{ source_alt }}"
-  text="{{ source_text }}"
-{% raw %}%}{% endraw %}
-
-{{ section_heading_marks }} {{ section_heading }}
-
-{{ section_text }}{% endcapture %}
 {::nomarkdown}
 {% if include.heading and include.image-path %}
 <section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
@@ -109,7 +90,6 @@
     <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
       <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
       <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>
-      <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-wrap" aria-controls="{{ demo_id | escape }}-wrap" aria-selected="false" tabindex="-1" data-demo-tab="wrap">Put image beside argument</button>
     </div>
     <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Give an image room" data-demo-panel="figure" data-demo-include="images/figure.html">
       <p class="editorial-demo-description">A caption connects what readers see to what you want them to notice.</p>
@@ -154,30 +134,6 @@
           <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-quote-source" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-quote-hint {{ demo_id | escape }}-quote-error" data-demo-source>{{ quote_source | escape }}</textarea>
           <p class="editorial-demo-hint" id="{{ demo_id | escape }}-quote-hint" data-demo-hint hidden>Edit the prose around the pull quote, or choose another sentence for <code>text</code>.</p>
           <p class="editorial-demo-error" id="{{ demo_id | escape }}-quote-error" data-demo-error aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-    <section class="editorial-demo-panel" id="{{ demo_id | escape }}-wrap" aria-label="Put image beside argument" data-demo-panel="wrap" data-demo-include="images/figure-wrap.html">
-      <p class="editorial-demo-description">Keep a photograph next to the passage that discusses it.</p>
-      <div class="editorial-demo-pair">
-        <div class="editorial-demo-result">
-          <p class="editorial-demo-label">The page readers see</p>
-          <article class="editorial-demo-page" data-demo-page>
-            <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
-            {{ story_text | markdownify }}
-            <div class="editorial-demo-component" data-demo-preview>
-              {% include images/figure-wrap.html image-path=include.image-path image-position="right" image-width="45%" caption=include.caption alt-text=alt_text text=image_text %}
-            </div>
-            <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
-            {{ section_text | markdownify }}
-          </article>
-        </div>
-        <div class="editorial-demo-source">
-          <label class="editorial-demo-label" for="{{ demo_id | escape }}-wrap-source">The text you edit</label>
-          <pre class="editorial-demo-static-source" data-demo-static><code>{{ wrap_source | escape }}</code></pre>
-          <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-wrap-source" rows="9" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-wrap-hint {{ demo_id | escape }}-wrap-error" data-demo-source>{{ wrap_source | escape }}</textarea>
-          <p class="editorial-demo-hint" id="{{ demo_id | escape }}-wrap-hint" data-demo-hint hidden>Edit the headings and prose, then change <code>right</code> to <code>left</code>. On a phone, the image and text stack for comfortable reading.</p>
-          <p class="editorial-demo-error" id="{{ demo_id | escape }}-wrap-error" data-demo-error aria-live="polite"></p>
         </div>
       </div>
     </section>

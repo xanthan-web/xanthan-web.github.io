@@ -1,5 +1,5 @@
 // Editorial demo: enhance a server-rendered passage with local source edits.
-// This recognises only the three displayed examples. It never evaluates Liquid,
+// This recognises only the two displayed examples. It never evaluates Liquid,
 // inserts visitor HTML, or writes the visitor's changes back to the site.
 (function () {
   'use strict';
@@ -116,8 +116,8 @@
       if (demo.hasAttribute('data-demo-ready')) return;
       var tabs = Array.from(demo.querySelectorAll('[data-demo-tab]'));
       var panels = Array.from(demo.querySelectorAll('[data-demo-panel]'));
-      if (tabs.length !== 3 || panels.length !== 3) {
-        console.warn('Editorial demo needs its three tabs and example panels. Showing the static examples.');
+      if (tabs.length !== 2 || panels.length !== 2) {
+        console.warn('Editorial demo needs its two tabs and example panels. Showing the static examples.');
         return;
       }
       var baseurl = (demo.getAttribute('data-baseurl') || '').replace(/\/$/, '');
@@ -131,9 +131,7 @@
         var figure = preview.querySelector('figure');
         var image = preview.querySelector('img');
         var quote = preview.querySelector('.pullquote');
-        var wrap = preview.querySelector('.figure-wrap');
         var allowed = kind === 'quote' ? ['text', 'width'] : ['image-path', 'image-width', 'caption', 'alt-text'];
-        if (kind === 'wrap') allowed = allowed.concat(['image-position', 'text']);
 
         function update() {
           fitEditor(editor);
@@ -153,21 +151,8 @@
                 quote.replaceChildren(quoteText);
               } else {
                 var imageUrl = localImage(values['image-path'], baseurl);
-                var imageWidth = percentage(values['image-width'], '40%', kind === 'wrap' ? 70 : 100);
-                if (kind === 'wrap') {
-                  var position = values['image-position'] || 'left';
-                  if (position !== 'left' && position !== 'right') throw new Error('Set image-position to "left" or "right".');
-                  if (!values.text || !values.text.trim()) throw new Error('Give the passage beside the image a text value.');
-                  wrap.classList.toggle('figure-wrap--right', position === 'right');
-                  wrap.classList.toggle('figure-wrap--left', position === 'left');
-                  wrap.style.setProperty('--figure-wrap-image-width', imageWidth);
-                  wrap.querySelector('.figure-wrap-text').replaceChildren();
-                  var paragraph = document.createElement('p');
-                  paragraph.textContent = values.text;
-                  wrap.querySelector('.figure-wrap-text').appendChild(paragraph);
-                } else {
-                  figure.style.width = imageWidth;
-                }
+                var imageWidth = percentage(values['image-width'], '40%', 100);
+                figure.style.width = imageWidth;
                 // textContent keeps even pasted markup as plain text. The original
                 // include handles the initial Markdown; live edits are plain text.
                 var caption = figure.querySelector('figcaption');

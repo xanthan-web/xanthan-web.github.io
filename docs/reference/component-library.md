@@ -1142,7 +1142,7 @@ A fixed background image that is revealed as page content scrolls over it, creat
 
 ## ScrollStory components
 
-The `scrollybox/` directory contains additional includes for building ScrollStory narratives. These are documented in the [ScrollStories](../scrollstories/) section.
+The `scrollybox/` directory contains additional includes for building ScrollStory narratives. Use the technique guides below when you want the code and settings for a particular effect.
 
 All scrollybox includes that display a text box support the `box-align` parameter (`left`, `right`, `center`):
 
@@ -1152,7 +1152,10 @@ All scrollybox includes that display a text box support the `box-align` paramete
 | `scrollybox/bg-sticky.html` | Background stays fixed while text scrolls over it |
 | `scrollybox/bg-multi-long.html` | Multiple background sections in sequence |
 | `scrollybox/bg-switch.html` | Switch background images as the reader scrolls |
-| `scrollybox/auto-scroll.html` | Side-scrolling text panels |
+| `scrollybox/bg-ss.html` | Text scrolls beside an image held in place |
+| `scrollybox/auto-scroll.html` | Optional, pausable automatic scrolling for demos |
 | `maps/story-map.html` | A historic map pinned in place while text scrolls over it |
 
-See the [ScrollStory examples](../scrollstories/) for these components in action.
+Technique guides: [Background Scroll Boxes](../scrollstories/bg-scrollbox), [Background Switching](../scrollstories/bg-switch), [Side-Scrolling Text](../scrollstories/side-scroll), and [Peekaboo Images](../scrollstories/peekaboo). For map settings, see [Story Map](#story-map).
+
+See [Forest]({{ site.baseurl }}/scrollstories/forest/) for the components in an essay and [Trail]({{ site.baseurl }}/scrollstories/trail/) for a story map. [Start Your Own Story](../scrollstories/start-your-story) walks through adapting an example.

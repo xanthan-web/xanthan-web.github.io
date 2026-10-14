@@ -16,25 +16,14 @@
   items:
     - title: "What ScrollStories Are"
       url: "/docs/scrollstories/"
-
-    - divider: true
-
-    - title: "Background Scroll Boxes"
-      url: "/docs/scrollstories/bg-scrollbox"
-    - title: "Background Switching"
-      url: "/docs/scrollstories/bg-switch"
-    - title: "Side-Scrolling Text"
-      url: "/docs/scrollstories/side-scroll"
-    - title: "Peekaboo Images"
-      url: "/docs/scrollstories/peekaboo"
-    - title: "Story Maps"
-      url: "/docs/reference/component-library#story-map"
+    - title: "Start Your Own Story"
+      url: "/docs/scrollstories/start-your-story"
 
     - divider: true
 
     - title: "Seedling: A Simple Essay"
       url: "/scrollstories/seedling"
-    - title: "Forest: Every Component"
+    - title: "Forest: Explore the Possibilities"
       url: "/scrollstories/forest"
     - title: "Trail: A Story Map"
       url: "/scrollstories/trail"

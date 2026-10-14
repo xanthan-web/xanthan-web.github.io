@@ -1,4 +1,4 @@
-// Editorial demo: enhance real, server-rendered includes with local edits.
+// Editorial demo: enhance a server-rendered passage with local source edits.
 // This recognises only the three displayed examples. It never evaluates Liquid,
 // inserts visitor HTML, or writes the visitor's changes back to the site.
 (function () {
@@ -26,6 +26,62 @@
       remaining = remaining.slice(parameter[0].length);
     }
     return values;
+  }
+
+  // Find the component among ordinary page text. A quoted caption may contain
+  // %}, so only an unquoted closing tag ends the include.
+  function passage(source) {
+    if (source.length > 12000) throw new Error('Keep this example to a short passage.');
+    var start = source.indexOf('{%');
+    if (start === -1) return { before: source, include: '', after: '' };
+    var quote = '';
+    var escaped = false;
+    for (var i = start + 2; i < source.length - 1; i++) {
+      var character = source[i];
+      if (escaped) { escaped = false; continue; }
+      if (quote && character === '\\') { escaped = true; continue; }
+      if (quote) {
+        if (character === quote) quote = '';
+      } else if (character === '"' || character === "'") {
+        quote = character;
+      } else if (character === '%' && source[i + 1] === '}') {
+        var after = source.slice(i + 2);
+        if (after.indexOf('{%') !== -1) throw new Error('Use one include in this short example, with headings and paragraphs around it.');
+        return { before: source.slice(0, start), include: source.slice(start, i + 2), after: after };
+      }
+    }
+    throw new Error('Finish the include with matching quotes and a closing %}.');
+  }
+
+  // The introductory editor supports headings and paragraphs. Build actual
+  // elements with textContent, so pasted HTML and Liquid remain inert text.
+  function markdownNodes(source, state) {
+    var nodes = [];
+    var paragraph = [];
+    function flush() {
+      if (!paragraph.length) return;
+      var element = document.createElement('p');
+      element.textContent = paragraph.join(' ');
+      nodes.push(element);
+      paragraph = [];
+    }
+    source.replace(/\r\n?/g, '\n').split('\n').forEach(function (line) {
+      var heading = line.match(/^(#{1,6})[ \t]+(.+)$/);
+      if (!line.trim()) {
+        flush();
+      } else if (heading) {
+        flush();
+        var element = document.createElement('h' + heading[1].length);
+        element.className = state.headingSeen ? 'editorial-demo-section-heading' : 'editorial-demo-story-heading';
+        element.textContent = heading[2].replace(/[ \t]+#+[ \t]*$/, '').trim();
+        state.headingSeen = true;
+        nodes.push(element);
+      } else {
+        paragraph.push(line.trim());
+      }
+    });
+    flush();
+    return nodes;
   }
 
   function percentage(value, fallback, maximum) {
@@ -69,6 +125,7 @@
       panels.forEach(function (panel) {
         var editor = panel.querySelector('[data-demo-source]');
         var preview = panel.querySelector('[data-demo-preview]');
+        var page = panel.querySelector('[data-demo-page]');
         var error = panel.querySelector('[data-demo-error]');
         var kind = panel.getAttribute('data-demo-panel');
         var figure = preview.querySelector('figure');
@@ -81,50 +138,57 @@
         function update() {
           fitEditor(editor);
           try {
-            var values = parameters(editor.value, panel.getAttribute('data-demo-include'), allowed);
-            if (kind === 'quote') {
-              if (!values.text || !values.text.trim()) throw new Error('Give the pull quote a text value.');
-              var quoteWidth = percentage(values.width, '70%', 100);
-              quote.style.width = quoteWidth;
-              var quoteText = document.createElement('p');
-              quoteText.textContent = values.text;
-              quote.replaceChildren(quoteText);
-            } else {
-              var imageUrl = localImage(values['image-path'], baseurl);
-              var imageWidth = percentage(values['image-width'], '40%', kind === 'wrap' ? 70 : 100);
-              if (kind === 'wrap') {
-                var position = values['image-position'] || 'left';
-                if (position !== 'left' && position !== 'right') throw new Error('Set image-position to "left" or "right".');
-                if (!values.text || !values.text.trim()) throw new Error('Give the passage beside the image a text value.');
-                wrap.classList.toggle('figure-wrap--right', position === 'right');
-                wrap.classList.toggle('figure-wrap--left', position === 'left');
-                wrap.style.setProperty('--figure-wrap-image-width', imageWidth);
-                wrap.querySelector('.figure-wrap-text').replaceChildren();
-                var paragraph = document.createElement('p');
-                paragraph.textContent = values.text;
-                wrap.querySelector('.figure-wrap-text').appendChild(paragraph);
+            var content = passage(editor.value);
+            var markdownState = { headingSeen: false };
+            var before = markdownNodes(content.before, markdownState);
+            var after = markdownNodes(content.after, markdownState);
+            if (content.include) {
+              var values = parameters(content.include, panel.getAttribute('data-demo-include'), allowed);
+              if (kind === 'quote') {
+                if (!values.text || !values.text.trim()) throw new Error('Give the pull quote a text value.');
+                var quoteWidth = percentage(values.width, '70%', 100);
+                quote.style.width = quoteWidth;
+                var quoteText = document.createElement('p');
+                quoteText.textContent = values.text;
+                quote.replaceChildren(quoteText);
               } else {
-                figure.style.width = imageWidth;
-              }
-              // textContent keeps even pasted markup as plain text. The original
-              // include handles the initial Markdown; live edits are plain text.
-              var caption = figure.querySelector('figcaption');
-              if (values.caption) {
-                if (!caption) {
-                  caption = document.createElement('figcaption');
-                  figure.appendChild(caption);
+                var imageUrl = localImage(values['image-path'], baseurl);
+                var imageWidth = percentage(values['image-width'], '40%', kind === 'wrap' ? 70 : 100);
+                if (kind === 'wrap') {
+                  var position = values['image-position'] || 'left';
+                  if (position !== 'left' && position !== 'right') throw new Error('Set image-position to "left" or "right".');
+                  if (!values.text || !values.text.trim()) throw new Error('Give the passage beside the image a text value.');
+                  wrap.classList.toggle('figure-wrap--right', position === 'right');
+                  wrap.classList.toggle('figure-wrap--left', position === 'left');
+                  wrap.style.setProperty('--figure-wrap-image-width', imageWidth);
+                  wrap.querySelector('.figure-wrap-text').replaceChildren();
+                  var paragraph = document.createElement('p');
+                  paragraph.textContent = values.text;
+                  wrap.querySelector('.figure-wrap-text').appendChild(paragraph);
+                } else {
+                  figure.style.width = imageWidth;
                 }
-                var captionText = document.createElement('p');
-                captionText.textContent = values.caption;
-                caption.replaceChildren(captionText);
-              } else if (caption) {
-                caption.remove();
+                // textContent keeps even pasted markup as plain text. The original
+                // include handles the initial Markdown; live edits are plain text.
+                var caption = figure.querySelector('figcaption');
+                if (values.caption) {
+                  if (!caption) {
+                    caption = document.createElement('figcaption');
+                    figure.appendChild(caption);
+                  }
+                  var captionText = document.createElement('p');
+                  captionText.textContent = values.caption;
+                  caption.replaceChildren(captionText);
+                } else if (caption) {
+                  caption.remove();
+                }
+                image.alt = values['alt-text'] === undefined ? (values.caption || '') : values['alt-text'];
+                var link = figure.querySelector('a.image');
+                if (link) link.href = imageUrl;
+                if (image.src !== imageUrl) image.src = imageUrl;
               }
-              image.alt = values['alt-text'] === undefined ? (values.caption || '') : values['alt-text'];
-              var link = figure.querySelector('a.image');
-              if (link) link.href = imageUrl;
-              if (image.src !== imageUrl) image.src = imageUrl;
             }
+            page.replaceChildren(...before, ...(content.include ? [preview] : []), ...after);
             editor.removeAttribute('aria-invalid');
             error.textContent = '';
           } catch (problem) {
@@ -139,6 +203,8 @@
           console.warn('Editorial demo image could not load:', image.getAttribute('src'));
         });
         editor.readOnly = false;
+        editor.hidden = false;
+        panel.querySelector('[data-demo-static]').hidden = true;
         panel.querySelector('[data-demo-hint]').hidden = false;
         editor.addEventListener('input', update);
         if (typeof ResizeObserver !== 'undefined') {

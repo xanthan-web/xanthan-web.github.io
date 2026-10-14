@@ -1,7 +1,7 @@
 /*****************************************************
 EDITORIAL DEMO
 
-A landing-page opening with a real Xanthan passage and its editable include
+A landing-page opening with a real Xanthan passage and its editable source
 side by side. Three views show a figure, a pull quote, and image-plus-text.
 
 Loads:    every page
@@ -54,7 +54,9 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 
 .editorial-demo-choices[hidden],
 .editorial-demo-panel[hidden],
-.editorial-demo-hint[hidden] {
+.editorial-demo-hint[hidden],
+.editorial-demo-editor[hidden],
+.editorial-demo-static-source[hidden] {
   display: none;
 }
 
@@ -123,6 +125,15 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   text-align: left;
 }
 
+.editorial-demo-section-heading {
+  margin: var(--spacing-md) 0 var(--spacing-xs);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--text-body);
+  text-align: left;
+}
+
 .editorial-demo-page p {
   margin: 0 0 var(--spacing-sm);
   font-size: 1rem;
@@ -158,7 +169,8 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   font-style: italic;
 }
 
-.editorial-demo-editor {
+.editorial-demo-editor,
+.editorial-demo-static-source {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -172,6 +184,21 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   line-height: 1.6;
   overflow: hidden;
   resize: none;
+}
+
+.editorial-demo-static-source {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.editorial-demo-static-source code {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  white-space: inherit;
 }
 
 .editorial-demo-hint,

@@ -12,6 +12,9 @@ opening:
   alt-text: "Aerial photograph of campus buildings, roads, and open ground."
   caption: "An aerial view makes the campus's paths and open spaces visible."
   quote-text: "Buildings tell one part of a campus's history."
+  section-heading: "Paths and gathering places"
+  section-text: "Tracing the paths between buildings brings everyday journeys into view. The spaces between landmarks become part of the story."
+  image-text: "Look at the routes between buildings: they connect spaces where campus life unfolds."
 reasons:
   - title: "You own your content"
     text: "Your site is text files in a repository you control. Move it to any host, take it between institutions, keep it after the grant ends. Hosting on GitHub Pages is free---no ads, no subscription, no terms-of-service surprises."
@@ -38,6 +41,9 @@ named_parts:
   alt-text=page.opening.alt-text
   caption=page.opening.caption
   quote-text=page.opening.quote-text
+  section-heading=page.opening.section-heading
+  section-text=page.opening.section-text
+  image-text=page.opening.image-text
   primary-url="/docs/getting-started/templates"
   secondary-url="/docs/getting-started/gallery"
 %}

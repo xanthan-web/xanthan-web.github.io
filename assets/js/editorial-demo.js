@@ -1,0 +1,186 @@
+// Editorial demo: enhance real, server-rendered includes with local edits.
+// This recognises only the three displayed examples. It never evaluates Liquid,
+// inserts visitor HTML, or writes the visitor's changes back to the site.
+(function () {
+  'use strict';
+
+  function parameters(source, expectedInclude, allowed) {
+    if (source.length > 12000) throw new Error('Keep this example to a short passage.');
+    var include = source.match(/^\s*{%\s*include\s+([a-z][a-z0-9/-]*\.html)\s*([\s\S]*?)\s*%}\s*$/);
+    if (!include || include[1] !== expectedInclude) {
+      throw new Error('Keep the include name and its opening {% and closing %}. Edit the values between them.');
+    }
+    var remaining = include[2];
+    var values = Object.create(null);
+    while (remaining.trim()) {
+      var parameter = remaining.match(/^\s*([a-z][a-z0-9-]*)\s*=\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/);
+      if (!parameter) throw new Error('Put each value in matching quotes, for example image-width="50%".');
+      var name = parameter[1];
+      if (allowed.indexOf(name) === -1) throw new Error('This example uses ' + allowed.join(', ') + '.');
+      if (Object.prototype.hasOwnProperty.call(values, name)) throw new Error('Use ' + name + ' only once.');
+      try {
+        values[name] = parameter[2][0] === '"' ? JSON.parse(parameter[2]) : parameter[2].slice(1, -1).replace(/\\(['\\])/g, '$1');
+      } catch (error) {
+        throw new Error('Use plain text inside the quotes. Put a backslash before a quote inside your text.');
+      }
+      remaining = remaining.slice(parameter[0].length);
+    }
+    return values;
+  }
+
+  function percentage(value, fallback, maximum) {
+    var width = value === undefined ? fallback : value.trim();
+    var number = parseFloat(width);
+    if (!/^\d+(?:\.\d+)?%$/.test(width) || number < 1 || number > maximum) {
+      throw new Error('Use a width from 1% to ' + maximum + '% in this example.');
+    }
+    return width;
+  }
+
+  function localImage(path, baseurl) {
+    if (!path || !path.trim()) throw new Error('The image needs an image-path value.');
+    var raw = path.trim();
+    if (raw[0] === '/' && raw[1] !== '/') raw = baseurl + raw;
+    var url = new URL(raw, window.location.href);
+    if (url.origin !== window.location.origin || !/^https?:$/.test(url.protocol)) {
+      throw new Error('Use an image from this site, such as the sample image-path shown here.');
+    }
+    return url.href;
+  }
+
+  function fitEditor(editor) {
+    if (editor.clientWidth) {
+      editor.style.height = 'auto';
+      editor.style.height = (editor.scrollHeight + 2) + 'px';
+    }
+  }
+
+  function start() {
+    document.querySelectorAll('[data-editorial-demo]').forEach(function (demo) {
+      if (demo.hasAttribute('data-demo-ready')) return;
+      var tabs = Array.from(demo.querySelectorAll('[data-demo-tab]'));
+      var panels = Array.from(demo.querySelectorAll('[data-demo-panel]'));
+      if (tabs.length !== 3 || panels.length !== 3) {
+        console.warn('Editorial demo needs its three tabs and example panels. Showing the static examples.');
+        return;
+      }
+      var baseurl = (demo.getAttribute('data-baseurl') || '').replace(/\/$/, '');
+
+      panels.forEach(function (panel) {
+        var editor = panel.querySelector('[data-demo-source]');
+        var preview = panel.querySelector('[data-demo-preview]');
+        var error = panel.querySelector('[data-demo-error]');
+        var kind = panel.getAttribute('data-demo-panel');
+        var figure = preview.querySelector('figure');
+        var image = preview.querySelector('img');
+        var quote = preview.querySelector('.pullquote');
+        var wrap = preview.querySelector('.figure-wrap');
+        var allowed = kind === 'quote' ? ['text', 'width'] : ['image-path', 'image-width', 'caption', 'alt-text'];
+        if (kind === 'wrap') allowed = allowed.concat(['image-position', 'text']);
+
+        function update() {
+          fitEditor(editor);
+          try {
+            var values = parameters(editor.value, panel.getAttribute('data-demo-include'), allowed);
+            if (kind === 'quote') {
+              if (!values.text || !values.text.trim()) throw new Error('Give the pull quote a text value.');
+              var quoteWidth = percentage(values.width, '70%', 100);
+              quote.style.width = quoteWidth;
+              var quoteText = document.createElement('p');
+              quoteText.textContent = values.text;
+              quote.replaceChildren(quoteText);
+            } else {
+              var imageUrl = localImage(values['image-path'], baseurl);
+              var imageWidth = percentage(values['image-width'], '40%', kind === 'wrap' ? 70 : 100);
+              if (kind === 'wrap') {
+                var position = values['image-position'] || 'left';
+                if (position !== 'left' && position !== 'right') throw new Error('Set image-position to "left" or "right".');
+                if (!values.text || !values.text.trim()) throw new Error('Give the passage beside the image a text value.');
+                wrap.classList.toggle('figure-wrap--right', position === 'right');
+                wrap.classList.toggle('figure-wrap--left', position === 'left');
+                wrap.style.setProperty('--figure-wrap-image-width', imageWidth);
+                wrap.querySelector('.figure-wrap-text').replaceChildren();
+                var paragraph = document.createElement('p');
+                paragraph.textContent = values.text;
+                wrap.querySelector('.figure-wrap-text').appendChild(paragraph);
+              } else {
+                figure.style.width = imageWidth;
+              }
+              // textContent keeps even pasted markup as plain text. The original
+              // include handles the initial Markdown; live edits are plain text.
+              var caption = figure.querySelector('figcaption');
+              if (values.caption) {
+                if (!caption) {
+                  caption = document.createElement('figcaption');
+                  figure.appendChild(caption);
+                }
+                var captionText = document.createElement('p');
+                captionText.textContent = values.caption;
+                caption.replaceChildren(captionText);
+              } else if (caption) {
+                caption.remove();
+              }
+              image.alt = values['alt-text'] === undefined ? (values.caption || '') : values['alt-text'];
+              var link = figure.querySelector('a.image');
+              if (link) link.href = imageUrl;
+              if (image.src !== imageUrl) image.src = imageUrl;
+            }
+            editor.removeAttribute('aria-invalid');
+            error.textContent = '';
+          } catch (problem) {
+            editor.setAttribute('aria-invalid', 'true');
+            var message = problem.message + ' Your last working preview is still shown.';
+            if (error.textContent !== message) error.textContent = message;
+          }
+        }
+
+        if (image) image.addEventListener('error', function () {
+          error.textContent = 'The image could not load. Check image-path against the files in your site.';
+          console.warn('Editorial demo image could not load:', image.getAttribute('src'));
+        });
+        editor.readOnly = false;
+        panel.querySelector('[data-demo-hint]').hidden = false;
+        editor.addEventListener('input', update);
+        if (typeof ResizeObserver !== 'undefined') {
+          new ResizeObserver(function () { fitEditor(editor); }).observe(editor);
+        }
+      });
+
+      function select(index, focus) {
+        tabs.forEach(function (tab, i) {
+          tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+          tab.tabIndex = i === index ? 0 : -1;
+          panels[i].hidden = i !== index;
+          panels[i].setAttribute('role', 'tabpanel');
+          panels[i].setAttribute('aria-labelledby', tab.id);
+        });
+        fitEditor(panels[index].querySelector('[data-demo-source]'));
+        if (focus) tabs[index].focus();
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () { select(index, false); });
+        tab.addEventListener('keydown', function (event) {
+          var next;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = tabs.length - 1;
+          if (next !== undefined) {
+            event.preventDefault();
+            select(next, true);
+          }
+        });
+      });
+      demo.setAttribute('data-demo-ready', '');
+      demo.querySelector('[data-demo-tabs]').hidden = false;
+      select(0, false);
+      window.addEventListener('resize', function () {
+        panels.forEach(function (panel) { fitEditor(panel.querySelector('[data-demo-source]')); });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();

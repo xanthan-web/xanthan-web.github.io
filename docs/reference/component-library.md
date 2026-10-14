@@ -12,6 +12,50 @@ Every component in Xanthan, with its parameters and copy-paste code. Drop any of
 
 ---
 
+## Editorial Demo
+
+**File:** `layout/editorial-demo.html`
+
+Put a passage beside its include so readers can see how editorial choices shape a page. Three views use the actual standalone figure, pull quote, and image-plus-text components. With JavaScript, readers can edit the short include excerpt and see local changes. Without it, all three examples and their source remain visible.
+
+Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
+
+```liquid
+{% raw %}{% include layout/editorial-demo.html
+  heading="Make a place for your fieldwork"
+  heading-level=2
+  story-heading-level=3
+  image-path="/assets/images/site/default.jpg"
+  alt-text="A sample photograph from the site"
+  caption="A photograph with a caption you can revise."
+  primary-url="/docs/getting-started/templates"
+%}{% endraw %}
+```
+
+| Parameter | Required | Default | Notes |
+|-----------|----------|---------|-------|
+| `heading` | yes | — | Opening statement, rendered by the component |
+| `heading-level` | no | `1` | Opening heading level, 1–6 |
+| `intro` | no | empty | Introduction; Markdown supported |
+| `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
+| `story-heading` | no | Reading a landscape | Title of the sample passage |
+| `story-heading-level` | no | `2` | Sample heading level, 1–6 |
+| `story-text` | no | Sample landscape paragraph | Prose used across all three views |
+| `image-path` | yes | — | Site-root or relative image path |
+| `alt-text` | no | caption | Description of the image for screen readers |
+| `caption` | no | empty | Initial caption; plain text recommended |
+| `quote-text` | no | Every landscape has a history. | Pull quote from the passage |
+| `primary-url` | no | empty | Main next-step link |
+| `primary-label` | no | Choose a starter site | Main link label |
+| `secondary-url` | no | empty | Optional second link |
+| `secondary-label` | no | Explore real sites | Second link label |
+
+The live editor recognises only the three shown includes, quoted plain-text values, images from the same site, and percentage widths. Image-plus-text widths are limited to 70% in this small preview. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
+
+The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
+
+---
+
 ## Standalone Image
 
 **File:** `images/figure.html`

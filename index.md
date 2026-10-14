@@ -3,6 +3,15 @@ title: Xanthan — Websites for Digital Humanities
 layout: default
 date: 2026-01-01
 summary: Open, transparent, AI-ready websites for scholars, instructors, and students. Built for public work people can understand, teach, and maintain.
+opening:
+  title: "Turn your research into a place people can explore."
+  text: "Build a portfolio, a collection, or a visual story around your ideas. Start with a complete design, make it your own, and keep the materials in your hands."
+  story-heading: "Reading a campus"
+  story-text: "Buildings tell one part of a campus's history. This essay follows the paths, gathering places, and everyday journeys that give those buildings meaning."
+  image-path: "/assets/images/site/default.jpg"
+  alt-text: "Aerial photograph of campus buildings, roads, and open ground."
+  caption: "An aerial view makes the campus's paths and open spaces visible."
+  quote-text: "Buildings tell one part of a campus's history."
 reasons:
   - title: "You own your content"
     text: "Your site is text files in a repository you control. Move it to any host, take it between institutions, keep it after the grant ends. Hosting on GitHub Pages is free---no ads, no subscription, no terms-of-service surprises."
@@ -20,11 +29,18 @@ named_parts:
     - "Every one of those names has a page in the documentation saying what it does and how to place it by hand. You can work that way. Most people describe what they want instead---and check the result against the same page."
 ---
 
-{: .hero-section}
-# Show Your Work
-
-{: .lede}
-Xanthan makes academic websites that stay easy to change---and easy to collaborate on. You edit plain text files with a direct correspondence between what your text and your page. Students and colleagues can contribute with a few non-technical steps to get started, the work stays yours to move, and it will still be running years later even if you forget about it. And it will work the same way when you pick it up again.
+{% include layout/editorial-demo.html
+  heading=page.opening.title
+  intro=page.opening.text
+  story-heading=page.opening.story-heading
+  story-text=page.opening.story-text
+  image-path=page.opening.image-path
+  alt-text=page.opening.alt-text
+  caption=page.opening.caption
+  quote-text=page.opening.quote-text
+  primary-url="/docs/getting-started/templates"
+  secondary-url="/docs/getting-started/gallery"
+%}
 
 {% include layout/section.html style="alt" %}
 
@@ -57,7 +73,7 @@ Digital humanities work should be as open in its process as in its product. Xant
 {% include layout/feature-grid.html features=page.reasons %}
 
 {: .link-callout}
-[See more in our FAQs →](faqs#why-not-use-wix-or-squarespace){: .btn-secondary}
+[See more in our FAQs →](faqs#why-not-use-a-commercial-platform){: .btn-secondary}
 
 {% include layout/section-end.html %}
 

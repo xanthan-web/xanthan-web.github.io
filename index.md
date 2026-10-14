@@ -30,12 +30,6 @@ reasons:
     text: "Start with plain-language prompts and Markdown, then pick up HTML, CSS, and Git as you go. These aren't \"website skills\"---they're foundational to digitally-engaged humanities work, and you learn them by building something real."
   - title: "Built for collaboration"
     text: "Your site is a folder of plain documents, not text sealed inside a system you can't open. A colleague can fix a typo, a student can add an essay, and you can hand the whole thing to whoever comes next---without everyone arriving with the same technical confidence."
-named_parts:
-  title: "Your site is made of parts, and every part has a name."
-  text:
-    - "A pull quote. A gallery. A figure with its caption. A card that links to an essay. Each is a named piece with its own documented options, and your pages are assembled from them rather than written from scratch."
-    - "That naming is what makes a site editable by someone who doesn't write CSS. You don't need to know how a gallery is built in order to ask for one, move it, or take it out---the way an author works with a typesetter without learning to run the press. It is also how somebody else learns your site: the parts are named, so the assembly is legible."
-    - "Every one of those names has a page in the documentation saying what it does and how to place it by hand. You can work that way. Most people describe what they want instead---and check the result against the same page."
 ---
 
 {% include layout/editorial-demo.html
@@ -83,8 +77,6 @@ Digital humanities work should be as open in its process as in its product. Xant
 {% include layout/section-end.html %}
 
 
-{% include layout/split-intro.html intro=page.named_parts %}
-
 {% include images/jumbotron.html
   image-path="/assets/images/site/scaffolding-hand.png"
   fade-start="50%"
@@ -93,12 +85,14 @@ Digital humanities work should be as open in its process as in its product. Xant
   bg-color="var(--bg-section-alt-flat)"
   text="
 
-## Built for AI Collaboration.
-AI can generate a website from a simple prompt. That's impressive, but it's opaque to whoever has to change it next.
+## Built for AI collaboration
+AI is more useful when you can direct the work and understand what changed. Xanthan gives you and your assistant a shared vocabulary: a figure with its caption, a pull quote, a gallery. Each is a named piece with a defined job and documented options.
 
-Xanthan provides starter sites with amply commented code that give AI a curated context to work inside, and becomes an assistant to human judgement rather than wrestle control away.
+> Put the photograph beside the opening paragraph, keep its caption, and leave the rest of the page as it is.
 
-Those guardrails make AI more useful, not less. You describe what you want in plain language, and you stay in the editorial role---judging results, giving feedback, and deciding what's right for your project.
+The assistant can translate that request into a focused change to the relevant component. The same names and documentation let you follow the work, learn the vocabulary, and make the next edit yourself.
+
+You remain the editor: judging the result, asking for revisions, and deciding what serves your argument. The framework supplies the structure; the vision is yours.
 
 [See our AI guide →](docs/using-ai/){: .btn-secondary}
 "

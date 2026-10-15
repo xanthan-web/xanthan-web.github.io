@@ -1,0 +1,92 @@
+/*****************************************************
+SCROLLSTORY SEQUENCE
+
+Full-width photographs with passages that move through the page's normal flow.
+Each photograph stays in view for its passage, then gives way to the next scene.
+There is no nested scrolling area or input handling.
+
+Loads:    every page
+Used by:  scrollstory/sequence.html
+Needs:    base.css tokens and container grid; home.css --home-measure
+Not here: the contained source editor (story-demo.css), or the older background
+          components (backgrounds.css)
+*****************************************************/
+
+.container > .story-sequence {
+  grid-column: full;
+  margin-block: var(--spacing-lg);
+}
+
+.story-sequence-intro {
+  max-width: var(--home-measure);
+  margin-inline: auto;
+  padding: 0 var(--spacing-md) var(--spacing-md);
+}
+.story-sequence-heading { margin: 0; }
+.story-sequence-intro p { margin: var(--spacing-sm) 0 0; }
+
+.story-sequence-scene {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+/* Sharing a grid cell gives the text a real place in the document while the
+   photograph sticks within this scene. Neither layer captures scrolling. */
+.story-sequence-image {
+  grid-area: 1 / 1;
+  position: sticky;
+  top: 0;
+  height: var(--story-sequence-view-height);
+}
+.story-sequence-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-sequence-passage {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: var(--story-sequence-height);
+  padding: var(--spacing-xl) max(var(--spacing-md), calc((100% - var(--home-measure)) / 2));
+}
+.story-sequence-card {
+  max-width: 28rem;
+  padding: var(--spacing-md);
+  color: var(--text-body);
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+.story-sequence-card :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-serif);
+  color: inherit;
+}
+.story-sequence-card p { margin: 0 0 var(--spacing-sm); text-align: left; }
+.story-sequence-card > :last-child { margin-bottom: 0; }
+
+@supports (height: 100svh) {
+  .story-sequence {
+    --story-sequence-view-height: 100svh;
+    --story-sequence-height: 120svh;
+  }
+}
+
+@media (max-width: 600px) {
+  .story-sequence-intro { padding-inline: var(--spacing-sm); }
+  .story-sequence-passage { padding-inline: var(--spacing-sm); }
+}
+
+@media print, (prefers-reduced-motion: reduce) {
+  .story-sequence-scene { display: block; }
+  .story-sequence-image { position: static; height: auto; }
+  .story-sequence-image img { height: auto; }
+  .story-sequence-passage { min-height: 0; padding-block: var(--spacing-lg); }
+  .story-sequence-card { box-shadow: none; }
+}

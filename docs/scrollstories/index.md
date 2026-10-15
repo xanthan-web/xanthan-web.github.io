@@ -5,8 +5,6 @@ date: 2026-10-14
 summary: Give images, maps, and words room to make an argument together, in a story whose materials you can keep and reshape.
 ---
 
-{% include nav/scrollspy-toc.html %}
-
 # Visual Storytelling with ScrollStories
 
 {: .lede}
@@ -14,7 +12,7 @@ A photograph can establish a place before you write a word. A map can make the d
 
 You decide what stays in view, what changes, and when the reader encounters the next piece of evidence. Scrolling becomes part of the telling.
 {% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
-{% include scrollstory/source-demo.html scenes=forest.demo-scenes heading="A walk through Forest" story-id="forest-walk" %}
+{% include scrollstory/sequence.html scenes=forest.demo-scenes heading="A walk through Forest" id="forest-walk" %}
 
 Read the full [Forest essay]({{ site.baseurl }}/scrollstories/forest/), or [try changing the passage]({{ site.baseurl }}/docs/scrollstories/try-a-story) and borrow the arrangement for your own work.
 

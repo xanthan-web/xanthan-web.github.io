@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `scrollstory/sequence.html` presents photographs and text as part of ordinary
+  page scrolling. Images stay in view for their passages; reduced-motion and
+  print views show each photograph above its text.
 - A live ScrollStory source example at `docs/scrollstories/try-a-story`, with
   editable prose, image order, and text position. The reusable
   `scrollstory/source-demo.html` opens with a large reading view and reveals
@@ -51,9 +54,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The homepage opens with "Academic websites, shaped by you," a serif headline,
   a distinct lead paragraph, and shorter supporting text. A CC0 photograph of
   xanthan gum sits alongside it, using the existing figure component.
-- The ScrollStories overview replaces its old Forest recording with a large,
-  interactive excerpt from the current essay. The editing page uses the same
-  passages and photographs, kept together in Forest's front matter. Both pages
+- The ScrollStories overview puts a short Forest sequence in the page's own
+  flow, so readers can scroll directly through the story into the rest of the
+  introduction, without a contents sidebar. The separate editing exercise uses
+  the same passages and photographs, kept together in Forest's front matter. Both pages
   link to Amaranth's naming story and Hadas Segal's Arkham Asylum essay.
 - The homepage example band uses the same green as the later warm section.
 - Callouts have explicit type labels, stronger tints, and distinct blue, amber,

@@ -73,6 +73,59 @@ The Xanthan homepage supplies its introduction and sample passage from an `openi
 
 ---
 
+## ScrollStory Sequence
+
+**File:** `scrollstory/sequence.html`
+
+Put a short visual story directly into a page. Each photograph stays in view
+while its passage moves through ordinary page scrolling, then gives way to the
+next scene. The [ScrollStories overview]({{ site.baseurl }}/docs/scrollstories/)
+uses it for three passages from Forest. Readers continue straight into the rest
+of the introduction without entering or leaving a separate scrolling area.
+
+Supply an array of scenes, with `image-path`, `alt-text`, `heading`, and `text`:
+
+```yaml
+story_scenes:
+  - image-path: /assets/images/backgrounds/hike-1.jpg
+    alt-text: Rocky slopes beneath a blue sky
+    heading: Along the ridge
+    text: The path gives us a view across the valley.
+  - image-path: /assets/images/backgrounds/lake-1.jpg
+    alt-text: Clouds reflected in a lake
+    heading: At the water
+    text: The same landscape takes on another scale from the shore.
+```
+
+```liquid
+{% raw %}{% include scrollstory/sequence.html
+  scenes=page.story_scenes
+  heading="A landscape in two views"
+  id="landscape-walk"
+%}{% endraw %}
+```
+
+| Parameter | Required | Default | Notes |
+|-----------|----------|---------|-------|
+| `scenes` | yes | — | Nonempty array; each scene needs `image-path`, `heading`, and `text` |
+| `heading` | no | A short walk | Heading above the full-width sequence |
+| `intro` | no | empty | Optional introduction; Markdown supported |
+| `id` | no | `story-sequence` | Unique ID for this sequence and its headings |
+| `heading-level` | no | `2` | Sequence heading level, 1–6 |
+| `scene-heading-level` | no | Next level, up to 6 | Heading level for the passages |
+
+Each scene's `alt-text` describes its photograph; the scene heading is the
+fallback. Passages support Markdown. The component uses CSS alone: no nested
+scroll region, wheel or touch listener, or automatic movement. Reduced-motion
+and print views show ordinary images followed by text. Styles live in
+`story-sequence.css`; the two height tokens in `base.css` control its pacing.
+
+For a field report, supply photographs and observations from successive stops
+on a walk. For an exhibition, use a detail, the whole object, and its setting.
+Keep the sequence short enough to serve the argument around it.
+
+---
+
 ## ScrollStory Source Demo
 
 **File:** `scrollstory/source-demo.html`
@@ -118,7 +171,7 @@ Each scene takes `image-path`, `heading`, and `text`. Give it an `alt-text` desc
 
 The copyable fragment uses `scrollybox/bg-multi-long.html`, `bg-switch.html`, and `bg-multi-long-close.html`. The contained preview models those includes in its own scroll region; a real story fills the page. It recognises only that pattern, two to four images, basic headings and paragraphs, and local image paths. It never evaluates visitor Liquid or HTML. Invalid source preserves the last working preview. Without JavaScript, all the scenes, images, and complete source are visible. The editor toggle is a keyboard-operable button with an expanded state; on phones the editor opens below the story. Scrolling works with touch, a pointer, or the keyboard; the preview introduces no automatic movement.
 
-The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The ScrollStories overview and editing page both read `demo-scenes` from Forest's front matter, so one excerpt supplies both demos. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
+The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The editing page reads `demo-scenes` from Forest's front matter; the overview uses the same excerpt through `scrollstory/sequence.html`, in ordinary page flow. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The source preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
 
 ---
 

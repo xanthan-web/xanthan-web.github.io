@@ -1,5 +1,5 @@
-// Fade a shared image frame when the next passage reaches the reading area's
-// top. Scroll mode and the complete static fallback require no JavaScript.
+// Fade to the following image when a passage reaches the reading area's top.
+// Scroll mode and the complete static fallback require no JavaScript.
 (function () {
   'use strict';
   function start() {
@@ -22,7 +22,9 @@
         var top = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
         var current = 0;
         cards.forEach(function (card, index) {
-          if (card.getBoundingClientRect().top <= top) current = index;
+          if (card.getBoundingClientRect().top <= top) {
+            current = Math.min(index + 1, layers.length - 1);
+          }
         });
         layers.forEach(function (layer, index) {
           layer.classList.toggle('story-sequence-layer--active', index === current);

@@ -25,7 +25,7 @@ You decide what stays in view, what changes, and when the reader encounters the 
 {% include scrollstory/sequence.html
   scenes=forest_changes
   heading="Change the view"
-  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the next view fades in when its passage reaches the top."
+  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the second view fades in when the first text box reaches the top."
   id="forest-fade"
   transition="fade"
   show-source=true
@@ -114,15 +114,33 @@ For a short story beside its editable text file, [try a scrolling story]({{ site
 
 Read these first as a visitor. Notice where you pause, what stays visible, and how the movement changes your understanding. Then choose something worth borrowing.
 
-### [Seedling: a simple essay]({{ site.baseurl }}/scrollstories/seedling/)
+### [Where the Name Comes From: Amaranth](https://amaranth.unm.edu/about/name-origins/)
 
-Images, captions, pull quotes, and footnotes give ordinary writing a visual rhythm. Seedling is a useful starting point for an illustrated essay: you can concentrate on the words and evidence, then add movement where it helps.
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-amaranth.jpg"
+  image-width="100%"
+  alt-text="Amaranth's naming story opens with a large red title over a botanical illustration."
+%}
+
+Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio. Read it as a finished essay, and notice how the visual materials help carry the argument.
 
 ### [Forest: explore the possibilities]({{ site.baseurl }}/scrollstories/forest/)
+
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-forest.jpg"
+  image-width="100%"
+  alt-text="Forest's opening, with a large title and subtitle over a photograph of misty woodland."
+%}
 
 Background images hold still, change, and give way to other views. Text moves beside images, and a comparison slider lets the reader inspect differences. Forest brings the toolkit together in one essay. Borrow a moment that suits your story; there is no obligation to use the whole forest.
 
 ### [Trail: a story map]({{ site.baseurl }}/scrollstories/trail/)
+
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-trail.jpg"
+  image-width="100%"
+  alt-text="Trail's historic map with a highlighted route beside the passage Armijo’s crossing, 1829."
+%}
 
 The Old Spanish Trail moves across an 1854 survey map as the essay follows a mule route from Santa Fe to Los Angeles. The route and the map tell different stories about the same country. Trail shows how a map can become part of an interpretation, with places and paths coming into focus as the argument develops.
 
@@ -130,11 +148,7 @@ The Old Spanish Trail moves across an 1854 survey map as the essay follows a mul
 
 ## Follow an argument
 
-The most useful possibilities emerge from a subject worth looking at closely. These finished stories use images as evidence, giving readers time to compare, notice, and return to the argument.
-
-### [Where the Name Comes From](https://amaranth.unm.edu/about/name-origins/)
-
-Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio.
+The most useful possibilities emerge from a subject worth looking at closely. This finished story offers another way to use images as evidence, giving readers time to compare, notice, and return to the argument.
 
 ### [A Cultural History of Arkham Asylum](https://hadas496.github.io/comics-and-Reaganomics-/)
 

@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Screenshots illustrate Amaranth's naming story and the Forest and Trail examples on the
+  ScrollStories introduction, using the existing figure component.
 - Three short reading patterns on the ScrollStories introduction: a photograph
-  that leaves after its text, a shared frame that fades at the next passage,
+  that leaves after its text, a shared frame that fades as its first passage reaches the top,
   and two stops on the Old Spanish Trail map. Each has a “See the text” reveal.
 - `layout/source-example.html`, a keyboard-operable disclosure for escaped,
   copyable source that wraps and grows with the page.
@@ -60,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - ScrollStory sequence cards travel from below the screen all the way past the
   top before a scrolling photograph moves away. Optional fade mode changes
-  the frame when the next card reaches the top of the reading area; reduced
+  to the following image when the current card reaches the top of the reading area; reduced
   motion keeps an ordinary stacked layout.
 - The homepage opens with "Academic websites, shaped by you," a serif headline,
   a distinct lead paragraph, and shorter supporting text. A CC0 photograph of

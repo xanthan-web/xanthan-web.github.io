@@ -116,7 +116,7 @@ story_scenes:
 | `id` | no | `story-sequence` | Unique ID for this sequence and its headings |
 | `heading-level` | no | `2` | Sequence heading level, 1–6 |
 | `scene-heading-level` | no | Next level, up to 6 | Heading level for the passages |
-| `transition` | no | `scroll` | `scroll` lets each image leave after its card clears; `fade` changes a shared frame when the next card reaches the top |
+| `transition` | no | `scroll` | `scroll` lets each image leave after its card clears; `fade` shows the following image when the current card reaches the top, holding the final image |
 | `show-source` | no | `false` | Add a native “See the text” disclosure with a complete copyable page |
 
 Each scene's `alt-text` describes its photograph; the scene heading is the

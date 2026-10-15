@@ -4,6 +4,7 @@
   The initial examples use the real figure, pullquote, and alert includes.
   JavaScript adds three keyboard-accessible views and a small, local source editor.
   Without JavaScript, all three examples and their source remain readable.
+  The introduction sits above a contrasting full-width demonstration band.
 
   Heading / introduction:
     - heading:             string, required — opening statement
@@ -106,86 +107,92 @@
 {::nomarkdown}
 {% if include.heading and include.image-path %}
 <section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
-  <div class="editorial-demo-inner">
-    <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
-    {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
-    <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
-      <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
-      <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>
-      <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-note" aria-controls="{{ demo_id | escape }}-note" aria-selected="false" tabindex="-1" data-demo-tab="note">Make room for context</button>
+  <div class="editorial-demo-opening">
+    <div class="editorial-demo-inner">
+      <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
+      {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
     </div>
-    <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Give an image room" data-demo-panel="figure" data-demo-include="images/figure.html">
-      <p class="editorial-demo-description">A caption connects what readers see to what you want them to notice.</p>
-      <div class="editorial-demo-pair">
-        <div class="editorial-demo-result">
-          <p class="editorial-demo-label">The page readers see</p>
-          <article class="editorial-demo-page" data-demo-page>
-            <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
-            {{ story_text | markdownify }}
-            <div class="editorial-demo-component" data-demo-preview>
-              {% include images/figure.html image-path=include.image-path image-width="80%" caption=include.caption alt-text=alt_text %}
-            </div>
-            <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
-            {{ section_text | markdownify }}
-          </article>
-        </div>
-        <div class="editorial-demo-source">
-          <label class="editorial-demo-label" for="{{ demo_id | escape }}-figure-source">The text you edit</label>
-          <pre class="editorial-demo-static-source" data-demo-static><code>{{ figure_source | escape }}</code></pre>
-          <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-figure-source" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-figure-hint {{ demo_id | escape }}-figure-error" data-demo-source>{{ figure_source | escape }}</textarea>
-          <p class="editorial-demo-hint" id="{{ demo_id | escape }}-figure-hint" data-demo-hint hidden>Edit a heading or paragraph. Then try changing <code>80%</code> to <code>50%</code>, or rewrite the caption. Edits here stay in this example.</p>
-          <p class="editorial-demo-error" id="{{ demo_id | escape }}-figure-error" data-demo-error aria-live="polite"></p>
-        </div>
+  </div>
+  <div class="editorial-demo-band">
+    <div class="editorial-demo-inner">
+      <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-note" aria-controls="{{ demo_id | escape }}-note" aria-selected="false" tabindex="-1" data-demo-tab="note">Make room for context</button>
       </div>
-    </section>
-    <section class="editorial-demo-panel" id="{{ demo_id | escape }}-quote" aria-label="Give a sentence weight" data-demo-panel="quote" data-demo-include="typography/pullquote.html">
-      <p class="editorial-demo-description">A pull quote lets a key thought linger in the reader's attention.</p>
-      <div class="editorial-demo-pair">
-        <div class="editorial-demo-result">
-          <p class="editorial-demo-label">The page readers see</p>
-          <article class="editorial-demo-page" data-demo-page>
-            <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
-            {{ story_text | markdownify }}
-            <div class="editorial-demo-component" data-demo-preview>{% include typography/pullquote.html text=quote_text width="80%" %}</div>
-            <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
-            {{ section_text | markdownify }}
-          </article>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Give an image room" data-demo-panel="figure" data-demo-include="images/figure.html">
+        <p class="editorial-demo-description">A caption connects what readers see to what you want them to notice.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>
+                {% include images/figure.html image-path=include.image-path image-width="80%" caption=include.caption alt-text=alt_text %}
+              </div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-figure-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ figure_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-figure-source" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-figure-hint {{ demo_id | escape }}-figure-error" data-demo-source>{{ figure_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-figure-hint" data-demo-hint hidden>Edit a heading or paragraph. Then try changing <code>80%</code> to <code>50%</code>, or rewrite the caption. Edits here stay in this example.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-figure-error" data-demo-error aria-live="polite"></p>
+          </div>
         </div>
-        <div class="editorial-demo-source">
-          <label class="editorial-demo-label" for="{{ demo_id | escape }}-quote-source">The text you edit</label>
-          <pre class="editorial-demo-static-source" data-demo-static><code>{{ quote_source | escape }}</code></pre>
-          <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-quote-source" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-quote-hint {{ demo_id | escape }}-quote-error" data-demo-source>{{ quote_source | escape }}</textarea>
-          <p class="editorial-demo-hint" id="{{ demo_id | escape }}-quote-hint" data-demo-hint hidden>Edit the prose around the pull quote, or choose another sentence for <code>text</code>.</p>
-          <p class="editorial-demo-error" id="{{ demo_id | escape }}-quote-error" data-demo-error aria-live="polite"></p>
+      </section>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-quote" aria-label="Give a sentence weight" data-demo-panel="quote" data-demo-include="typography/pullquote.html">
+        <p class="editorial-demo-description">A pull quote lets a key thought linger in the reader's attention.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>{% include typography/pullquote.html text=quote_text width="80%" %}</div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-quote-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ quote_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-quote-source" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-quote-hint {{ demo_id | escape }}-quote-error" data-demo-source>{{ quote_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-quote-hint" data-demo-hint hidden>Edit the prose around the pull quote, or choose another sentence for <code>text</code>.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-quote-error" data-demo-error aria-live="polite"></p>
+          </div>
         </div>
+      </section>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-note" aria-label="Make room for context" data-demo-panel="note" data-demo-include="typography/alert.html">
+        <p class="editorial-demo-description">A note keeps sources, methods, or a useful aside close to the argument.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>{% include typography/alert.html class="info" title=note_title heading-level=note_heading_level text=note_text %}</div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-note-error" data-demo-error aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+      <p class="editorial-demo-payoff">The starter supplies the design. Your document supplies the words, images, and editorial choices. You can edit them yourself or ask AI to help.</p>
+      <div class="editorial-demo-actions">
+        {% if include.primary-url %}{% capture primary_url %}{% include helpers/link-path.html link=include.primary-url %}{% endcapture %}<a class="btn-primary" href="{{ primary_url | strip }}">{{ include.primary-label | default: 'Choose a starter site' | escape }} <span aria-hidden="true">→</span></a>{% endif %}
+        {% if include.secondary-url %}{% capture secondary_url %}{% include helpers/link-path.html link=include.secondary-url %}{% endcapture %}<a href="{{ secondary_url | strip }}">{{ include.secondary-label | default: 'Explore real sites' | escape }}</a>{% endif %}
       </div>
-    </section>
-    <section class="editorial-demo-panel" id="{{ demo_id | escape }}-note" aria-label="Make room for context" data-demo-panel="note" data-demo-include="typography/alert.html">
-      <p class="editorial-demo-description">A note keeps sources, methods, or a useful aside close to the argument.</p>
-      <div class="editorial-demo-pair">
-        <div class="editorial-demo-result">
-          <p class="editorial-demo-label">The page readers see</p>
-          <article class="editorial-demo-page" data-demo-page>
-            <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
-            {{ story_text | markdownify }}
-            <div class="editorial-demo-component" data-demo-preview>{% include typography/alert.html class="info" title=note_title heading-level=note_heading_level text=note_text %}</div>
-            <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
-            {{ section_text | markdownify }}
-          </article>
-        </div>
-        <div class="editorial-demo-source">
-          <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
-          <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
-          <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
-          <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
-          <p class="editorial-demo-error" id="{{ demo_id | escape }}-note-error" data-demo-error aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-    <p class="editorial-demo-payoff">The starter supplies the design. Your document supplies the words, images, and editorial choices. You can edit them yourself or ask AI to help.</p>
-    <div class="editorial-demo-actions">
-      {% if include.primary-url %}{% capture primary_url %}{% include helpers/link-path.html link=include.primary-url %}{% endcapture %}<a class="btn-primary" href="{{ primary_url | strip }}">{{ include.primary-label | default: 'Choose a starter site' | escape }} <span aria-hidden="true">→</span></a>{% endif %}
-      {% if include.secondary-url %}{% capture secondary_url %}{% include helpers/link-path.html link=include.secondary-url %}{% endcapture %}<a href="{{ secondary_url | strip }}">{{ include.secondary-label | default: 'Explore real sites' | escape }}</a>{% endif %}
     </div>
   </div>
 </section>

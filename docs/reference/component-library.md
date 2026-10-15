@@ -20,6 +20,8 @@ Put a passage beside its source so readers can see how ordinary writing and incl
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
+The introduction stays on the page background. The tabbed examples sit in a contrasting band using the theme's feature-band colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing.
+
 ```liquid
 {% raw %}{% include layout/editorial-demo.html
   heading="Make a place for your fieldwork"

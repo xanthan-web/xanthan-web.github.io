@@ -3,6 +3,7 @@ EDITORIAL DEMO
 
 A landing-page opening with a real Xanthan passage and its editable source
 side by side. Three views show a figure, a pull quote, and a contextual note.
+The introduction stays on the page surface; the demonstration has a dark band.
 
 Loads:    every page
 Used by:  layout/editorial-demo.html
@@ -15,7 +16,16 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 @media screen {
 .container > .editorial-demo {
   grid-column: full;
+}
+
+.editorial-demo-opening {
   padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.editorial-demo-band {
+  padding: var(--spacing-xl) var(--spacing-md);
+  color: var(--text-feature-band);
+  background: var(--bg-feature-band);
 }
 
 .editorial-demo-inner {
@@ -35,7 +45,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 
 .editorial-demo-intro {
   max-width: 70ch;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 0;
   font-size: clamp(1.1rem, 1.6vw, 1.25rem);
 }
 
@@ -53,7 +63,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   flex-wrap: wrap;
   gap: var(--spacing-xs) var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--border-medium);
+  border-bottom: 1px solid var(--border-on-dark);
 }
 
 .editorial-demo-choices[hidden],
@@ -69,18 +79,23 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   border: 0;
   border-bottom: 2px solid transparent;
   font: inherit;
-  color: var(--text-body);
+  color: var(--text-feature-band);
   background: transparent;
   cursor: pointer;
 }
 
 .editorial-demo-choice[aria-selected="true"] {
-  border-bottom-color: var(--text-body);
+  border-bottom-color: var(--text-feature-band);
   font-weight: 700;
 }
 
 .editorial-demo-choice:hover {
-  border-bottom-color: var(--text-body);
+  border-bottom-color: var(--text-feature-band);
+}
+
+.editorial-demo-choice:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
 }
 
 .editorial-demo-description {
@@ -109,7 +124,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 .editorial-demo-label {
   display: block;
   margin: 0 0 var(--spacing-xs);
-  color: var(--text-body);
+  color: var(--text-feature-band);
   font-size: 0.9rem;
   font-weight: 600;
   text-align: left;
@@ -117,6 +132,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 
 .editorial-demo-page {
   padding: var(--spacing-md);
+  color: var(--text-body);
   background: var(--bg-card);
 }
 
@@ -183,8 +199,8 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   color: var(--text-body);
   background: var(--bg-editorial-note);
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.8rem;
+  line-height: 1.55;
   overflow: hidden;
   resize: none;
 }
@@ -204,6 +220,11 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   white-space: inherit;
 }
 
+.editorial-demo-editor:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
+}
+
 .editorial-demo-hint,
 .editorial-demo-error {
   margin: var(--spacing-xs) 0 0;
@@ -215,10 +236,17 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   display: none;
 }
 
+.editorial-demo-hint code {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band);
+  border: 0;
+}
+
 .editorial-demo-error {
   padding: var(--spacing-xs);
   border-left: 2px solid var(--border-editorial-note);
   background: var(--bg-editorial-note);
+  color: var(--text-body);
 }
 
 .editorial-demo-payoff {
@@ -234,6 +262,31 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   align-items: center;
 }
 
+.editorial-demo-actions a,
+.editorial-demo-actions a:visited {
+  color: var(--text-feature-band-link);
+}
+
+.editorial-demo-actions a:hover {
+  color: var(--text-feature-band-link-hover);
+}
+
+.editorial-demo-actions .btn-primary,
+.editorial-demo-actions .btn-primary:visited {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band);
+}
+
+.editorial-demo-actions .btn-primary:hover {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band-link);
+}
+
+.editorial-demo-actions a:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
+}
+
 @media (max-width: 850px) {
   .editorial-demo-pair {
     grid-template-columns: minmax(0, 1fr);
@@ -241,15 +294,20 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 @media (max-width: 600px) {
-  .container > .editorial-demo {
+  .editorial-demo-opening {
     padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .editorial-demo-band {
+    padding-inline: var(--spacing-sm);
   }
 
   .editorial-demo-choice {
     padding-block: var(--spacing-sm);
   }
 
-  .editorial-demo-editor {
+  .editorial-demo-editor,
+  .editorial-demo-static-source {
     font-size: 1rem;
   }
 }

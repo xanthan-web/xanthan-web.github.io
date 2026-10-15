@@ -51,8 +51,9 @@ reasons:
 
 {% include layout/section.html style="alt" %}
 
+{% assign featured_sites = site.data.gallery | where: "featured", true %}
 {% include nav/gallery-grid.html
-  items=site.data.gallery
+  items=featured_sites
   heading="What Can You Build?"
   intro="Course archives, oral history collections, digital exhibits, scrolling narratives, mapped directories, annual reports---every one of these is a real Xanthan site, and every one of them is plain text underneath."
   variant="uniform"

@@ -1,0 +1,53 @@
+{% comment %}
+  ScrollStory Sequence — full-width images and text in the page's normal flow.
+
+  Content:
+    - scenes: array, required — objects containing image-path, heading, text,
+      and alt-text (the scene heading is the alt-text fallback)
+    - heading: string, default "A short walk" — heading above the sequence
+    - intro: string, default empty — optional introduction; Markdown supported
+
+  Structure:
+    - id: string, default "story-sequence" — unique ID for this sequence
+    - heading-level: integer 1–6, default 2 — sequence heading level
+    - scene-heading-level: integer 1–6, default next level — passage headings
+
+  Each image stays in view while its passage moves with ordinary page scrolling.
+  No separate scroll region, wheel/touch handler, or JavaScript is needed.
+  Reduced-motion and print views show each image above its passage.
+  Styles: assets/css/story-sequence.css.
+{% endcomment %}
+{% assign sequence_id = include.id | default: 'story-sequence' %}
+{% assign heading_level = include.heading-level | default: 2 | plus: 0 %}
+{% if heading_level < 1 or heading_level > 6 %}{% assign heading_level = 2 %}{% endif %}
+{% assign scene_level = heading_level | plus: 1 | at_most: 6 %}
+{% if include.scene-heading-level %}{% assign scene_level = include.scene-heading-level | plus: 0 %}{% endif %}
+{% if scene_level < 1 or scene_level > 6 %}{% assign scene_level = heading_level | plus: 1 | at_most: 6 %}{% endif %}
+{% assign scenes_valid = true %}
+{% for scene in include.scenes %}{% unless scene.image-path and scene.heading and scene.text %}{% assign scenes_valid = false %}{% endunless %}{% endfor %}
+{::nomarkdown}
+{% if include.scenes.size > 0 and scenes_valid %}
+<section class="story-sequence" id="{{ sequence_id | escape }}" aria-labelledby="{{ sequence_id | escape }}-heading">
+  <div class="story-sequence-intro">
+    <h{{ heading_level }} class="story-sequence-heading" id="{{ sequence_id | escape }}-heading">{{ include.heading | default: 'A short walk' | escape }}</h{{ heading_level }}>
+    {% if include.intro %}{{ include.intro | markdownify }}{% endif %}
+  </div>
+  {% for scene in include.scenes %}
+  {% capture scene_url %}{% include helpers/image-path.html image-path=scene.image-path %}{% endcapture %}
+  <section class="story-sequence-scene" aria-labelledby="{{ sequence_id | escape }}-scene-{{ forloop.index }}">
+    <div class="story-sequence-image">
+      <img src="{{ scene_url | strip | escape }}" alt="{{ scene.alt-text | default: scene.heading | escape }}"{% unless forloop.first %} loading="lazy"{% endunless %} decoding="async">
+    </div>
+    <div class="story-sequence-passage">
+      <div class="story-sequence-card">
+        <h{{ scene_level }} id="{{ sequence_id | escape }}-scene-{{ forloop.index }}">{{ scene.heading | escape }}</h{{ scene_level }}>
+        {{ scene.text | markdownify }}
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+</section>
+{% else %}
+<div class="xanthan-warning">sequence include needs at least one scene, with an image-path, heading, and text. Give each image an alt-text description too.</div>
+{% endif %}
+{:/nomarkdown}

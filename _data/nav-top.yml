@@ -16,6 +16,8 @@
   items:
     - title: "What ScrollStories Are"
       url: "/docs/scrollstories/"
+    - title: "Try a Scrolling Story"
+      url: "/docs/scrollstories/try-a-story"
     - title: "Start Your Own Story"
       url: "/docs/scrollstories/start-your-story"
 

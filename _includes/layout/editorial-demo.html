@@ -53,7 +53,6 @@
 {% if section_heading_level < 1 %}{% assign section_heading_level = 1 %}{% endif %}
 {% if section_heading_level > 6 %}{% assign section_heading_level = 6 %}{% endif %}
 {% assign note_heading_level = section_heading_level %}
-{% if note_heading_level < 2 %}{% assign note_heading_level = 2 %}{% endif %}
 {% assign section_text = include.section-text | default: 'Each view makes different relationships visible. The images and words give readers a way into the argument.' %}
 {% assign story_heading_marks = '######' | slice: 0, story_heading_level %}
 {% assign section_heading_marks = '######' | slice: 0, section_heading_level %}
@@ -97,7 +96,7 @@
 {% raw %}{% include typography/alert.html{% endraw %}
   class="info"
   title="{{ source_note_title }}"
-  heading-level="{{ note_heading_level }}"
+  heading-level={{ note_heading_level }}
   text="{{ source_note_text }}"
 {% raw %}%}{% endraw %}
 
@@ -181,6 +180,23 @@
           </div>
           <div class="editorial-demo-source">
             <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
+            <div class="editorial-demo-controls" data-demo-controls hidden>
+              <div>
+                <label for="{{ demo_id | escape }}-note-style">Note style</label>
+                <select id="{{ demo_id | escape }}-note-style" data-demo-note-style>
+                  <option value="info">Information</option>
+                  <option value="warning">Warning</option>
+                  <option value="danger">Danger</option>
+                  <option value="success">Success</option>
+                </select>
+              </div>
+              <div>
+                <label for="{{ demo_id | escape }}-note-level">Heading level</label>
+                <select id="{{ demo_id | escape }}-note-level" data-demo-note-level>
+                  {% for level in (1..6) %}<option value="{{ level }}"{% if level == note_heading_level %} selected{% endif %}>Heading {{ level }}</option>{% endfor %}
+                </select>
+              </div>
+            </div>
             <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
             <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
             <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
@@ -196,7 +212,7 @@
     </div>
   </div>
 </section>
-<script src="{{ '/assets/js/editorial-demo.js' | relative_url }}" defer></script>
+<script type="module" src="{{ '/assets/js/editorial-demo.js' | relative_url }}"></script>
 {% else %}
 <div class="xanthan-warning">editorial-demo include needs heading and image-path parameters.</div>
 {% endif %}

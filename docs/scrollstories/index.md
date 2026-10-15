@@ -54,6 +54,8 @@ Working with files takes some getting used to. Xanthan makes that work legible: 
 
 ## Explore three examples
 
+For a short story beside its editable text file, [try a scrolling story]({{ site.baseurl }}/docs/scrollstories/try-a-story). Change the words, swap the images, and see how the arrangement changes the reading.
+
 Read these first as a visitor. Notice where you pause, what stays visible, and how the movement changes your understanding. Then choose something worth borrowing.
 
 ### [Seedling: a simple essay]({{ site.baseurl }}/scrollstories/seedling/)

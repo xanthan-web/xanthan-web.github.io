@@ -60,6 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- ScrollStory demonstration passages explain how holding an image, changing
+  a view, and arranging a sequence shape the reading. The homepage introduces
+  its editable examples before the tabs; its Why Xanthan and AI sections use
+  distinct pale-green and page-colored backgrounds.
 - ScrollStory sequence cards travel from below the screen all the way past the
   top before a scrolling photograph moves away. Optional fade mode changes
   to the following image when the current card reaches the top of the reading area; reduced

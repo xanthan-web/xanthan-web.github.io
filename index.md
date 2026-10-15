@@ -44,6 +44,8 @@ reasons:
   intro-image-path=page.opening.intro-image-path
   intro-alt-text=page.opening.intro-alt-text
   intro-caption=page.opening.intro-caption
+  demo-heading="A page, and the text behind it"
+  demo-intro="Your writing and layout choices live together in one readable document. Compare the page with the text that makes it, then choose an image, a pull quote, or a note. Change a heading or a few words to see the page respond."
   story-heading=page.opening.story-heading
   story-text=page.opening.story-text
   image-path=page.opening.image-path
@@ -74,7 +76,7 @@ reasons:
 
 {% include layout/section-end.html %}
 
-{% include layout/section.html style="alt" %}
+{% include layout/section.html style="cool" %}
 
 ## Why Xanthan?
 Digital humanities work should be as open in its process as in its product. Xanthan is built on a simple conviction: scholars shouldn't have to rent their web presence from proprietary platforms, and they shouldn't need a computer science degree to publish online.
@@ -92,7 +94,7 @@ Digital humanities work should be as open in its process as in its product. Xant
   fade-start="50%"
   fade-end="100%"
   text-shadow=false
-  bg-color="var(--bg-section-alt-flat)"
+  bg-color="var(--bg-page)"
   text="
 
 ## Built for AI collaboration

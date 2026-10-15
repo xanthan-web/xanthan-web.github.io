@@ -34,7 +34,7 @@ You decide what stays in view, what changes, and when the reader encounters the 
 {% include maps/story-map.html
   map-id="trail-intro"
   heading="Follow a journey"
-  intro="A map can carry the reader from one place to the next while the words explain what made the journey possible. These two stops come from the Old Spanish Trail essay."
+  intro="A map can carry the reader from one place to the next while the words explain the journey. This example borrows the map and two stops from the Old Spanish Trail essay."
   overlay-image="/assets/images/maps/whipple-1854.webp"
   overlay-bounds="32.45416, -119.73999, 37.10777, -106.34216"
   overlay-alt="Whipple's 1854 survey map, with the routes of the Old Spanish Trail drawn across it"
@@ -49,15 +49,15 @@ You decide what stays in view, what changes, and when the reader encounters the 
 %}
 
 {% include maps/story-map-panel.html map-id="trail-intro" center="35.9, -111.5" zoom=7 highlight="Armijo Route" panel-align="left" %}
-### A southern crossing
+### Let the map carry the journey
 
-Antonio Armijo took sixty men and a string of mules out of Abiquiú in November 1829 and reached the San Gabriel mission the following January. His was the first commercial caravan to make the trip and return, and the route that carries his name is highlighted here.
+A journey has distance as well as events. As you scroll, the map moves from one stretch of the trail to another, keeping the words near the place they describe. The route gives the narrative a shape a paragraph alone cannot show.
 {% include maps/story-map-panel-end.html %}
 
 {% capture mojave_passage %}
-### Across the Mojave
+### Bring the next place into view
 
-Between the Virgin River and the Mojave River lay a stretch that parties crossed at night, moving between springs they had to know about in advance.
+The view shifts across the Mojave while the passage continues. A change of scale lets you move from the whole journey to one crossing or settlement. Choose the view that makes your point clearer, and give your reader time to look before moving on.
 {% endcapture %}
 {% include maps/story-map-panel.html map-id="trail-intro" center="35.3, -116.0" zoom=8 highlight="Mojave Road" panel-align="left" %}
 {{ mojave_passage }}

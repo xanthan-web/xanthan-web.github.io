@@ -25,7 +25,7 @@ You decide what stays in view, what changes, and when the reader encounters the 
 {% include scrollstory/sequence.html
   scenes=forest_changes
   heading="Change the view"
-  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the next view fades in when its passage reaches the top."
+  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the second view fades in when the first text box reaches the top."
   id="forest-fade"
   transition="fade"
   show-source=true

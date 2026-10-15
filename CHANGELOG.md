@@ -56,8 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   xanthan gum sits alongside it, using the existing figure component.
 - The ScrollStories overview puts a short Forest sequence in the page's own
   flow, so readers can scroll directly through the story into the rest of the
-  introduction. The separate editing exercise uses the same
-  passages and photographs, kept together in Forest's front matter. Both pages
+  introduction, without a contents sidebar. The separate editing exercise uses
+  the same passages and photographs, kept together in Forest's front matter. Both pages
   link to Amaranth's naming story and Hadas Segal's Arkham Asylum essay.
 - The homepage example band uses the same green as the later warm section.
 - Callouts have explicit type labels, stronger tints, and distinct blue, amber,

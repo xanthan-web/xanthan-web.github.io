@@ -5,8 +5,6 @@ date: 2026-10-14
 summary: Give images, maps, and words room to make an argument together, in a story whose materials you can keep and reshape.
 ---
 
-{% include nav/scrollspy-toc.html %}
-
 # Visual Storytelling with ScrollStories
 
 {: .lede}

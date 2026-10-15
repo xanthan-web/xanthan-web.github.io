@@ -14,6 +14,11 @@
     - intro:               string, default empty — introduction; Markdown supported
     - id:                  string, default "editorial-demo" — unique ID per instance
 
+  Demonstration introduction:
+    - demo-heading:        string, default "A page, and the text behind it" — heading above the examples
+    - demo-heading-level:  integer 1–6, default next level after opening — demonstration heading level
+    - demo-intro:          string, default below — explanation before the tabs; Markdown supported
+
   Opening illustration (separate from the editable figure example):
     - intro-image-path:    string, default empty — optional image beside the opening
     - intro-alt-text:      string, default intro-caption — image description
@@ -47,6 +52,10 @@
 {% assign demo_id = include.id | default: 'editorial-demo' %}
 {% assign heading_level = include.heading-level | default: 1 | plus: 0 %}
 {% if heading_level < 1 or heading_level > 6 %}{% assign heading_level = 1 %}{% endif %}
+{% assign demo_heading_level = heading_level | plus: 1 | at_most: 6 %}
+{% if include.demo-heading-level %}{% assign demo_heading_level = include.demo-heading-level | plus: 0 %}{% endif %}
+{% if demo_heading_level < 1 or demo_heading_level > 6 %}{% assign demo_heading_level = heading_level | plus: 1 | at_most: 6 %}{% endif %}
+{% assign demo_intro = include.demo-intro | default: 'Your words and layout choices live together in one readable document. Compare the page with the text that makes it, then change a heading or paragraph to see the result.' %}
 {% assign story_heading_level = include.story-heading-level | default: 2 | plus: 0 %}
 {% if story_heading_level < 1 or story_heading_level > 6 %}{% assign story_heading_level = 2 %}{% endif %}
 {% assign story_heading = include.story-heading | default: 'Reading a landscape' %}
@@ -130,6 +139,10 @@
   </div>
   <div class="editorial-demo-band">
     <div class="editorial-demo-inner">
+      <header class="editorial-demo-band-intro">
+        <h{{ demo_heading_level }} class="editorial-demo-band-heading">{{ include.demo-heading | default: 'A page, and the text behind it' | escape }}</h{{ demo_heading_level }}>
+        {{ demo_intro | markdownify }}
+      </header>
       <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
         <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
         <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>

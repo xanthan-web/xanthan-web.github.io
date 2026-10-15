@@ -2,17 +2,17 @@
 title: Try a Scrolling Story
 layout: default
 date: 2026-10-15
-summary: Read a passage from Forest, then open its text file and change the words, images, and their arrangement.
+summary: Explore how words and images shape a story, then open its text file and try an edit.
 ---
 
 # Try a Scrolling Story
 
-A change of image can turn a paragraph in a new direction. Read this passage from [Forest]({{ site.baseurl }}/scrollstories/forest/), then open its text file and see how the words and images work together.
+A change of image can turn a paragraph in a new direction. These photographs from [Forest]({{ site.baseurl }}/scrollstories/forest/) show how the words, images, and pace work together. Read the short demonstration, then open its text file and try a change.
 
 {% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
-{% include scrollstory/source-demo.html scenes=forest.demo-scenes heading="A walk through Forest" story-id="forest-walk" %}
+{% include scrollstory/source-demo.html scenes=forest.demo-scenes heading="Let the images carry part of the story" story-id="forest-walk" %}
 
-The words and photographs come from [Forest]({{ site.baseurl }}/scrollstories/forest/). This excerpt arranges three of its passages over changing images; the full essay explores more ways of giving a reader time to look.
+The photographs come from [Forest]({{ site.baseurl }}/scrollstories/forest/). The passages here describe what the movement contributes to the reading; the full essay explores more ways of giving a reader time to look.
 
 ## Make one choice, then read again
 

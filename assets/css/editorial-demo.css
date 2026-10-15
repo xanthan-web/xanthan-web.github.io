@@ -34,6 +34,23 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   margin-inline: auto;
 }
 
+.editorial-demo-band-intro {
+  max-width: 66ch;
+  margin-bottom: var(--spacing-lg);
+}
+.editorial-demo-band-heading {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-section-warm-heading);
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.2;
+}
+.editorial-demo-band-intro p {
+  margin: 0;
+  text-align: left;
+}
+.editorial-demo-band-intro p + p { margin-top: var(--spacing-sm); }
+
 .editorial-demo-opening-grid--illustrated {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);

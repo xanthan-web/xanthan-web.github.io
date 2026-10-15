@@ -20,6 +20,8 @@ Put a passage beside its source so readers can see how ordinary writing and incl
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
+The demonstration band opens with its own heading and explanation before the tabs. Use `demo-heading` and `demo-intro` to tell readers what they are comparing and invite a small edit. `demo-heading-level` follows the opening heading by default and can be set explicitly for another page outline.
+
 The introduction stays on the page background, with a serif headline, an optional lead paragraph, and an optional illustration beside the text. The illustration uses the standard figure include and stacks below the introduction on phones. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing. The note view has style and heading-level selectors that update the same source file; source edits update the selectors in turn.
 
 ```liquid
@@ -31,6 +33,8 @@ The introduction stays on the page background, with a serif headline, an optiona
   intro-image-path="/assets/images/site/xanthan-gum.png"
   intro-alt-text="A wooden bowl of xanthan gum with a measuring scoop"
   intro-caption="The other xanthan. Photo by Mhgunning, CC0."
+  demo-heading="A page, and the text behind it"
+  demo-intro="Compare the page with its text file, then change a heading to see the result."
   story-heading-level=3
   image-path="/assets/images/site/default.jpg"
   alt-text="A sample photograph from the site"
@@ -50,6 +54,9 @@ The introduction stays on the page background, with a serif headline, an optiona
 | `intro-alt-text` | no | `intro-caption` | Description of the opening illustration |
 | `intro-caption` | no | empty | Opening illustration caption; Markdown supported |
 | `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
+| `demo-heading` | no | A page, and the text behind it | Heading above the examples |
+| `demo-heading-level` | no | Next level after opening, up to 6 | Demonstration heading level, 1–6 |
+| `demo-intro` | no | Sample explanation | Introduction before the tabs; Markdown supported |
 | `story-heading` | no | Reading a landscape | Title of the sample passage |
 | `story-heading-level` | no | `2` | Sample heading level, 1–6 |
 | `story-text` | no | Sample landscape paragraph | Opening prose across all three views |
@@ -219,7 +226,7 @@ Each scene takes `image-path`, `heading`, and `text`. Give it an `alt-text` desc
 
 The copyable fragment uses `scrollybox/bg-multi-long.html`, `bg-switch.html`, and `bg-multi-long-close.html`. The contained preview models those includes in its own scroll region; a real story fills the page. It recognises only that pattern, two to four images, basic headings and paragraphs, and local image paths. It never evaluates visitor Liquid or HTML. Invalid source preserves the last working preview. Without JavaScript, all the scenes, images, and complete source are visible. The editor toggle is a keyboard-operable button with an expanded state; on phones the editor opens below the story. Scrolling works with touch, a pointer, or the keyboard; the preview introduces no automatic movement.
 
-The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The editing page reads `demo-scenes` from Forest's front matter; the overview uses the same excerpt through `scrollstory/sequence.html`, in ordinary page flow. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The source preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
+The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The editing page reads `demo-scenes` from Forest's front matter; the overview uses the same teaching passages and photographs through `scrollstory/sequence.html`, in ordinary page flow. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The source preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
 
 ---
 

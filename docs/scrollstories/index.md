@@ -116,13 +116,31 @@ Read these first as a visitor. Notice where you pause, what stays visible, and h
 
 ### [Seedling: a simple essay]({{ site.baseurl }}/scrollstories/seedling/)
 
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-seedling.jpg"
+  image-width="100%"
+  alt-text="Seedling's opening, with its title over a photograph of green shoots emerging from soil."
+%}
+
 Images, captions, pull quotes, and footnotes give ordinary writing a visual rhythm. Seedling is a useful starting point for an illustrated essay: you can concentrate on the words and evidence, then add movement where it helps.
 
 ### [Forest: explore the possibilities]({{ site.baseurl }}/scrollstories/forest/)
 
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-forest.jpg"
+  image-width="100%"
+  alt-text="Forest's opening, with a large title and subtitle over a photograph of misty woodland."
+%}
+
 Background images hold still, change, and give way to other views. Text moves beside images, and a comparison slider lets the reader inspect differences. Forest brings the toolkit together in one essay. Borrow a moment that suits your story; there is no obligation to use the whole forest.
 
 ### [Trail: a story map]({{ site.baseurl }}/scrollstories/trail/)
+
+{% include images/figure.html
+  image-path="/assets/images/site/scrollstory-trail.jpg"
+  image-width="100%"
+  alt-text="Trail's historic map with a highlighted route beside the passage Armijo’s crossing, 1829."
+%}
 
 The Old Spanish Trail moves across an 1854 survey map as the essay follows a mule route from Santa Fe to Los Angeles. The route and the map tell different stories about the same country. Trail shows how a map can become part of an interpretation, with places and paths coming into focus as the argument develops.
 

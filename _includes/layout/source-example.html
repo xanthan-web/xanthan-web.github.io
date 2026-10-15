@@ -1,0 +1,23 @@
+{% comment %}
+  Source Example — a native disclosure containing copyable page text.
+
+  Parameters:
+    - source: string, required — exact source text; rendered as escaped text
+    - label: string, default "See the text" — disclosure label
+    - intro: string, default empty — context for the fragment; Markdown supported
+
+  Capture source containing Liquid with raw/endraw inside the capture, so it
+  is displayed rather than executed. The native details/summary control works
+  from the keyboard and without JavaScript. Styles: source-example.css.
+{% endcomment %}
+{::nomarkdown}
+{% if include.source and include.source != '' %}
+<details class="source-example">
+  <summary>{{ include.label | default: 'See the text' | escape }}</summary>
+  {% if include.intro %}<div class="source-example-intro">{{ include.intro | markdownify }}</div>{% endif %}
+  <pre><code>{{ include.source | strip | escape }}</code></pre>
+</details>
+{% else %}
+<div class="xanthan-warning">source-example include needs source text to display.</div>
+{% endif %}
+{:/nomarkdown}

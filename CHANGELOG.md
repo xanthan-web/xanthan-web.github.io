@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Three short reading patterns on the ScrollStories introduction: a photograph
+  that leaves after its text, a shared frame that fades at the next passage,
+  and two stops on the Old Spanish Trail map. Each has a “See the text” reveal.
+- `layout/source-example.html`, a keyboard-operable disclosure for escaped,
+  copyable source that wraps and grows with the page.
+- Story maps accept an optional heading and introduction. `interactive=false`
+  also disables route tooltips and marker interactions for passive reading.
 - `scrollstory/sequence.html` presents photographs and text as part of ordinary
   page scrolling. Images stay in view for their passages; reduced-motion and
   print views show each photograph above its text.
@@ -51,6 +58,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- ScrollStory sequence cards travel from below the screen all the way past the
+  top before a scrolling photograph moves away. Optional fade mode changes
+  the frame when the next card reaches the top of the reading area; reduced
+  motion keeps an ordinary stacked layout.
 - The homepage opens with "Academic websites, shaped by you," a serif headline,
   a distinct lead paragraph, and shorter supporting text. A CC0 photograph of
   xanthan gum sits alongside it, using the existing figure component.
@@ -111,6 +122,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   did not. Seedling's closing links now point at Forest.
 
 ### Fixed
+- Story maps follow the last passage reached during fast scrolling and page
+  jumps. Going back restores earlier overlay images and opacity as well as
+  the map's position and scale.
 - Background image changes follow the last marker passed, including during
   fast scrolling, keyboard navigation, and jumps to an anchor. A one-pixel
   marker could previously skip the observer's narrow trigger band.

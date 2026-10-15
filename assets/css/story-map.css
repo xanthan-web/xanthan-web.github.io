@@ -13,7 +13,8 @@ understood the other.
 
 Loads:    via the maps/ includes, which link it themselves
 Used by:  maps/story-map.html, maps/figure-map.html, assets/js/story-map.js
-Needs:    base.css tokens; Leaflet's own stylesheet must load first
+Needs:    base.css tokens; home.css --home-measure for optional headings;
+          Leaflet's own stylesheet must load first
 Not here: collection-map popups (map.css) — that is a different component
 *****************************************************/
 
@@ -35,6 +36,16 @@ THE MAP ITSELF
   /* Positioning */
   position: relative;
 }
+
+.container > .story-map-intro {
+  grid-column: full;
+  width: 100%;
+  max-width: var(--home-measure);
+  margin-inline: auto;
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+}
+.story-map-intro :is(h1, h2, h3, h4, h5, h6) { margin: 0; }
+.story-map-intro p { margin: var(--spacing-sm) 0 0; }
 
 .story-map-container > .story-map {
   /* Positioning */
@@ -112,10 +123,7 @@ TEXT OVER THE MAP
 SCROLL MARKERS
 *****************************************************/
 
-/* height: 1px is load-bearing, not decoration — the same constraint as
-   scrollybox/bg-switch.html. IntersectionObserver reports nothing for a
-   zero-area target, and these markers hold no content, so without a height
-   they never intersect and the map never moves. */
+/* A small, stable position in the flow for the camera's scroll trigger. */
 .story-map-step {
   height: 1px;
 }

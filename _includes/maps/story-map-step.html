@@ -28,10 +28,6 @@
 "highlight": {{ include.highlight | default: '' | jsonify }}
 }{% endcapture %}
 
-{%- comment -%}
-  height comes from .story-map-step in story-map.css and is load-bearing:
-  IntersectionObserver reports nothing for a target with no area.
-{%- endcomment -%}
 <div class="story-map-step"
      data-map-id="{{ include.map-id }}"
      data-step="{{ step_config | strip | escape }}"

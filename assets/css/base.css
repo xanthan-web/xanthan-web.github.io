@@ -219,7 +219,6 @@ PAGE SETUP & CUSTOMIZATION
   /* Visual story pacing */
   --story-demo-height: clamp(24rem, 80vh, 48rem);
   --story-sequence-view-height: 100vh;
-  --story-sequence-height: 120vh;
 
   /* Spacing */
   --spacing-xs: 0.5rem;

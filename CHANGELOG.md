@@ -20,11 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scrollstory/sequence.html` presents photographs and text as part of ordinary
   page scrolling. Images stay in view for their passages; reduced-motion and
   print views show each photograph above its text.
-- A live ScrollStory source example at `docs/scrollstories/try-a-story`, with
-  editable prose, image order, and text position. The reusable
-  `scrollstory/source-demo.html` opens with a large reading view and reveals
-  copyable background-switching includes when readers choose to edit. Returning
-  to the wide story preserves their edits. A static version works without JavaScript.
+- `scrollstory/source-demo.html`, an optional editor for teaching pages, with
+  editable prose, image order, and text position. It reveals copyable source
+  beside a scrolling preview and keeps a static fallback without JavaScript.
 - Callout type and heading-level selectors in the homepage editor, synchronized
   with its text file. All six heading levels now have visibly different sizes.
 - `layout/profile-intro.html`, a photograph beside a name, a bio, and a row of
@@ -60,6 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- The ScrollStories introduction keeps the demonstrations and source reveals
+  together, with shorter supporting prose. The separate Try page leaves the
+  navigation; its old address forwards to the introduction.
 - ScrollStory demonstration passages explain how holding an image, changing
   a view, and arranging a sequence shape the reading. The homepage introduces
   its editable examples before the tabs; its Why Xanthan and AI sections use

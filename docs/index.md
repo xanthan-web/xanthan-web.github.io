@@ -29,7 +29,6 @@ From zero to a live site in 15 minutes. Choose a template, create your repositor
 Give images, maps, and words room to make an argument together. Explore the form, then try a passage of your own.
 
 - [What ScrollStories Are]({{ site.baseurl }}/docs/scrollstories/)
-- [Try a Scrolling Story]({{ site.baseurl }}/docs/scrollstories/try-a-story)
 - [Start Your Own Story]({{ site.baseurl }}/docs/scrollstories/start-your-story)
 - [Seedling: A Simple Essay]({{ site.baseurl }}/scrollstories/seedling/)
 - [Forest: Explore the Possibilities]({{ site.baseurl }}/scrollstories/forest/)

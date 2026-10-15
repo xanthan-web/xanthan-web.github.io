@@ -215,7 +215,7 @@ PAGE SETUP & CUSTOMIZATION
   --font-body: 'Source Sans 3', sans-serif;
   --font-serif: 'Lora', serif;
   --font-mono: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-  --story-demo-height: clamp(24rem, 65vh, 34rem);
+  --story-demo-height: clamp(24rem, 80vh, 48rem);
 
   /* Spacing */
   --spacing-xs: 0.5rem;

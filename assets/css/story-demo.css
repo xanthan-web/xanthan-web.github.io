@@ -1,8 +1,9 @@
 /*****************************************************
 SCROLLSTORY SOURCE DEMO
 
-A contained scrolling story beside its editable text file. The static version
-shows all the images; JavaScript turns it into a small scrolling viewport.
+A large scrolling story, with its editable text file available on request.
+The static version shows every image and the complete source. Opening the
+editor places the story beside its text on desktop, or above it on mobile.
 
 Loads:    every page
 Used by:  scrollstory/source-demo.html
@@ -31,9 +32,24 @@ Not here: full-page scrolling backgrounds (backgrounds.css), or the homepage's
 .story-demo-intro { margin-bottom: var(--spacing-lg); }
 .story-demo-pair {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--spacing-lg);
   align-items: start;
+}
+
+.story-demo--editing .story-demo-pair {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.story-demo-toggle {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
 }
 
 /* Keep the story in view while a desktop reader edits the longer source. */
@@ -160,7 +176,7 @@ Not here: full-page scrolling backgrounds (backgrounds.css), or the homepage's
 }
 
 @media (max-width: 850px) {
-  .story-demo-pair { grid-template-columns: minmax(0, 1fr); }
+  .story-demo--editing .story-demo-pair { grid-template-columns: minmax(0, 1fr); }
   .story-demo-pair > :first-child { position: static; }
 }
 @media (max-width: 600px) {

@@ -63,6 +63,8 @@ import { sourceTokens, parameters, markdownNodes, localImage, fitEditor } from '
       const background = demo.querySelector('[data-story-background-image]');
       const error = demo.querySelector('[data-story-error]');
       const alignControl = demo.querySelector('[data-story-align]');
+      const toggle = demo.querySelector('[data-story-toggle]');
+      const sourcePanel = demo.querySelector('[data-story-source-panel]');
       const initialSource = editor.value;
       const baseurl = (demo.dataset.baseurl || '').replace(/\/$/, '');
       try { readStory(initialSource, baseurl); }
@@ -145,6 +147,15 @@ import { sourceTokens, parameters, markdownNodes, localImage, fitEditor } from '
         });
       })));
       demo.querySelector('[data-story-reset]').addEventListener('click', () => { editor.value = initialSource; viewport.scrollTop = 0; update(); });
+      toggle.addEventListener('click', () => {
+        const editing = sourcePanel.hidden;
+        sourcePanel.hidden = !editing;
+        demo.classList.toggle('story-demo--editing', editing);
+        toggle.setAttribute('aria-expanded', String(editing));
+        toggle.textContent = editing ? 'Return to the story' : 'See and edit the text';
+        fitEditor(editor);
+        chooseBackground();
+      });
       viewport.addEventListener('scroll', chooseBackground, { passive: true });
       editor.addEventListener('input', update);
       background.addEventListener('error', () => { error.textContent = 'The image could not load. Check its image-path against the files in your site.'; });
@@ -156,6 +167,8 @@ import { sourceTokens, parameters, markdownNodes, localImage, fitEditor } from '
       demo.querySelector('[data-story-static]').hidden = true;
       demo.querySelector('[data-story-controls]').hidden = false;
       demo.querySelector('[data-story-instruction]').hidden = false;
+      sourcePanel.hidden = true;
+      toggle.hidden = false;
       demo.dataset.storyReady = 'true';
       update();
       if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { fitEditor(editor); chooseBackground(); }).observe(viewport);

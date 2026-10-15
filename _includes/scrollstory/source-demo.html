@@ -1,5 +1,5 @@
 {% comment %}
-  ScrollStory Source Demo — a contained scrolling story beside editable source.
+  ScrollStory Source Demo — a large reading view with optional editable source.
 
   Parameters:
     - scenes: array, required — two to four objects with image-path, alt-text,
@@ -50,12 +50,13 @@
 <section class="story-demo" id="{{ demo_id | escape }}" data-story-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
   <div class="story-demo-inner">
     <h{{ heading_level }} class="story-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | default: 'Shape a story as you read' | escape }}</h{{ heading_level }}>
-    <p class="story-demo-intro">Read the first view, then scroll to the next. Change a few words or swap the images and read it again.</p>
+    <p class="story-demo-intro">Scroll through the story. When you want to try a change, open the text and make it your own.</p>
+    <button class="story-demo-toggle" type="button" data-story-toggle hidden aria-expanded="false" aria-controls="{{ demo_id | escape }}-source-panel">See and edit the text</button>
     <div class="story-demo-pair">
       <div>
         <p class="story-demo-label" id="{{ demo_id | escape }}-preview-label">The story readers see</p>
         <p class="story-demo-instruction" id="{{ demo_id | escape }}-instruction" hidden data-story-instruction>Scroll inside this preview, or focus it and use the arrow keys.</p>
-        <div class="story-demo-viewport" data-story-viewport aria-labelledby="{{ demo_id | escape }}-preview-label" aria-describedby="{{ demo_id | escape }}-instruction" role="region">
+        <div class="story-demo-viewport" data-story-viewport data-toc-ignore aria-labelledby="{{ demo_id | escape }}-preview-label" aria-describedby="{{ demo_id | escape }}-instruction" role="region">
           <div class="story-demo-background" data-story-background hidden><img alt="" data-story-background-image></div>
           <div class="story-demo-scenes" data-story-scenes>
             {% for scene in include.scenes %}
@@ -71,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div id="{{ demo_id | escape }}-source-panel" data-story-source-panel>
         <label class="story-demo-label" for="{{ demo_id | escape }}-source">The text you edit</label>
         <div class="story-demo-controls" data-story-controls hidden>
           <div>

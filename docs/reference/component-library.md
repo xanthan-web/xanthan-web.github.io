@@ -67,7 +67,7 @@ The Xanthan homepage supplies its introduction and sample passage from an `openi
 
 **File:** `scrollstory/source-demo.html`
 
-Let readers edit a short scrolling story beside its source. Images stay in view while the text moves; the view changes at an image instruction between passages. Text position, image order, headings, and paragraphs can all be changed locally. [Try a Scrolling Story]({{ site.baseurl }}/docs/scrollstories/try-a-story) uses it as a visual introduction before the longer essays.
+Open with a large scrolling story, then let readers choose **See and edit the text** to place the source beside it. Images stay in view while the text moves; the view changes at an image instruction between passages. Text position, image order, headings, and paragraphs can all be changed locally. Returning to the wide story preserves those edits and the reader's place. [Try a Scrolling Story]({{ site.baseurl }}/docs/scrollstories/try-a-story) uses it as a visual introduction before the longer essays.
 
 Put two to four scenes in the page's front matter:
 
@@ -106,9 +106,9 @@ Then place the example in the page:
 
 Each scene takes `image-path`, `heading`, and `text`. Give it an `alt-text` description too; the heading is the fallback. Text can contain Markdown headings and paragraphs. Use images already in the site.
 
-The copyable fragment uses `scrollybox/bg-multi-long.html`, `bg-switch.html`, and `bg-multi-long-close.html`. The contained preview models those includes in a smaller scroll region; a real story fills the page. It recognises only that pattern, two to four images, basic headings and paragraphs, and local image paths. It never evaluates visitor Liquid or HTML. Invalid source preserves the last working preview. Without JavaScript, all the scenes, images, and complete source are visible. Scrolling works with touch, a pointer, or the keyboard; the preview introduces no automatic movement.
+The copyable fragment uses `scrollybox/bg-multi-long.html`, `bg-switch.html`, and `bg-multi-long-close.html`. The contained preview models those includes in its own scroll region; a real story fills the page. It recognises only that pattern, two to four images, basic headings and paragraphs, and local image paths. It never evaluates visitor Liquid or HTML. Invalid source preserves the last working preview. Without JavaScript, all the scenes, images, and complete source are visible. The editor toggle is a keyboard-operable button with an expanded state; on phones the editor opens below the story. Scrolling works with touch, a pointer, or the keyboard; the preview introduces no automatic movement.
 
-The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The supplied landscape images already belong to the synced backgrounds directory.
+The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The ScrollStories overview and editing page both read `demo-scenes` from Forest's front matter, so one excerpt supplies both demos. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
 
 ---
 

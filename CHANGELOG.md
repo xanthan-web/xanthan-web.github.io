@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - A live ScrollStory source example at `docs/scrollstories/try-a-story`, with
   editable prose, image order, and text position. The reusable
-  `scrollstory/source-demo.html` pairs a contained preview with copyable
-  background-switching includes and keeps a static version without JavaScript.
+  `scrollstory/source-demo.html` opens with a large reading view and reveals
+  copyable background-switching includes when readers choose to edit. Returning
+  to the wide story preserves their edits. A static version works without JavaScript.
 - Callout type and heading-level selectors in the homepage editor, synchronized
   with its text file. All six heading levels now have visibly different sizes.
 - `layout/profile-intro.html`, a photograph beside a name, a bio, and a row of
@@ -47,6 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- The ScrollStories overview replaces its old Forest recording with a large,
+  interactive excerpt from the current essay. The editing page uses the same
+  passages and photographs, kept together in Forest's front matter. Both pages
+  link to Amaranth's naming story and Hadas Segal's Arkham Asylum essay.
 - The homepage example band uses the same green as the later warm section.
 - Callouts have explicit type labels, stronger tints, and distinct blue, amber,
   red, and green accents. Their heading-level parameter supports levels 1–6.

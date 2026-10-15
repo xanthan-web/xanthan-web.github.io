@@ -1,0 +1,314 @@
+/*****************************************************
+EDITORIAL DEMO
+
+A landing-page opening with a real Xanthan passage and its editable source
+side by side. Three views show a figure, a pull quote, and a contextual note.
+The introduction stays on the page surface; the demonstration has a dark band.
+
+Loads:    every page
+Used by:  layout/editorial-demo.html
+Needs:    base.css tokens and container grid, home.css --home-measure,
+          images.css and typography.css for the actual sample components
+Not here: ordinary figures and pull quotes (images.css, typography.css), or
+          the image-backed landing-page hero (home.css)
+*****************************************************/
+
+@media screen {
+.container > .editorial-demo {
+  grid-column: full;
+}
+
+.editorial-demo-opening {
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.editorial-demo-band {
+  padding: var(--spacing-xl) var(--spacing-md);
+  color: var(--text-feature-band);
+  background: var(--bg-feature-band);
+}
+
+.editorial-demo-inner {
+  max-width: var(--home-measure);
+  margin-inline: auto;
+}
+
+.editorial-demo-heading {
+  max-width: 20ch;
+  margin: 0 0 var(--spacing-md);
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
+  line-height: 1.08;
+  color: var(--text-body);
+  text-align: left;
+}
+
+.editorial-demo-intro {
+  max-width: 70ch;
+  margin-bottom: 0;
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+}
+
+.editorial-demo-intro p {
+  margin: 0;
+  text-align: left;
+}
+
+.editorial-demo-intro p + p {
+  margin-top: var(--spacing-sm);
+}
+
+.editorial-demo-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-on-dark);
+}
+
+.editorial-demo-choices[hidden],
+.editorial-demo-panel[hidden],
+.editorial-demo-hint[hidden],
+.editorial-demo-editor[hidden],
+.editorial-demo-static-source[hidden] {
+  display: none;
+}
+
+.editorial-demo-choice {
+  padding: var(--spacing-xs) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  font: inherit;
+  color: var(--text-feature-band);
+  background: transparent;
+  cursor: pointer;
+}
+
+.editorial-demo-choice[aria-selected="true"] {
+  border-bottom-color: var(--text-feature-band);
+  font-weight: 700;
+}
+
+.editorial-demo-choice:hover {
+  border-bottom-color: var(--text-feature-band);
+}
+
+.editorial-demo-choice:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-description {
+  margin: 0 0 var(--spacing-md);
+  max-width: 65ch;
+  text-align: left;
+}
+
+.editorial-demo-panel + .editorial-demo-panel {
+  margin-top: var(--spacing-lg);
+}
+
+/* With JavaScript, there is one panel at a time; the margin above is for the
+   all-examples fallback, where every panel remains visible. */
+.editorial-demo[data-demo-ready] .editorial-demo-panel {
+  margin-top: 0;
+}
+
+.editorial-demo-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.editorial-demo-label {
+  display: block;
+  margin: 0 0 var(--spacing-xs);
+  color: var(--text-feature-band);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.editorial-demo-page {
+  padding: var(--spacing-md);
+  color: var(--text-body);
+  background: var(--bg-card);
+}
+
+.editorial-demo-story-heading {
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--text-body);
+  text-align: left;
+}
+
+.editorial-demo-section-heading {
+  margin: var(--spacing-md) 0 var(--spacing-xs);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--text-body);
+  text-align: left;
+}
+
+.editorial-demo-page p {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+/* A normal page places the figure directly in the container grid. The small
+   article needs that same grid context so the actual include can centre itself. */
+.editorial-demo-component {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.editorial-demo-page figure {
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.editorial-demo-page figcaption p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.editorial-demo-page .pullquote {
+  max-width: 100%;
+}
+
+.editorial-demo-page .pullquote p {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-style: italic;
+}
+
+.editorial-demo-editor,
+.editorial-demo-static-source {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-body);
+  background: var(--bg-editorial-note);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  overflow: hidden;
+  resize: none;
+}
+
+.editorial-demo-static-source {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.editorial-demo-static-source code {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  white-space: inherit;
+}
+
+.editorial-demo-editor:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-hint,
+.editorial-demo-error {
+  margin: var(--spacing-xs) 0 0;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.editorial-demo-error:empty {
+  display: none;
+}
+
+.editorial-demo-hint code {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band);
+  border: 0;
+}
+
+.editorial-demo-error {
+  padding: var(--spacing-xs);
+  border-left: 2px solid var(--border-editorial-note);
+  background: var(--bg-editorial-note);
+  color: var(--text-body);
+}
+
+.editorial-demo-payoff {
+  max-width: 65ch;
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+  text-align: left;
+}
+
+.editorial-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm) var(--spacing-md);
+  align-items: center;
+}
+
+.editorial-demo-actions a,
+.editorial-demo-actions a:visited {
+  color: var(--text-feature-band-link);
+}
+
+.editorial-demo-actions a:hover {
+  color: var(--text-feature-band-link-hover);
+}
+
+.editorial-demo-actions .btn-primary,
+.editorial-demo-actions .btn-primary:visited {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band);
+}
+
+.editorial-demo-actions .btn-primary:hover {
+  color: var(--bg-feature-band);
+  background: var(--text-feature-band-link);
+}
+
+.editorial-demo-actions a:focus-visible {
+  outline: 2px solid var(--text-feature-band);
+  outline-offset: var(--spacing-xs);
+}
+
+@media (max-width: 850px) {
+  .editorial-demo-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .editorial-demo-opening {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .editorial-demo-band {
+    padding-inline: var(--spacing-sm);
+  }
+
+  .editorial-demo-choice {
+    padding-block: var(--spacing-sm);
+  }
+
+  .editorial-demo-editor,
+  .editorial-demo-static-source {
+    font-size: 1rem;
+  }
+}
+}

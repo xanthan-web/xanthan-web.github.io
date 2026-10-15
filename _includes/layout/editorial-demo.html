@@ -1,0 +1,203 @@
+{% comment %}
+  Editorial Demo — a landing-page opening with a rendered passage beside its include.
+
+  The initial examples use the real figure, pullquote, and alert includes.
+  JavaScript adds three keyboard-accessible views and a small, local source editor.
+  Without JavaScript, all three examples and their source remain readable.
+  The introduction sits above a contrasting full-width demonstration band.
+
+  Heading / introduction:
+    - heading:             string, required — opening statement
+    - heading-level:       integer 1–6, default 1 — opening heading level
+    - intro:               string, default empty — introduction; Markdown supported
+    - id:                  string, default "editorial-demo" — unique ID per instance
+
+  Story / image:
+    - story-heading:       string, default "Reading a landscape" — sample passage title
+    - story-heading-level: integer 1–6, default 2 — sample heading level
+    - story-text:          string, default below — opening prose across all three views
+    - section-heading:     string, default "Look closer" — next section of the passage
+    - section-heading-level: integer 1–6, default next level — section heading level
+    - section-text:         string, default below — prose following the component
+    - image-path:          string, required — sample image; site-root or relative path
+    - alt-text:            string, default caption — image description for screen readers
+    - caption:             string, default empty — initial caption; use plain text here
+    - quote-text:          string, default "Every landscape has a history." — pull quote
+    - note-title:          string, default "Reading the evidence" — callout heading
+    - note-text:           string, default below — context set apart from the main prose
+
+  Links:
+    - primary-url:         string, default empty — main next-step link
+    - primary-label:       string, default "Choose a starter site" — link label
+    - secondary-url:       string, default empty — optional second link
+    - secondary-label:     string, default "Explore real sites" — link label
+
+  Live editing covers Markdown headings and paragraphs around the shown
+  includes, plain-text parameter strings, and percentage widths. It does not
+  execute Liquid or HTML supplied by visitors.
+  Styles: assets/css/editorial-demo.css. Behavior: assets/js/editorial-demo.js.
+{% endcomment %}
+{% assign demo_id = include.id | default: 'editorial-demo' %}
+{% assign heading_level = include.heading-level | default: 1 | plus: 0 %}
+{% if heading_level < 1 or heading_level > 6 %}{% assign heading_level = 1 %}{% endif %}
+{% assign story_heading_level = include.story-heading-level | default: 2 | plus: 0 %}
+{% if story_heading_level < 1 or story_heading_level > 6 %}{% assign story_heading_level = 2 %}{% endif %}
+{% assign story_heading = include.story-heading | default: 'Reading a landscape' %}
+{% assign story_text = include.story-text | default: 'Every landscape has a history. This essay follows the paths, people, and ideas that have shaped one forest.' %}
+{% assign quote_text = include.quote-text | default: 'Every landscape has a history.' %}
+{% assign note_title = include.note-title | default: 'Reading the evidence' %}
+{% assign note_text = include.note-text | default: 'A photograph records one view of a place. Read it alongside other sources to understand what lies outside the frame.' %}
+{% assign section_heading = include.section-heading | default: 'Look closer' %}
+{% assign section_heading_level = include.section-heading-level | default: story_heading_level | plus: 0 %}
+{% unless include.section-heading-level %}{% assign section_heading_level = story_heading_level | plus: 1 %}{% endunless %}
+{% if section_heading_level < 1 %}{% assign section_heading_level = 1 %}{% endif %}
+{% if section_heading_level > 6 %}{% assign section_heading_level = 6 %}{% endif %}
+{% assign note_heading_level = section_heading_level %}
+{% if note_heading_level < 2 %}{% assign note_heading_level = 2 %}{% endif %}
+{% assign section_text = include.section-text | default: 'Each view makes different relationships visible. The images and words give readers a way into the argument.' %}
+{% assign story_heading_marks = '######' | slice: 0, story_heading_level %}
+{% assign section_heading_marks = '######' | slice: 0, section_heading_level %}
+{% assign alt_text = include.alt-text | default: include.caption | default: '' %}
+{% assign source_path = include.image-path | replace: '\', '\\' | replace: '"', '\"' %}
+{% assign source_alt = alt_text | replace: '\', '\\' | replace: '"', '\"' %}
+{% assign source_caption = include.caption | replace: '\', '\\' | replace: '"', '\"' %}
+{% assign source_quote = quote_text | replace: '\', '\\' | replace: '"', '\"' %}
+{% assign source_note_title = note_title | replace: '\', '\\' | replace: '"', '\"' %}
+{% assign source_note_text = note_text | replace: '\', '\\' | replace: '"', '\"' %}
+{% capture figure_source %}{{ story_heading_marks }} {{ story_heading }}
+
+{{ story_text }}
+
+{% raw %}{% include images/figure.html{% endraw %}
+  image-path="{{ source_path }}"
+  image-width="80%"
+  caption="{{ source_caption }}"
+  alt-text="{{ source_alt }}"
+{% raw %}%}{% endraw %}
+
+{{ section_heading_marks }} {{ section_heading }}
+
+{{ section_text }}{% endcapture %}
+{% capture quote_source %}{{ story_heading_marks }} {{ story_heading }}
+
+{{ story_text }}
+
+{% raw %}{% include typography/pullquote.html{% endraw %}
+  text="{{ source_quote }}"
+  width="80%"
+{% raw %}%}{% endraw %}
+
+{{ section_heading_marks }} {{ section_heading }}
+
+{{ section_text }}{% endcapture %}
+{% capture note_source %}{{ story_heading_marks }} {{ story_heading }}
+
+{{ story_text }}
+
+{% raw %}{% include typography/alert.html{% endraw %}
+  class="info"
+  title="{{ source_note_title }}"
+  heading-level="{{ note_heading_level }}"
+  text="{{ source_note_text }}"
+{% raw %}%}{% endraw %}
+
+{{ section_heading_marks }} {{ section_heading }}
+
+{{ section_text }}{% endcapture %}
+{::nomarkdown}
+{% if include.heading and include.image-path %}
+<section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
+  <div class="editorial-demo-opening">
+    <div class="editorial-demo-inner">
+      <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
+      {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
+    </div>
+  </div>
+  <div class="editorial-demo-band">
+    <div class="editorial-demo-inner">
+      <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-note" aria-controls="{{ demo_id | escape }}-note" aria-selected="false" tabindex="-1" data-demo-tab="note">Make room for context</button>
+      </div>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Give an image room" data-demo-panel="figure" data-demo-include="images/figure.html">
+        <p class="editorial-demo-description">A caption connects what readers see to what you want them to notice.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>
+                {% include images/figure.html image-path=include.image-path image-width="80%" caption=include.caption alt-text=alt_text %}
+              </div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-figure-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ figure_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-figure-source" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-figure-hint {{ demo_id | escape }}-figure-error" data-demo-source>{{ figure_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-figure-hint" data-demo-hint hidden>Edit a heading or paragraph. Then try changing <code>80%</code> to <code>50%</code>, or rewrite the caption. Edits here stay in this example.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-figure-error" data-demo-error aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-quote" aria-label="Give a sentence weight" data-demo-panel="quote" data-demo-include="typography/pullquote.html">
+        <p class="editorial-demo-description">A pull quote lets a key thought linger in the reader's attention.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>{% include typography/pullquote.html text=quote_text width="80%" %}</div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-quote-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ quote_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-quote-source" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-quote-hint {{ demo_id | escape }}-quote-error" data-demo-source>{{ quote_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-quote-hint" data-demo-hint hidden>Edit the prose around the pull quote, or choose another sentence for <code>text</code>.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-quote-error" data-demo-error aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-note" aria-label="Make room for context" data-demo-panel="note" data-demo-include="typography/alert.html">
+        <p class="editorial-demo-description">A note keeps sources, methods, or a useful aside close to the argument.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <div class="editorial-demo-component" data-demo-preview>{% include typography/alert.html class="info" title=note_title heading-level=note_heading_level text=note_text %}</div>
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-note-error" data-demo-error aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+      <p class="editorial-demo-payoff">The starter supplies the design. Your document supplies the words, images, and editorial choices. You can edit them yourself or ask AI to help.</p>
+      <div class="editorial-demo-actions">
+        {% if include.primary-url %}{% capture primary_url %}{% include helpers/link-path.html link=include.primary-url %}{% endcapture %}<a class="btn-primary" href="{{ primary_url | strip }}">{{ include.primary-label | default: 'Choose a starter site' | escape }} <span aria-hidden="true">→</span></a>{% endif %}
+        {% if include.secondary-url %}{% capture secondary_url %}{% include helpers/link-path.html link=include.secondary-url %}{% endcapture %}<a href="{{ secondary_url | strip }}">{{ include.secondary-label | default: 'Explore real sites' | escape }}</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{{ '/assets/js/editorial-demo.js' | relative_url }}" defer></script>
+{% else %}
+<div class="xanthan-warning">editorial-demo include needs heading and image-path parameters.</div>
+{% endif %}
+{:/nomarkdown}

@@ -1,23 +1,28 @@
 # Sites built with Xanthan.
 #
-# Used by the homepage grid and by docs/getting-started/gallery.md. Add a site
-# here and it appears in both; neither page owns the list.
+# Used by the homepage grid and by docs/getting-started/gallery.md.
+# Every entry appears in the full gallery. Set featured: true to also show it
+# on the homepage; false or an omitted field keeps it in the full gallery only.
 #
-# Fields: title, summary (one sentence), thumbnail, link, tags
+# Fields: title, featured (boolean), summary (one sentence), thumbnail, link, tags
+# Optional position sets display order in both galleries (lowest number first).
 
 - title: "Campus Histories"
+  featured: true
   summary: "Successive classes each add buildings to a shared campus archive, so the site keeps growing after any one semester ends."
   thumbnail: "/assets/images/gallery/class-project-screenshot.png"
   link: "https://amaranth.unm.edu/campus-history/"
   tags: ["class project"]
 
 - title: "Metahistory"
+  featured: true
   summary: "Several courses contribute to one site, showing how student essays from different classes can share a home and a design."
   thumbnail: "/assets/images/gallery/metahistory.jpg"
   link: "https://unm-historiography.github.io/metahistory/"
   tags: ["class project"]
 
 - title: "Medieval Elite Marriages"
+  featured: true
   summary: "An object-centred exhibit where each artefact gets its own page, a structure students can fill in one item at a time."
   thumbnail: "/assets/images/gallery/medieval-marriages.png"
   link: "https://jeseyfried.github.io/medieval-marriages/"
@@ -25,6 +30,7 @@
 
 
 - title: "A Cultural History of Arkham Asylum"
+  featured: true
   summary: "A single long scrolling argument, showing what one student can build when the format is a narrative rather than a page."
   thumbnail: "/assets/images/gallery/asylum.png"
   link: "https://hadas496.github.io/comics-and-Reaganomics-/"
@@ -32,6 +38,7 @@
 
 
 - title: "Santa Fe Trail Sites"
+  featured: true
   summary: "Each location is a page and a point on a map, so a class can divide a region between them and still produce one atlas."
   thumbnail: "/assets/images/gallery/trails.png"
   link: "https://historic-trails.unm.edu/"
@@ -39,54 +46,63 @@
 
 
 - title: "Histories of the Future"
+  featured: true
   summary: "A short workshop left behind a permanent essay collection instead of a folder of files nobody opens again."
   thumbnail: "/assets/images/gallery/histscifi.jpg"
   link: "http://histscifi.com"
   tags: ["workshop archive"]
 
 - title: "Amaranth"
+  featured: true
   summary: "UNM's Digital Humanities Studio."
   thumbnail: "/assets/images/gallery/amaranth.jpg"
   link: "https://amaranth.unm.edu/"
   tags: ["digital studio", "research project"]
 
 - title: "Silk Road"
+  featured: true
   summary: "Students research goods, routes, and objects separately, and the cards assemble their work into one navigable collection."
   thumbnail: "/assets/images/gallery/silk-road.jpg"
   link: "https://amaranth.unm.edu/silk-road/"
   tags: ["class project", "collaborative"]
 
 - title: "Farming Oral Histories"
+  featured: true
   summary: "Interviews gathered by many students become a public archive that the communities involved can actually read."
   thumbnail: "/assets/images/gallery/farming-oral-histories.jpg"
   link: "https://amaranth.unm.edu/farming-oral-histories/"
   tags: ["class project", "oral history"]
 
 - title: "Antifascist Women"
+  featured: true
   summary: "Each student recovers one woman's history; together the pages become a reference work no single essay could be."
   thumbnail: "/assets/images/gallery/antifascist-women.jpg"
   link: "https://ginambenavidez.github.io/antifascist-women/"
   tags: ["student research", "digital exhibit"]
 
 - title: "20th Century Music History"
+  featured: true
   summary: "Student writing on music and politics, published for readers outside the class rather than submitted and filed away."
   thumbnail: "/assets/images/gallery/music-history.jpg"
   link: "https://amaranth.unm.edu/music-history/"
   tags: ["class project", "music"]
 
 - title: "US Culture & Society Since 1945"
+  featured: false
   summary: "A course's essays organised by theme, so the syllabus becomes a public reader rather than a list of due dates."
   thumbnail: "/assets/images/gallery/history-337.jpg"
   link: "https://profpurplekale.github.io/History-337/"
   tags: ["class project", "course site"]
 
 - title: "Xanthan"
+  featured: false
   summary: "An introductory class doing local research, showing that beginners can produce work worth publishing."
   thumbnail: "/assets/images/gallery/xanthan.jpg"
   link: "https://xanthan-web.github.io/"
   tags: ["research project", "publishing"]
 
 - title: "Food Stories"
+  featured: true
   summary: "Essays and oral history excerpts side by side, letting students contribute in whichever form suits their material."
   thumbnail: "/assets/images/gallery/food-stories.jpg"
   link: "https://amaranth.unm.edu/food-stories/"

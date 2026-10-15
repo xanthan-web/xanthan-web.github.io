@@ -12,6 +12,57 @@ Every component in Xanthan, with its parameters and copy-paste code. Drop any of
 
 ---
 
+## Editorial Demo
+
+**File:** `layout/editorial-demo.html`
+
+Put a passage beside its source so readers can see how ordinary writing and includes shape a page. Three views use the actual standalone figure, pull quote, and callout components. With JavaScript, readers can edit headings, paragraphs, and the include together and see local changes. Without it, all three examples and their source remain visible.
+
+Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
+
+The introduction stays on the page background. The tabbed examples sit in a contrasting band using the theme's feature-band colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing.
+
+```liquid
+{% raw %}{% include layout/editorial-demo.html
+  heading="Make a place for your fieldwork"
+  heading-level=2
+  story-heading-level=3
+  image-path="/assets/images/site/default.jpg"
+  alt-text="A sample photograph from the site"
+  caption="A photograph with a caption you can revise."
+  primary-url="/docs/getting-started/templates"
+%}{% endraw %}
+```
+
+| Parameter | Required | Default | Notes |
+|-----------|----------|---------|-------|
+| `heading` | yes | — | Opening statement, rendered by the component |
+| `heading-level` | no | `1` | Opening heading level, 1–6 |
+| `intro` | no | empty | Introduction; Markdown supported |
+| `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
+| `story-heading` | no | Reading a landscape | Title of the sample passage |
+| `story-heading-level` | no | `2` | Sample heading level, 1–6 |
+| `story-text` | no | Sample landscape paragraph | Opening prose across all three views |
+| `section-heading` | no | Look closer | Heading following the component |
+| `section-heading-level` | no | Next level after story heading | Section heading level, 1–6 |
+| `section-text` | no | Sample closing paragraph | Prose following the component |
+| `image-path` | yes | — | Site-root or relative image path |
+| `alt-text` | no | caption | Description of the image for screen readers |
+| `caption` | no | empty | Initial caption; plain text recommended |
+| `quote-text` | no | Every landscape has a history. | Pull quote from the passage |
+| `note-title` | no | Reading the evidence | Contextual note heading |
+| `note-text` | no | Sample source note | Context set apart from the main prose |
+| `primary-url` | no | empty | Main next-step link |
+| `primary-label` | no | Choose a starter site | Main link label |
+| `secondary-url` | no | empty | Optional second link |
+| `secondary-label` | no | Explore real sites | Second link label |
+
+The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, images from the same site, and percentage widths. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
+
+The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
+
+---
+
 ## Standalone Image
 
 **File:** `images/figure.html`
@@ -244,6 +295,7 @@ Colored callout box for tips, warnings, or important information.
 | `class` | no | `info` | `info` (blue), `warning` (yellow), `danger` (red), `success` (green) |
 | `text` | yes | --- | Alert content; supports Markdown |
 | `title` | no | --- | Bold heading at top of alert |
+| `heading-level` | no | `3` | Heading level for the title, 2–6 |
 
 ---
 

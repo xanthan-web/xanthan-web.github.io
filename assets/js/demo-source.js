@@ -121,4 +121,3 @@ export function fitEditor(editor) {
     editor.style.height = (editor.scrollHeight + 2) + 'px';
   }
 }
-

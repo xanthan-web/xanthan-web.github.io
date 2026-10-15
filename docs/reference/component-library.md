@@ -20,12 +20,17 @@ Put a passage beside its source so readers can see how ordinary writing and incl
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
-The introduction stays on the page background. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing. The note view has style and heading-level selectors that update the same source file; source edits update the selectors in turn.
+The introduction stays on the page background, with a serif headline, an optional lead paragraph, and an optional illustration beside the text. The illustration uses the standard figure include and stacks below the introduction on phones. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing. The note view has style and heading-level selectors that update the same source file; source edits update the selectors in turn.
 
 ```liquid
 {% raw %}{% include layout/editorial-demo.html
   heading="Make a place for your fieldwork"
   heading-level=2
+  kicker="An illustrated opening"
+  lead="Give your materials a website you can shape and keep."
+  intro-image-path="/assets/images/site/xanthan-gum.png"
+  intro-alt-text="A wooden bowl of xanthan gum with a measuring scoop"
+  intro-caption="The other xanthan. Photo by Mhgunning, CC0."
   story-heading-level=3
   image-path="/assets/images/site/default.jpg"
   alt-text="A sample photograph from the site"
@@ -38,7 +43,12 @@ The introduction stays on the page background. The tabbed examples sit in a cont
 |-----------|----------|---------|-------|
 | `heading` | yes | — | Opening statement, rendered by the component |
 | `heading-level` | no | `1` | Opening heading level, 1–6 |
+| `kicker` | no | empty | Small label above the opening heading |
+| `lead` | no | empty | Prominent opening paragraph; Markdown supported |
 | `intro` | no | empty | Introduction; Markdown supported |
+| `intro-image-path` | no | empty | Illustration beside the introduction; separate from the editable figure |
+| `intro-alt-text` | no | `intro-caption` | Description of the opening illustration |
+| `intro-caption` | no | empty | Opening illustration caption; Markdown supported |
 | `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
 | `story-heading` | no | Reading a landscape | Title of the sample passage |
 | `story-heading-level` | no | `2` | Sample heading level, 1–6 |
@@ -59,7 +69,7 @@ The introduction stays on the page background. The tabbed examples sit in a cont
 
 The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, a heading-level integer from 1 to 6 (quoted or unquoted), images from the same site, and percentage widths. All six heading levels have distinct sizes in the preview. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
 
-The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
+The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. Its opening illustration is a CC0 photograph of xanthan gum; the caption links to the source. For an illustrated opening, pass `intro-image-path`, `intro-alt-text`, and `intro-caption`; omit the image path to keep a text-only introduction. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
 
 ---
 

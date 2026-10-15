@@ -48,6 +48,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- The homepage opens with "Academic websites, shaped by you," a serif headline,
+  a distinct lead paragraph, and shorter supporting text. A CC0 photograph of
+  xanthan gum sits alongside it, using the existing figure component.
 - The ScrollStories overview replaces its old Forest recording with a large,
   interactive excerpt from the current essay. The editing page uses the same
   passages and photographs, kept together in Forest's front matter. Both pages

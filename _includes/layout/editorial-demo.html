@@ -9,8 +9,15 @@
   Heading / introduction:
     - heading:             string, required — opening statement
     - heading-level:       integer 1–6, default 1 — opening heading level
+    - kicker:              string, default empty — small label above the heading
+    - lead:                string, default empty — prominent opening paragraph; Markdown supported
     - intro:               string, default empty — introduction; Markdown supported
     - id:                  string, default "editorial-demo" — unique ID per instance
+
+  Opening illustration (separate from the editable figure example):
+    - intro-image-path:    string, default empty — optional image beside the opening
+    - intro-alt-text:      string, default intro-caption — image description
+    - intro-caption:       string, default empty — illustration caption; Markdown supported
 
   Story / image:
     - story-heading:       string, default "Reading a landscape" — sample passage title
@@ -107,9 +114,18 @@
 {% if include.heading and include.image-path %}
 <section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
   <div class="editorial-demo-opening">
-    <div class="editorial-demo-inner">
-      <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
-      {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
+    <div class="editorial-demo-inner editorial-demo-opening-grid{% if include.intro-image-path %} editorial-demo-opening-grid--illustrated{% endif %}">
+      <div class="editorial-demo-opening-copy">
+        {% if include.kicker %}<p class="editorial-demo-kicker">{{ include.kicker | escape }}</p>{% endif %}
+        <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
+        {% if include.lead %}<div class="editorial-demo-lead">{{ include.lead | markdownify }}</div>{% endif %}
+        {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
+      </div>
+      {% if include.intro-image-path %}
+      <div class="editorial-demo-opening-figure">
+        {% include images/figure.html image-path=include.intro-image-path image-width="100%" caption=include.intro-caption alt-text=include.intro-alt-text %}
+      </div>
+      {% endif %}
     </div>
   </div>
   <div class="editorial-demo-band">

@@ -3,7 +3,8 @@ EDITORIAL DEMO
 
 A landing-page opening with a real Xanthan passage and its editable source
 side by side. Three views show a figure, a pull quote, and a contextual note.
-The introduction stays on the page surface; the demonstration has a contrasting band.
+The introduction pairs a serif headline, a lead, and optional illustration on
+the page surface; the demonstration has a contrasting band.
 
 Loads:    every page
 Used by:  layout/editorial-demo.html
@@ -19,7 +20,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 .editorial-demo-opening {
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .editorial-demo-band {
@@ -33,20 +34,49 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   margin-inline: auto;
 }
 
+.editorial-demo-opening-grid--illustrated {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.editorial-demo-kicker {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-kicker);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .editorial-demo-heading {
-  max-width: 20ch;
+  max-width: 19ch;
   margin: 0 0 var(--spacing-md);
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
-  line-height: 1.08;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.07;
   color: var(--text-body);
   text-align: left;
 }
 
+.editorial-demo-lead {
+  max-width: 44ch;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-lede);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.editorial-demo-lead p { margin: 0; text-align: left; }
+
 .editorial-demo-intro {
-  max-width: 70ch;
+  max-width: 55ch;
   margin-bottom: 0;
-  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .editorial-demo-intro p {
@@ -57,6 +87,25 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 .editorial-demo-intro p + p {
   margin-top: var(--spacing-sm);
 }
+
+.editorial-demo-opening-figure {
+  max-width: 23rem;
+  justify-self: end;
+}
+
+.editorial-demo-opening-figure figure { margin: 0; }
+.editorial-demo-opening-figure img { border-radius: var(--radius-lg); }
+.editorial-demo-opening-figure figcaption {
+  margin-top: var(--spacing-sm);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+}
+.editorial-demo-opening-figure figcaption p { margin: 0; }
+.editorial-demo-opening-figure figcaption p + p { margin-top: var(--spacing-xs); }
+.editorial-demo-opening-figure figcaption a { color: var(--text-muted); opacity: 1; }
+.editorial-demo-opening-figure figcaption a:hover { color: var(--text-body); }
 
 .editorial-demo-choices {
   display: flex;
@@ -325,6 +374,16 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 @media (max-width: 850px) {
+  .editorial-demo-opening-grid--illustrated {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .editorial-demo-opening-figure {
+    max-width: 19rem;
+    justify-self: center;
+  }
+
   .editorial-demo-pair {
     grid-template-columns: minmax(0, 1fr);
   }

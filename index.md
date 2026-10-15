@@ -5,14 +5,14 @@ date: 2026-01-01
 summary: Open, transparent, AI-ready websites for scholars, instructors, and students. Built for public work people can understand, teach, and maintain.
 opening:
   kicker: "Xanthan for digital scholarship"
-  title: "Academic websites, shaped by you."
-  lead: "Xanthan gives your research, teaching, and collections a website of their own. Begin with a complete design, then shape the words, images, and reading experience around your work."
+  title: "Academic websites that you control with simple text files."
+  lead: "Xanthan gives your research, teaching, and collections a website of their own. Begin with a starter site, then shape the words, images, and reading experience around your work."
   text: |
     Your pages are text files you can read, edit, and keep. Write directly in them, or ask an AI assistant to help with the layout. You make the editorial decisions.
   intro-image-path: "/assets/images/site/xanthan-gum.png"
   intro-alt-text: "A wooden bowl of xanthan gum powder with a black measuring scoop."
   intro-caption: |
-    The other xanthan. A little goes a long way.
+    The other xanthan. It's in a ton of shelf-stable food to improve texture and stability. A little goes a long way.
 
     [Photo: Mhgunning · CC0](https://commons.wikimedia.org/wiki/File:Xanthan_gum.png)
   story-heading: "Reading a campus"

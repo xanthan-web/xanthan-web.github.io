@@ -591,7 +591,9 @@ ALERTS
   padding: var(--spacing-sm) var(--spacing-md);
   margin-bottom: var(--spacing-md);
   border-radius: var(--radius-md);
-  border-left: 4px solid transparent;
+  border-left: 4px solid var(--alert-accent);
+  background: color-mix(in srgb, var(--alert-accent) 22%, var(--bg-page));
+  color: var(--text-body);
 
   /* Typography */
   font-size: 0.95rem;
@@ -604,32 +606,34 @@ ALERTS
   margin-bottom: var(--spacing-xs);
 
   /* Typography */
-  font-size: 1rem;
   font-weight: 600;
 }
 
-.alert-info {
-  background: color-mix(in srgb, var(--info) 12%, var(--bg-page));
-  border-left-color: var(--info);
+.alert-label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-body);
+}
+
+.alert-info {
+  --alert-accent: var(--info);
 }
 
 .alert-warning {
-  background: color-mix(in srgb, var(--warning) 12%, var(--bg-page));
-  border-left-color: var(--warning);
-  color: var(--text-body);
+  --alert-accent: var(--warning);
 }
 
 .alert-danger {
-  background: color-mix(in srgb, var(--error) 12%, var(--bg-page));
-  border-left-color: var(--error);
-  color: var(--text-body);
+  --alert-accent: var(--error);
 }
 
 .alert-success {
-  background: color-mix(in srgb, var(--success) 12%, var(--bg-page));
-  border-left-color: var(--success);
-  color: var(--text-body);
+  --alert-accent: var(--success);
 }
 
 } /* end regular styles */

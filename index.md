@@ -4,13 +4,17 @@ layout: default
 date: 2026-01-01
 summary: Open, transparent, AI-ready websites for scholars, instructors, and students. Built for public work people can understand, teach, and maintain.
 opening:
-  title: "What is Xanthan?"
+  kicker: "Xanthan for digital scholarship"
+  title: "Academic websites, shaped by you."
+  lead: "Xanthan gives your research, teaching, and collections a website of their own. Begin with a complete design, then shape the words, images, and reading experience around your work."
   text: |
-    Xanthan is a framework for publishing academic work on the web. Start with a complete design for a portfolio, a collection, or a visual story, then shape it around your research and your readers.
+    Your pages are text files you can read, edit, and keep. Write directly in them, or ask an AI assistant to help with the layout. You make the editorial decisions.
+  intro-image-path: "/assets/images/site/xanthan-gum.png"
+  intro-alt-text: "A wooden bowl of xanthan gum powder with a black measuring scoop."
+  intro-caption: |
+    The other xanthan. A little goes a long way.
 
-    Your site is a folder of text files and images that you control. GitHub can publish it for free. Editing a page means changing its text, adding images, and choosing how readers encounter them.
-
-    You can edit those files yourself or describe a change to an AI assistant. Xanthan supplies the named pieces; you make the editorial decisions. The examples below show how ordinary writing and a few instructions become a page.
+    [Photo: Mhgunning · CC0](https://commons.wikimedia.org/wiki/File:Xanthan_gum.png)
   story-heading: "Reading a campus"
   story-text: "Buildings tell one part of a campus's history. This essay follows the paths, gathering places, and everyday journeys that give those buildings meaning."
   image-path: "/assets/images/site/default.jpg"
@@ -34,7 +38,12 @@ reasons:
 
 {% include layout/editorial-demo.html
   heading=page.opening.title
+  kicker=page.opening.kicker
+  lead=page.opening.lead
   intro=page.opening.text
+  intro-image-path=page.opening.intro-image-path
+  intro-alt-text=page.opening.intro-alt-text
+  intro-caption=page.opening.intro-caption
   story-heading=page.opening.story-heading
   story-text=page.opening.story-text
   image-path=page.opening.image-path

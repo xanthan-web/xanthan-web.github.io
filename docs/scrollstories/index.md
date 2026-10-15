@@ -9,26 +9,20 @@ summary: Give images, maps, and words room to make an argument together, in a st
 
 # Visual Storytelling with ScrollStories
 
-{% capture scrollstories_intro %}
 {: .lede}
 A photograph can establish a place before you write a word. A map can make the distance in a journey palpable. Two images can reveal a change that paragraphs struggle to describe. A ScrollStory gives those materials room to do intellectual work together, unfolding as the reader moves down the page.
 
 You decide what stays in view, what changes, and when the reader encounters the next piece of evidence. Scrolling becomes part of the telling.
-{% endcapture %}
+{% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
+{% include scrollstory/source-demo.html scenes=forest.demo-scenes heading="A walk through Forest" story-id="forest-walk" %}
 
-{% include images/figure-wrap.html
-  image-path="/assets/images/gallery/forest-scroll.gif"
-  image-position="right"
-  image-width="44%"
-  alt-text="A scrolling essay holds text panels over background images, then changes the images as the reader moves through the story"
-  text=scrollstories_intro
-%}
-
-The form works for a close reading of a painting, a walk through an archive, a field report, an oral history, or an argument about a changing landscape. Text, images, maps, audio, and video can share a continuous narrative. In Xanthan, that narrative is a page in your own website.
+Read the full [Forest essay]({{ site.baseurl }}/scrollstories/forest/), or [try changing the passage]({{ site.baseurl }}/docs/scrollstories/try-a-story) and borrow the arrangement for your own work.
 
 ---
 
 ## Let the reader linger
+
+The form works for a close reading of a painting, a walk through an archive, a field report, an oral history, or an argument about a changing landscape. Text, images, maps, audio, and video can share a continuous narrative. In Xanthan, that narrative is a page in your own website.
 
 Think of the screen as a place to arrange evidence. Hold a photograph beside several paragraphs so readers can look back at the detail you are discussing. Change from an old view to a new one at the moment your argument turns. Follow a route across a historic map while the text explains what made each crossing possible.
 
@@ -54,6 +48,8 @@ Working with files takes some getting used to. Xanthan makes that work legible: 
 
 ## Explore three examples
 
+For a short story beside its editable text file, [try a scrolling story]({{ site.baseurl }}/docs/scrollstories/try-a-story). Change the words, swap the images, and see how the arrangement changes the reading.
+
 Read these first as a visitor. Notice where you pause, what stays visible, and how the movement changes your understanding. Then choose something worth borrowing.
 
 ### [Seedling: a simple essay]({{ site.baseurl }}/scrollstories/seedling/)
@@ -67,6 +63,20 @@ Background images hold still, change, and give way to other views. Text moves be
 ### [Trail: a story map]({{ site.baseurl }}/scrollstories/trail/)
 
 The Old Spanish Trail moves across an 1854 survey map as the essay follows a mule route from Santa Fe to Los Angeles. The route and the map tell different stories about the same country. Trail shows how a map can become part of an interpretation, with places and paths coming into focus as the argument develops.
+
+---
+
+## Follow an argument
+
+The most useful possibilities emerge from a subject worth looking at closely. These finished stories use images as evidence, giving readers time to compare, notice, and return to the argument.
+
+### [Where the Name Comes From](https://amaranth.unm.edu/about/name-origins/)
+
+Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio.
+
+### [A Cultural History of Arkham Asylum](https://hadas496.github.io/comics-and-Reaganomics-/)
+
+Hadas Segal puts Batman comics, personal memory, and the history of psychiatric institutions into conversation. Image comparisons and close readings make the visual sources part of the interpretation.
 
 ---
 

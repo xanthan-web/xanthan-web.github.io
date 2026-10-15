@@ -108,7 +108,7 @@ CSS VARIABLE OVERRIDES
   --warning: var(--trail-tan);
   --warning-bg: color-mix(in srgb, var(--trail-tan) 24%, var(--bg-page));
   --error: var(--canyon-red-dark);
-  --info: color-mix(in srgb, var(--ponderosa-green) 70%, var(--granite-white));
+  --info: var(--river-blue);
 
   /* Page headers */
   --bg-page-header: var(--shadow-gray);

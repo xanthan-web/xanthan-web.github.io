@@ -18,6 +18,8 @@ If you need a site, [choose a starter]({{ site.baseurl }}/docs/getting-started/t
 
 ## Borrow a pattern
 
+[Try a scrolling story]({{ site.baseurl }}/docs/scrollstories/try-a-story) to make a few changes in a live preview before working in your own site. The story and its text file sit together, so you can see what each edit does.
+
 Open [Seedling]({{ site.baseurl }}/scrollstories/seedling/) for an illustrated essay, [Forest]({{ site.baseurl }}/scrollstories/forest/) for visual movement, or [Trail]({{ site.baseurl }}/scrollstories/trail/) for a story map.
 
 Pick one moment to try. Sketch it in ordinary language: *show the whole building, linger on the entrance, then reveal what replaced it.* Gather a few images, their source information, and a paragraph or two of writing.

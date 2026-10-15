@@ -1,0 +1,99 @@
+{% comment %}
+  ScrollStory Source Demo — a large reading view with optional editable source.
+
+  Parameters:
+    - scenes: array, required — two to four objects with image-path, alt-text,
+      heading, and text. Text supports Markdown headings and paragraphs.
+    - heading: string, default "Shape a story as you read" — component heading
+    - heading-level: integer 1–6, default 2 — component heading level
+    - story-heading-level: integer 1–6, default 2 — headings within the story
+    - id: string, default "story-demo" — unique ID for this example
+    - story-id: string, default "my-story" — bg-id shown in the copyable source
+    - box-align: left | center | right, default left — initial text position
+
+  The source uses the existing bg-multi-long, bg-switch, and closing includes.
+  The contained preview models that pattern; a real story uses the whole window.
+  Live edits never execute visitor Liquid or HTML and are not saved. Without
+  JavaScript, every scene and the complete source remain visible.
+  Styles: assets/css/story-demo.css. Behavior: assets/js/story-demo.js.
+{% endcomment %}
+{% assign demo_id = include.id | default: 'story-demo' %}
+{% assign story_id = include.story-id | default: 'my-story' %}
+{% assign heading_level = include.heading-level | default: 2 | plus: 0 %}
+{% if heading_level < 1 or heading_level > 6 %}{% assign heading_level = 2 %}{% endif %}
+{% assign story_level = include.story-heading-level | default: 2 | plus: 0 %}
+{% if story_level < 1 or story_level > 6 %}{% assign story_level = 2 %}{% endif %}
+{% assign marks = '######' | slice: 0, story_level %}
+{% assign box_align = include.box-align | default: 'left' %}
+{% assign first_scene = include.scenes | first %}
+{% assign scenes_valid = true %}
+{% for scene in include.scenes %}{% unless scene.image-path and scene.heading and scene.text %}{% assign scenes_valid = false %}{% endunless %}{% endfor %}
+{% capture source %}{% raw %}{% include scrollybox/bg-multi-long.html{% endraw %}
+  bg-id="{{ story_id }}"
+  image-path="{{ first_scene.image-path }}"
+  box-align="{{ box_align }}"
+{% raw %}%}{% endraw %}
+{% for scene in include.scenes %}{% unless forloop.first %}
+{% raw %}{% include scrollybox/bg-switch.html{% endraw %}
+  bg-id="{{ story_id }}"
+  switch-id="view-{{ forloop.index }}"
+  image-path="{{ scene.image-path }}"
+{% raw %}%}{% endraw %}
+{% endunless %}
+{{ marks }} {{ scene.heading }}
+
+{{ scene.text }}
+{% endfor %}
+{% raw %}{% include scrollybox/bg-multi-long-close.html %}{% endraw %}{% endcapture %}
+{::nomarkdown}
+{% if include.scenes.size >= 2 and include.scenes.size <= 4 and scenes_valid %}
+<section class="story-demo" id="{{ demo_id | escape }}" data-story-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
+  <div class="story-demo-inner">
+    <h{{ heading_level }} class="story-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | default: 'Shape a story as you read' | escape }}</h{{ heading_level }}>
+    <p class="story-demo-intro">Scroll through the story. When you want to try a change, open the text and make it your own.</p>
+    <button class="story-demo-toggle" type="button" data-story-toggle hidden aria-expanded="false" aria-controls="{{ demo_id | escape }}-source-panel">See and edit the text</button>
+    <div class="story-demo-pair">
+      <div>
+        <p class="story-demo-label" id="{{ demo_id | escape }}-preview-label">The story readers see</p>
+        <p class="story-demo-instruction" id="{{ demo_id | escape }}-instruction" hidden data-story-instruction>Scroll inside this preview, or focus it and use the arrow keys.</p>
+        <div class="story-demo-viewport" data-story-viewport data-toc-ignore aria-labelledby="{{ demo_id | escape }}-preview-label" aria-describedby="{{ demo_id | escape }}-instruction" role="region">
+          <div class="story-demo-background" data-story-background hidden><img alt="" data-story-background-image></div>
+          <div class="story-demo-scenes" data-story-scenes>
+            {% for scene in include.scenes %}
+            {% capture scene_url %}{% include helpers/image-path.html image-path=scene.image-path %}{% endcapture %}
+            <section class="story-demo-step" data-story-step data-image="{{ scene_url | strip | escape }}" data-alt="{{ scene.alt-text | default: scene.heading | escape }}">
+              <img class="story-demo-still" src="{{ scene_url | strip }}" alt="{{ scene.alt-text | default: scene.heading | escape }}">
+              <div class="story-demo-card">
+                <h{{ story_level }}>{{ scene.heading | escape }}</h{{ story_level }}>
+                {{ scene.text | markdownify }}
+              </div>
+            </section>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div id="{{ demo_id | escape }}-source-panel" data-story-source-panel>
+        <label class="story-demo-label" for="{{ demo_id | escape }}-source">The text you edit</label>
+        <div class="story-demo-controls" data-story-controls hidden>
+          <div>
+            <label for="{{ demo_id | escape }}-align">Text position</label>
+            <select id="{{ demo_id | escape }}-align" data-story-align>
+              <option value="left">Left</option><option value="center">Center</option><option value="right">Right</option>
+            </select>
+          </div>
+          <button type="button" data-story-swap>Swap the images</button>
+          <button type="button" data-story-reset>Start again</button>
+        </div>
+        <pre class="story-demo-static" data-story-static><code>{{ source | strip | escape }}</code></pre>
+        <textarea class="story-demo-editor" id="{{ demo_id | escape }}-source" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-hint {{ demo_id | escape }}-error" data-story-source>{{ source | strip | escape }}</textarea>
+        <p class="story-demo-hint" id="{{ demo_id | escape }}-hint">Edit a heading or paragraph. The image instruction between passages marks where the view changes. Edits here stay in this example.</p>
+        <p class="story-demo-error" id="{{ demo_id | escape }}-error" aria-live="polite" data-story-error></p>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="{{ '/assets/js/story-demo.js' | relative_url }}"></script>
+{% else %}
+<div class="xanthan-warning">source-demo include needs two to four scenes, each with an image-path, heading, text, and alt-text.</div>
+{% endif %}
+{:/nomarkdown}

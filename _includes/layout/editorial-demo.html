@@ -9,8 +9,15 @@
   Heading / introduction:
     - heading:             string, required — opening statement
     - heading-level:       integer 1–6, default 1 — opening heading level
+    - kicker:              string, default empty — small label above the heading
+    - lead:                string, default empty — prominent opening paragraph; Markdown supported
     - intro:               string, default empty — introduction; Markdown supported
     - id:                  string, default "editorial-demo" — unique ID per instance
+
+  Opening illustration (separate from the editable figure example):
+    - intro-image-path:    string, default empty — optional image beside the opening
+    - intro-alt-text:      string, default intro-caption — image description
+    - intro-caption:       string, default empty — illustration caption; Markdown supported
 
   Story / image:
     - story-heading:       string, default "Reading a landscape" — sample passage title
@@ -53,7 +60,6 @@
 {% if section_heading_level < 1 %}{% assign section_heading_level = 1 %}{% endif %}
 {% if section_heading_level > 6 %}{% assign section_heading_level = 6 %}{% endif %}
 {% assign note_heading_level = section_heading_level %}
-{% if note_heading_level < 2 %}{% assign note_heading_level = 2 %}{% endif %}
 {% assign section_text = include.section-text | default: 'Each view makes different relationships visible. The images and words give readers a way into the argument.' %}
 {% assign story_heading_marks = '######' | slice: 0, story_heading_level %}
 {% assign section_heading_marks = '######' | slice: 0, section_heading_level %}
@@ -97,7 +103,7 @@
 {% raw %}{% include typography/alert.html{% endraw %}
   class="info"
   title="{{ source_note_title }}"
-  heading-level="{{ note_heading_level }}"
+  heading-level={{ note_heading_level }}
   text="{{ source_note_text }}"
 {% raw %}%}{% endraw %}
 
@@ -108,9 +114,18 @@
 {% if include.heading and include.image-path %}
 <section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
   <div class="editorial-demo-opening">
-    <div class="editorial-demo-inner">
-      <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
-      {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
+    <div class="editorial-demo-inner editorial-demo-opening-grid{% if include.intro-image-path %} editorial-demo-opening-grid--illustrated{% endif %}">
+      <div class="editorial-demo-opening-copy">
+        {% if include.kicker %}<p class="editorial-demo-kicker">{{ include.kicker | escape }}</p>{% endif %}
+        <h{{ heading_level }} class="editorial-demo-heading" id="{{ demo_id | escape }}-heading">{{ include.heading | escape }}</h{{ heading_level }}>
+        {% if include.lead %}<div class="editorial-demo-lead">{{ include.lead | markdownify }}</div>{% endif %}
+        {% if include.intro %}<div class="editorial-demo-intro">{{ include.intro | markdownify }}</div>{% endif %}
+      </div>
+      {% if include.intro-image-path %}
+      <div class="editorial-demo-opening-figure">
+        {% include images/figure.html image-path=include.intro-image-path image-width="100%" caption=include.intro-caption alt-text=include.intro-alt-text %}
+      </div>
+      {% endif %}
     </div>
   </div>
   <div class="editorial-demo-band">
@@ -181,6 +196,23 @@
           </div>
           <div class="editorial-demo-source">
             <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
+            <div class="editorial-demo-controls" data-demo-controls hidden>
+              <div>
+                <label for="{{ demo_id | escape }}-note-style">Note style</label>
+                <select id="{{ demo_id | escape }}-note-style" data-demo-note-style>
+                  <option value="info">Information</option>
+                  <option value="warning">Warning</option>
+                  <option value="danger">Danger</option>
+                  <option value="success">Success</option>
+                </select>
+              </div>
+              <div>
+                <label for="{{ demo_id | escape }}-note-level">Heading level</label>
+                <select id="{{ demo_id | escape }}-note-level" data-demo-note-level>
+                  {% for level in (1..6) %}<option value="{{ level }}"{% if level == note_heading_level %} selected{% endif %}>Heading {{ level }}</option>{% endfor %}
+                </select>
+              </div>
+            </div>
             <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
             <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
             <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
@@ -196,7 +228,7 @@
     </div>
   </div>
 </section>
-<script src="{{ '/assets/js/editorial-demo.js' | relative_url }}" defer></script>
+<script type="module" src="{{ '/assets/js/editorial-demo.js' | relative_url }}"></script>
 {% else %}
 <div class="xanthan-warning">editorial-demo include needs heading and image-path parameters.</div>
 {% endif %}

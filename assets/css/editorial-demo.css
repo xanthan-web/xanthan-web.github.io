@@ -3,7 +3,8 @@ EDITORIAL DEMO
 
 A landing-page opening with a real Xanthan passage and its editable source
 side by side. Three views show a figure, a pull quote, and a contextual note.
-The introduction stays on the page surface; the demonstration has a dark band.
+The introduction pairs a serif headline, a lead, and optional illustration on
+the page surface; the demonstration has a contrasting band.
 
 Loads:    every page
 Used by:  layout/editorial-demo.html
@@ -19,13 +20,13 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 .editorial-demo-opening {
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .editorial-demo-band {
   padding: var(--spacing-xl) var(--spacing-md);
-  color: var(--text-feature-band);
-  background: var(--bg-feature-band);
+  color: var(--text-section-warm);
+  background: var(--bg-section-warm);
 }
 
 .editorial-demo-inner {
@@ -33,20 +34,49 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   margin-inline: auto;
 }
 
+.editorial-demo-opening-grid--illustrated {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.editorial-demo-kicker {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-kicker);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .editorial-demo-heading {
-  max-width: 20ch;
+  max-width: 19ch;
   margin: 0 0 var(--spacing-md);
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
-  line-height: 1.08;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.07;
   color: var(--text-body);
   text-align: left;
 }
 
+.editorial-demo-lead {
+  max-width: 44ch;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-lede);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.editorial-demo-lead p { margin: 0; text-align: left; }
+
 .editorial-demo-intro {
-  max-width: 70ch;
+  max-width: 55ch;
   margin-bottom: 0;
-  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .editorial-demo-intro p {
@@ -58,14 +88,34 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   margin-top: var(--spacing-sm);
 }
 
+.editorial-demo-opening-figure {
+  max-width: 23rem;
+  justify-self: end;
+}
+
+.editorial-demo-opening-figure figure { margin: 0; }
+.editorial-demo-opening-figure img { border-radius: var(--radius-lg); }
+.editorial-demo-opening-figure figcaption {
+  margin-top: var(--spacing-sm);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+}
+.editorial-demo-opening-figure figcaption p { margin: 0; }
+.editorial-demo-opening-figure figcaption p + p { margin-top: var(--spacing-xs); }
+.editorial-demo-opening-figure figcaption a { color: var(--text-muted); opacity: 1; }
+.editorial-demo-opening-figure figcaption a:hover { color: var(--text-body); }
+
 .editorial-demo-choices {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs) var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--border-on-dark);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-section-warm) 25%, transparent);
 }
 
+.editorial-demo-controls[hidden],
 .editorial-demo-choices[hidden],
 .editorial-demo-panel[hidden],
 .editorial-demo-hint[hidden],
@@ -79,22 +129,51 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   border: 0;
   border-bottom: 2px solid transparent;
   font: inherit;
-  color: var(--text-feature-band);
+  color: var(--text-section-warm);
   background: transparent;
   cursor: pointer;
 }
 
 .editorial-demo-choice[aria-selected="true"] {
-  border-bottom-color: var(--text-feature-band);
+  border-bottom-color: var(--text-section-warm);
   font-weight: 700;
 }
 
 .editorial-demo-choice:hover {
-  border-bottom-color: var(--text-feature-band);
+  border-bottom-color: var(--text-section-warm);
 }
 
 .editorial-demo-choice:focus-visible {
-  outline: 2px solid var(--text-feature-band);
+  outline: 2px solid var(--text-section-warm);
+  outline-offset: var(--spacing-xs);
+}
+
+.editorial-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.editorial-demo-controls > div {
+  display: grid;
+  gap: var(--spacing-xs);
+  font-size: 0.85rem;
+}
+
+.editorial-demo-controls label { margin: 0; }
+
+.editorial-demo-controls select {
+  padding: var(--spacing-xs);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-body);
+  background: var(--bg-card);
+  font: inherit;
+}
+
+.editorial-demo-controls select:focus-visible {
+  outline: 2px solid var(--text-section-warm);
   outline-offset: var(--spacing-xs);
 }
 
@@ -124,7 +203,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 .editorial-demo-label {
   display: block;
   margin: 0 0 var(--spacing-xs);
-  color: var(--text-feature-band);
+  color: var(--text-section-warm);
   font-size: 0.9rem;
   font-weight: 600;
   text-align: left;
@@ -136,22 +215,29 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   background: var(--bg-card);
 }
 
-.editorial-demo-story-heading {
-  margin: 0 0 var(--spacing-sm);
+.editorial-demo-page :is(h1, h2, h3, h4, h5, h6) {
+  margin: var(--spacing-md) 0 var(--spacing-xs);
   font-family: var(--font-serif);
-  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
   line-height: 1.2;
   color: var(--text-body);
   text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
-.editorial-demo-section-heading {
-  margin: var(--spacing-md) 0 var(--spacing-xs);
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  line-height: 1.3;
-  color: var(--text-body);
-  text-align: left;
+/* Preserve a visible hierarchy when readers change # marks or heading-level.
+   The old story/section classes flattened every level to the same size. */
+.editorial-demo-page h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+.editorial-demo-page h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+.editorial-demo-page h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+.editorial-demo-page h4 { font-size: clamp(1.15rem, 1.7vw, 1.3rem); }
+.editorial-demo-page h5 { font-size: clamp(1.05rem, 1.4vw, 1.15rem); }
+.editorial-demo-page h6 { font-size: 1rem; }
+
+.editorial-demo-page > :first-child,
+.editorial-demo-page .editorial-demo-story-heading,
+.editorial-demo-page .alert-heading {
+  margin-top: 0;
 }
 
 .editorial-demo-page p {
@@ -221,7 +307,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 .editorial-demo-editor:focus-visible {
-  outline: 2px solid var(--text-feature-band);
+  outline: 2px solid var(--text-section-warm);
   outline-offset: var(--spacing-xs);
 }
 
@@ -237,8 +323,8 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 .editorial-demo-hint code {
-  color: var(--bg-feature-band);
-  background: var(--text-feature-band);
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm);
   border: 0;
 }
 
@@ -264,30 +350,40 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 
 .editorial-demo-actions a,
 .editorial-demo-actions a:visited {
-  color: var(--text-feature-band-link);
+  color: var(--text-section-warm-link);
 }
 
 .editorial-demo-actions a:hover {
-  color: var(--text-feature-band-link-hover);
+  color: var(--text-section-warm-link-hover);
 }
 
 .editorial-demo-actions .btn-primary,
 .editorial-demo-actions .btn-primary:visited {
-  color: var(--bg-feature-band);
-  background: var(--text-feature-band);
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm);
 }
 
 .editorial-demo-actions .btn-primary:hover {
-  color: var(--bg-feature-band);
-  background: var(--text-feature-band-link);
+  color: var(--bg-section-warm);
+  background: var(--text-section-warm-link);
 }
 
 .editorial-demo-actions a:focus-visible {
-  outline: 2px solid var(--text-feature-band);
+  outline: 2px solid var(--text-section-warm);
   outline-offset: var(--spacing-xs);
 }
 
 @media (max-width: 850px) {
+  .editorial-demo-opening-grid--illustrated {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .editorial-demo-opening-figure {
+    max-width: 19rem;
+    justify-self: center;
+  }
+
   .editorial-demo-pair {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -310,5 +406,7 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   .editorial-demo-static-source {
     font-size: 1rem;
   }
+
+  .editorial-demo-controls select { font-size: 1rem; }
 }
 }

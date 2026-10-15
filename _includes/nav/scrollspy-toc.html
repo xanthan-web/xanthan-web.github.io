@@ -1,11 +1,15 @@
-<!-- Scrollspy Table of Contents
+{% comment %}
+     Scrollspy Table of Contents
 
      Parameters:
        headings - CSS selector for the headings to track. Optional; defaults to "h2".
                   Use headings="h3" on pages whose sections are h3 (e.g. FAQ questions).
 
      Example: {% raw %}{% include nav/scrollspy-toc.html headings="h3" %}{% endraw %}
--->
+
+     Headings within data-toc-ignore are excluded, for example a story that
+     scrolls inside its own preview rather than as part of the host page.
+{% endcomment %}
 <nav class="scrollspy-toc" aria-label="On this page">
   <p class="scrollspy-toc-heading" aria-hidden="true">On this page</p>
   <ul id="toc-list">
@@ -156,7 +160,8 @@
     if (!tocList) return;
 
     // Find the headings to track (defaults to h2; override with headings="h3")
-    const headings = document.querySelectorAll('.container {{ include.headings | default: "h2" }}');
+    const headings = Array.from(document.querySelectorAll('.container {{ include.headings | default: "h2" }}'))
+      .filter(heading => !heading.closest('[data-toc-ignore]'));
 
     // No matching headings: remove the nav entirely so the container grid
     // doesn't reserve an empty sidebar column via :has(.scrollspy-toc).

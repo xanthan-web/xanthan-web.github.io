@@ -19,6 +19,31 @@ geo: [44.600000, -110.500000]
 placename: Yellowstone National Park
 tags:
   - music
+demo-scenes:
+  - image-path: /scrollstories/forest/images/960px-Fern_Carpet_(9002108266).jpg
+    alt-text: A thick carpet of ferns beneath tall forest trees
+    heading: In the understory
+    text: >-
+      We begin in the understory. The light here is filtered through layers of
+      leaves above, and what reaches the ground arrives in moving patches rather
+      than a steady wash. Every surface harbours something: fungi breaking down
+      fallen wood, mosses covering rock, insects working their way through root systems.
+  - image-path: /scrollstories/forest/images/960px-Totholz-am-Teufelssee-bei-Thelkow-19-09-2008-036.jpg
+    alt-text: Mushrooms growing across a moss-covered fallen tree
+    heading: Life in fallen wood
+    text: >-
+      Deadwood is not an absence of life but a concentration of it. A standing
+      trunk that has lost its crown becomes a vertical habitat: beetles bore in,
+      woodpeckers follow the beetles, and the holes they leave behind become nests
+      for birds that could not have made them.
+  - image-path: /scrollstories/forest/images/960px-Nurse_Log_(8014005473).jpg
+    alt-text: Young trees and ferns growing along a fallen nurse log
+    heading: The next forest
+    text: >-
+      A fallen tree becomes a nurse log — decomposing over decades, feeding the
+      soil, hosting new seedlings along its length. Nothing in a forest is
+      wasted; it is only moved from one account to another, on a schedule measured
+      in decades rather than seasons.
 ---
 
 This essay uses every ScrollStory component at least once: simple figures and footnotes, scrollyboxes and jumbotrons, background image switching, sticky backgrounds, side-scroll sections, juxtapose comparisons, and the full header system. Read it as a demonstration, or copy any piece of it straight into your own essay.
@@ -343,6 +368,3 @@ Mist softens the boundaries between trees." | split: '|'
 
 ## Ready to Create Your Own?
 Start with the [Getting Started guide]({{ site.baseurl }}/docs/getting-started/) to create your own site first. Once you have a working site, come back here to build your ScrollStory.
-
-
-

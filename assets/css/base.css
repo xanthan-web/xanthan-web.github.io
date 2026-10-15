@@ -72,6 +72,8 @@ PAGE SETUP & CUSTOMIZATION
   --golden-clay-dark: #8b6f47;  /* Darker warm clay for headings */
   --amber: #f59e0b;        /* Bright amber */
   --trail-red: #8c2f10;    /* Route lines over pale map scans, where clay and sage both vanish */
+  --river-blue: #3f6c88;
+  --info: var(--river-blue); /* Information stays distinct from green success notes. */
 
   /* ===== SEMANTIC COLOR SYSTEM ===== */
   /* Backgrounds */
@@ -168,7 +170,7 @@ PAGE SETUP & CUSTOMIZATION
   --warning: #ffc107;
   --warning-bg: #fff3cd;
   --error: #dc3545;
-  --info: #5b9aa0;
+  --alert-accent: var(--info);
 
   /* Heading colors — override these in themes to change heading hierarchy */
   --text-h1: var(--golden-clay);
@@ -213,6 +215,7 @@ PAGE SETUP & CUSTOMIZATION
   --font-body: 'Source Sans 3', sans-serif;
   --font-serif: 'Lora', serif;
   --font-mono: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  --story-demo-height: clamp(24rem, 80vh, 48rem);
 
   /* Spacing */
   --spacing-xs: 0.5rem;

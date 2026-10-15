@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- A live ScrollStory source example at `docs/scrollstories/try-a-story`, with
+  editable prose, image order, and text position. The reusable
+  `scrollstory/source-demo.html` opens with a large reading view and reveals
+  copyable background-switching includes when readers choose to edit. Returning
+  to the wide story preserves their edits. A static version works without JavaScript.
+- Callout type and heading-level selectors in the homepage editor, synchronized
+  with its text file. All six heading levels now have visibly different sizes.
 - `layout/profile-intro.html`, a photograph beside a name, a bio, and a row of
   links, as the opening block of a personal homepage. It is the successor to
   the profile sidebar and reads the same `_data/nav-profile.yml`, so a site can
@@ -41,20 +48,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   class that breaks the map out of the text column.
 
 ### Changed
+- The homepage opens with "Academic websites, shaped by you," a serif headline,
+  a distinct lead paragraph, and shorter supporting text. A CC0 photograph of
+  xanthan gum sits alongside it, using the existing figure component.
+- The ScrollStories overview replaces its old Forest recording with a large,
+  interactive excerpt from the current essay. The editing page uses the same
+  passages and photographs, kept together in Forest's front matter. Both pages
+  link to Amaranth's naming story and Hadas Segal's Arkham Asylum essay.
+- The homepage example band uses the same green as the later warm section.
+- Callouts have explicit type labels, stronger tints, and distinct blue, amber,
+  red, and green accents. Their heading-level parameter supports levels 1–6.
+  Shared scrolling text panels use the theme's readable card surface.
+- Both visual source editors share a restricted source reader; visitor Liquid
+  and HTML are never executed.
+
 - The Portfolio screenshot on the starter chooser is a fresh capture of the
   live example, which now opens with the profile block rather than the
   sidebar. Its alt text describes the live site rather than calling it the
   starter site, which it never was. Resized to the 1600px the project's own
   `optimize-images.sh` uses, taking it from 2.1MB to 237KB — a saving every
   template inherits, since the sync copies the gallery images the docs name.
-- The homepage argues that the site is made of named parts, in a new
-  `split-intro` band between the reasons grid and the AI section. The
-  component story had only ever appeared as "reusable components each have a
-  place", buried in the fourth of four tiles and in developer vocabulary. The
-  point for a reader who does not write CSS is not reuse, it is that a named
-  thing can be asked for, moved, refused, or recognised a year later — and it
-  is what the AI band means by "a curated context", which that band asserted
-  without ever saying what the context was made of.
+- The homepage connects its named, documented parts to AI collaboration in
+  one band. A plain-language request shows how those parts support focused
+  changes that the author can inspect and revise.
 - "Others can build on it" is now "Built for collaboration", and makes the
   argument through plain documents rather than through a platform. Naming
   GitHub there explained collaboration as a mechanism the reader has no model
@@ -91,6 +107,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   did not. Seedling's closing links now point at Forest.
 
 ### Fixed
+- Background image changes follow the last marker passed, including during
+  fast scrolling, keyboard navigation, and jumps to an anchor. A one-pixel
+  marker could previously skip the observer's narrow trigger band.
 - A doubled phrase in the homepage's AI section ("That's impressive, but
   impressive but opaque").
 - The `nav-profile` layout no longer reserves a column for a sidebar that is

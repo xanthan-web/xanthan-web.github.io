@@ -20,12 +20,17 @@ Put a passage beside its source so readers can see how ordinary writing and incl
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
-The introduction stays on the page background. The tabbed examples sit in a contrasting band using the theme's feature-band colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing.
+The introduction stays on the page background, with a serif headline, an optional lead paragraph, and an optional illustration beside the text. The illustration uses the standard figure include and stacks below the introduction on phones. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing. The note view has style and heading-level selectors that update the same source file; source edits update the selectors in turn.
 
 ```liquid
 {% raw %}{% include layout/editorial-demo.html
   heading="Make a place for your fieldwork"
   heading-level=2
+  kicker="An illustrated opening"
+  lead="Give your materials a website you can shape and keep."
+  intro-image-path="/assets/images/site/xanthan-gum.png"
+  intro-alt-text="A wooden bowl of xanthan gum with a measuring scoop"
+  intro-caption="The other xanthan. Photo by Mhgunning, CC0."
   story-heading-level=3
   image-path="/assets/images/site/default.jpg"
   alt-text="A sample photograph from the site"
@@ -38,7 +43,12 @@ The introduction stays on the page background. The tabbed examples sit in a cont
 |-----------|----------|---------|-------|
 | `heading` | yes | — | Opening statement, rendered by the component |
 | `heading-level` | no | `1` | Opening heading level, 1–6 |
+| `kicker` | no | empty | Small label above the opening heading |
+| `lead` | no | empty | Prominent opening paragraph; Markdown supported |
 | `intro` | no | empty | Introduction; Markdown supported |
+| `intro-image-path` | no | empty | Illustration beside the introduction; separate from the editable figure |
+| `intro-alt-text` | no | `intro-caption` | Description of the opening illustration |
+| `intro-caption` | no | empty | Opening illustration caption; Markdown supported |
 | `id` | no | `editorial-demo` | Set a unique ID if using more than one on a page |
 | `story-heading` | no | Reading a landscape | Title of the sample passage |
 | `story-heading-level` | no | `2` | Sample heading level, 1–6 |
@@ -57,9 +67,58 @@ The introduction stays on the page background. The tabbed examples sit in a cont
 | `secondary-url` | no | empty | Optional second link |
 | `secondary-label` | no | Explore real sites | Second link label |
 
-The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, images from the same site, and percentage widths. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
+The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, a heading-level integer from 1 to 6 (quoted or unquoted), images from the same site, and percentage widths. All six heading levels have distinct sizes in the preview. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
 
-The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
+The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. Its opening illustration is a CC0 photograph of xanthan gum; the caption links to the source. For an illustrated opening, pass `intro-image-path`, `intro-alt-text`, and `intro-caption`; omit the image path to keep a text-only introduction. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
+
+---
+
+## ScrollStory Source Demo
+
+**File:** `scrollstory/source-demo.html`
+
+Open with a large scrolling story, then let readers choose **See and edit the text** to place the source beside it. Images stay in view while the text moves; the view changes at an image instruction between passages. Text position, image order, headings, and paragraphs can all be changed locally. Returning to the wide story preserves those edits and the reader's place. [Try a Scrolling Story]({{ site.baseurl }}/docs/scrollstories/try-a-story) uses it as a visual introduction before the longer essays.
+
+Put two to four scenes in the page's front matter:
+
+```yaml
+story_scenes:
+  - image-path: /assets/images/backgrounds/hike-1.jpg
+    alt-text: Rocky slopes under a blue sky
+    heading: A first view
+    text: The hillside draws the eye toward the horizon.
+  - image-path: /assets/images/backgrounds/lake-1.jpg
+    alt-text: Clouds reflected in a lake with a small boat
+    heading: A second look
+    text: Water gives the horizon a reflection and the scene another scale.
+```
+
+Then place the example in the page:
+
+```liquid
+{% raw %}{% include scrollstory/source-demo.html
+  scenes=page.story_scenes
+  heading="Read the landscape in two views"
+  heading-level=2
+  story-heading-level=3
+%}{% endraw %}
+```
+
+| Parameter | Required | Default | Notes |
+|-----------|----------|---------|-------|
+| `scenes` | yes | — | Array of two to four scenes; fields below |
+| `heading` | no | Shape a story as you read | Component heading, aligned with the wide preview |
+| `heading-level` | no | `2` | Component heading level, 1–6 |
+| `story-heading-level` | no | `2` | Initial level of the scene headings, 1–6 |
+| `id` | no | `story-demo` | Unique ID when placing several examples on a page |
+| `story-id` | no | `my-story` | Matching `bg-id` in the displayed source |
+| `box-align` | no | `left` | `left`, `center`, or `right` |
+
+Each scene takes `image-path`, `heading`, and `text`. Give it an `alt-text` description too; the heading is the fallback. Text can contain Markdown headings and paragraphs. Use images already in the site.
+
+The copyable fragment uses `scrollybox/bg-multi-long.html`, `bg-switch.html`, and `bg-multi-long-close.html`. The contained preview models those includes in its own scroll region; a real story fills the page. It recognises only that pattern, two to four images, basic headings and paragraphs, and local image paths. It never evaluates visitor Liquid or HTML. Invalid source preserves the last working preview. Without JavaScript, all the scenes, images, and complete source are visible. The editor toggle is a keyboard-operable button with an expanded state; on phones the editor opens below the story. Scrolling works with touch, a pointer, or the keyboard; the preview introduces no automatic movement.
+
+The include, stylesheet (`story-demo.css`), and script (`story-demo.js`) sync to all starters. `demo-source.js` shares the restricted source reader with the homepage's editorial example. The ScrollStories overview and editing page both read `demo-scenes` from Forest's front matter, so one excerpt supplies both demos. The full essay keeps its prose in the page body, and its photographs travel with the synced Forest directory. The preview's `data-toc-ignore` attribute keeps its editable headings out of the host page's table of contents.
 
 ---
 
@@ -280,7 +339,7 @@ Description of third image" | split: '|'
 
 **File:** `typography/alert.html`
 
-Colored callout box for tips, warnings, or important information.
+Callout box for tips, warnings, or important information. The type has a visible label as well as a distinct tint and border, so color is not the only cue. Heading levels change both document structure and the title's size.
 
 ```
 {% raw %}{% include typography/alert.html
@@ -295,7 +354,7 @@ Colored callout box for tips, warnings, or important information.
 | `class` | no | `info` | `info` (blue), `warning` (yellow), `danger` (red), `success` (green) |
 | `text` | yes | --- | Alert content; supports Markdown |
 | `title` | no | --- | Bold heading at top of alert |
-| `heading-level` | no | `3` | Heading level for the title, 2–6 |
+| `heading-level` | no | `3` | Heading level for the title, 1–6 |
 
 ---
 

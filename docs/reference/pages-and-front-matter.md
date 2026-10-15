@@ -92,6 +92,10 @@ Add a full-width header image to any page. The `header-tier` controls visual wei
 | `thumbnail` | `thumbnail: images/thumb.jpg` | Image used in navigation cards |
 | `tags` | `tags: [mapping, history]` | Categorizes pages; see [Tags](tags) |
 | `autoscroll` | `autoscroll: true` | Enables hands-free auto-scroll (press P to start/pause); ScrollStory pages only; off by default |
+| `redirect-to` | `redirect-to: /docs/scrollstories/` | Forwards an old page URL to another path on this site, including the site's base path |
+| `searchable` | `searchable: false` | Leaves an alias or other utility page out of site search |
+
+For a moved page, keep its old file with `redirect-to`, `searchable: false`, and a normal Markdown link to the destination as a fallback. Use a site-root path beginning with `/`; canonical and social URLs point to the destination too.
 
 ### Geographic fields
 

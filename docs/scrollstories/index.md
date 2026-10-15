@@ -8,15 +8,15 @@ summary: Give images, maps, and words room to make an argument together, in a st
 # Visual Storytelling with ScrollStories
 
 {: .lede}
-A photograph can establish a place before you write a word. A map can make the distance in a journey palpable. Two images can reveal a change that paragraphs struggle to describe. A ScrollStory gives those materials room to do intellectual work together, unfolding as the reader moves down the page.
+A photograph establishes a place. A change of view can turn an argument. A ScrollStory lets words, images, and maps unfold together as the reader moves down the page.
 
-You decide what stays in view, what changes, and when the reader encounters the next piece of evidence. Scrolling becomes part of the telling.
+You decide what stays in view, what changes, and when. The reader sets the pace.
 {% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
 {% assign forest_opening = forest.demo-scenes | slice: 0, 1 %}
 {% include scrollstory/sequence.html
   scenes=forest_opening
   heading="Let the words move"
-  intro="Keep a photograph in view while a passage crosses it. The words travel from the bottom of the screen to the top; only then does the photograph move away."
+  intro="Hold a photograph while its passage crosses the screen. Once the words clear the top, the image moves away."
   id="forest-scroll"
   show-source=true
 %}
@@ -25,7 +25,7 @@ You decide what stays in view, what changes, and when the reader encounters the 
 {% include scrollstory/sequence.html
   scenes=forest_changes
   heading="Change the view"
-  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the second view fades in when the first text box reaches the top."
+  intro="Hold the frame while the view changes. The second photograph fades in as the first text box reaches the top."
   id="forest-fade"
   transition="fade"
   show-source=true
@@ -34,7 +34,7 @@ You decide what stays in view, what changes, and when the reader encounters the 
 {% include maps/story-map.html
   map-id="trail-intro"
   heading="Follow a journey"
-  intro="A map can carry the reader from one place to the next while the words explain the journey. This example borrows the map and two stops from the Old Spanish Trail essay."
+  intro="Let the map follow the narrative. These two stops use the map from the Old Spanish Trail essay."
   overlay-image="/assets/images/maps/whipple-1854.webp"
   overlay-bounds="32.45416, -119.73999, 37.10777, -106.34216"
   overlay-alt="Whipple's 1854 survey map, with the routes of the Old Spanish Trail drawn across it"
@@ -78,41 +78,33 @@ The view shifts across the Mojave while the passage continues. A change of scale
   intro="This is one passage from the map above. Its place and scale tell the map where to move. The map image and route are set once, before the passages."
 %}
 
-The words, images, and places are named in a text file. Open **See the text** under an example to inspect it. Read the full [Forest]({{ site.baseurl }}/scrollstories/forest/) and [Trail]({{ site.baseurl }}/scrollstories/trail/) essays, or [try changing a passage]({{ site.baseurl }}/docs/scrollstories/try-a-story) and borrow the arrangement for your own work.
+Open **See the text** beneath an example to inspect the words and instructions behind it. Borrow an arrangement, then replace its images and passages with your own.
 
 ---
 
 ## Let the reader linger
 
-The form works for a close reading of a painting, a walk through an archive, a field report, an oral history, or an argument about a changing landscape. Text, images, maps, audio, and video can share a continuous narrative. In Xanthan, that narrative is a page in your own website.
+Use the form where looking closely matters: a painting, an archive, a field report, or a changing landscape. Ask what the reader should see while reading each passage. Keep movement that helps the argument, and let a still image linger when it needs time.
 
-Think of the screen as a place to arrange evidence. Hold a photograph beside several paragraphs so readers can look back at the detail you are discussing. Change from an old view to a new one at the moment your argument turns. Follow a route across a historic map while the text explains what made each crossing possible.
-
-These choices shape attention. An image held in place gives the reader time to inspect it. A change of scale can connect one object to a landscape. A quiet passage of prose lets a complicated visual moment settle.
-
-Start with the relationship between your materials. What should the reader see while reading this sentence? What becomes clearer when these two images appear in sequence? The answer gives a visual effect a purpose.
-
-A ScrollStory can also stay simple: generous images, careful typography, captions, and footnotes. You choose the rhythm that suits the argument.
+A ScrollStory can also stay simple, with generous images, captions, and footnotes. You choose the rhythm.
 
 ---
 
 ## Keep the work in your hands
 
-If you know Esri's ArcGIS StoryMaps, the reading experience will feel familiar. ArcGIS StoryMaps provides a visual builder within the ArcGIS platform. Its [account types determine which features are available](https://doc.esri.com/en/arcgis-storymaps/latest/reference/licensing.html): free public accounts have limits, including on custom themes and embedded web content.
+If you know Esri's ArcGIS StoryMaps, the reading experience will feel familiar. In Xanthan, the story is part of a website whose files you control. Keep your writing, images, and design together; download the project, revise it, or move it to another host. Using the framework requires no Xanthan subscription.
 
-Xanthan gives you the visual storytelling form through an open-source framework. Your writing lives in readable text files alongside your images, page settings, and design. You can download the whole project, keep a copy, revise it, and publish the site on GitHub Pages, a university server, or another web host. Using the framework requires no Xanthan subscription.
+You can publish on GitHub Pages, a university server, or another host. A future collaborator can open the same materials, understand how the story was assembled, and reuse a section in another project.
 
-That matters for work that outlives a course, a grant, or an institutional account. A future collaborator can open the materials and understand how the story was assembled. You can reuse a section in another project, change the site's design, or move the site to another host. Maps and media you embed from outside services still depend on those services; keeping copies of your own materials makes the project easier to preserve.
+That independence matters after a course, grant, or institutional account ends. An AI assistant can help arrange the materials; you remain the author and editor. Embedded maps and media still depend on their outside services.
 
-Working with files takes some getting used to. Xanthan makes that work legible: named settings, reusable pieces, and examples you can copy. An AI assistant can read the same materials and help arrange them. You can ask it to hold an image beside a passage, give a section more breathing room, or explain a change before you accept it. You remain the author and editor; the framework and the assistant help with the typesetting.
+The file names and reusable pieces give you and an assistant a shared vocabulary. Ask it to hold a photograph beside a passage or give a section more breathing room, then judge the result as an editor.
 
 ---
 
 ## Explore three examples
 
-For a short story beside its editable text file, [try a scrolling story]({{ site.baseurl }}/docs/scrollstories/try-a-story). Change the words, swap the images, and see how the arrangement changes the reading.
-
-Read these first as a visitor. Notice where you pause, what stays visible, and how the movement changes your understanding. Then choose something worth borrowing.
+Read these first as a visitor, then borrow an arrangement that serves your story.
 
 ### [Where the Name Comes From: Amaranth](https://amaranth.unm.edu/about/name-origins/)
 
@@ -122,7 +114,9 @@ Read these first as a visitor. Notice where you pause, what stays visible, and h
   alt-text="Amaranth's naming story opens with a large red title over a botanical illustration."
 %}
 
-Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio. Read it as a finished essay, and notice how the visual materials help carry the argument.
+Botanical illustrations, literary history, and food connect a plant's changing meanings to the work of a humanities studio. Notice how the images help carry the argument.
+
+Read it as a finished essay, noticing where the changing view invites you to pause or connects one source to another.
 
 ### [Forest: explore the possibilities]({{ site.baseurl }}/scrollstories/forest/)
 
@@ -132,7 +126,9 @@ Amaranth's naming story moves between botanical illustrations, literary history,
   alt-text="Forest's opening, with a large title and subtitle over a photograph of misty woodland."
 %}
 
-Background images hold still, change, and give way to other views. Text moves beside images, and a comparison slider lets the reader inspect differences. Forest brings the toolkit together in one essay. Borrow a moment that suits your story; there is no obligation to use the whole forest.
+Images hold still, change, and give way to other views. Forest brings the toolkit together in one essay; borrow a moment that suits your argument.
+
+Text moves beside images, and a comparison slider lets the reader inspect differences. There is no obligation to use the whole forest.
 
 ### [Trail: a story map]({{ site.baseurl }}/scrollstories/trail/)
 
@@ -142,13 +138,13 @@ Background images hold still, change, and give way to other views. Text moves be
   alt-text="Trail's historic map with a highlighted route beside the passage Armijo’s crossing, 1829."
 %}
 
-The Old Spanish Trail moves across an 1854 survey map as the essay follows a mule route from Santa Fe to Los Angeles. The route and the map tell different stories about the same country. Trail shows how a map can become part of an interpretation, with places and paths coming into focus as the argument develops.
+Follow a mule route from Santa Fe to Los Angeles across an 1854 survey map. Places and paths come into focus as the argument develops.
+
+The route and the historic map tell different stories about the same country; their relationship becomes part of the interpretation.
 
 ---
 
 ## Follow an argument
-
-The most useful possibilities emerge from a subject worth looking at closely. This finished story offers another way to use images as evidence, giving readers time to compare, notice, and return to the argument.
 
 ### [A Cultural History of Arkham Asylum](https://hadas496.github.io/comics-and-Reaganomics-/)
 
@@ -158,8 +154,8 @@ Hadas Segal puts Batman comics, personal memory, and the history of psychiatric 
 
 ## One story within a larger site
 
-Every Xanthan starter site can publish ScrollStories. A **Portfolio** can put a visual essay beside your research and teaching. An **Essay Collection** can gather stories by a class or project team. An **Object Collection** can connect individual objects through a larger narrative. **Single Story** puts one continuous narrative at the center of the site.
+A visual essay can sit beside research and teaching in a **Portfolio**, join a class **Essay Collection**, or connect objects in an **Object Collection**. **Single Story** puts one narrative at the site's center. Every starter supports the same storytelling tools.
 
-The story shares your site's navigation and design. You can connect it to sources, related essays, a collection, or an account of how the research was done. The reader can follow the argument and then explore the work around it.
+The story shares your site's navigation and design. Connect it to sources, related essays, a collection, or an account of how the research was done. Readers can follow the argument and then explore the work around it.
 
 [Start your own story]({{ site.baseurl }}/docs/scrollstories/start-your-story) with a few images and one passage of writing. You can build the rest from there.

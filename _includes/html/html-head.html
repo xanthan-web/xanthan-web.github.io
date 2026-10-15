@@ -7,6 +7,15 @@
 
   <meta name="description" content="{{ page.summary | default: 'Xanthan is a free, open-source website template for digital scholarship, portfolios, and scrollytelling narratives.' | escape }}">
   <meta name="author" content="">
+  {%- comment -%}
+    Keep a moved page as an alias with redirect-to: /new-path/. The default
+    page body should include a Markdown link for browsers that do not redirect.
+    relative_url keeps the destination inside a starter site's project path.
+  {%- endcomment -%}
+  {% assign canonical_path = page.redirect-to | default: page.url %}
+  {% if page.redirect-to %}
+  <meta http-equiv="refresh" content="0; url={{ page.redirect-to | relative_url | escape }}">
+  {% endif %}
   <link rel="icon" href="{{site.baseurl}}/favicon.ico">
   {%- comment -%}
     site.url is the host only; the project path lives in site.baseurl. Omitting
@@ -15,12 +24,12 @@
     engines and social cards at a 404. GitHub Pages fills both in
     automatically, so a site owner does not have to set either.
   {%- endcomment -%}
-  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ canonical_path }}">
 
   <!-- Open Graph for social sharing -->
   <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
   <meta property="og:description" content="{{ page.summary | default: 'Xanthan is a free, open-source website template for digital scholarship, portfolios, and scrollytelling narratives.' | escape }}">
-  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ canonical_path }}">
   {% if page.thumbnail or page.header-image %}
   <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}{{ page.dir }}{{ page.thumbnail | default: page.header-image }}">
   {% endif %}

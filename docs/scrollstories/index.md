@@ -114,15 +114,15 @@ For a short story beside its editable text file, [try a scrolling story]({{ site
 
 Read these first as a visitor. Notice where you pause, what stays visible, and how the movement changes your understanding. Then choose something worth borrowing.
 
-### [Seedling: a simple essay]({{ site.baseurl }}/scrollstories/seedling/)
+### [Where the Name Comes From: Amaranth](https://amaranth.unm.edu/about/name-origins/)
 
 {% include images/figure.html
-  image-path="/assets/images/site/scrollstory-seedling.jpg"
+  image-path="/assets/images/site/scrollstory-amaranth.jpg"
   image-width="100%"
-  alt-text="Seedling's opening, with its title over a photograph of green shoots emerging from soil."
+  alt-text="Amaranth's naming story opens with a large red title over a botanical illustration."
 %}
 
-Images, captions, pull quotes, and footnotes give ordinary writing a visual rhythm. Seedling is a useful starting point for an illustrated essay: you can concentrate on the words and evidence, then add movement where it helps.
+Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio. Read it as a finished essay, and notice how the visual materials help carry the argument.
 
 ### [Forest: explore the possibilities]({{ site.baseurl }}/scrollstories/forest/)
 
@@ -148,11 +148,7 @@ The Old Spanish Trail moves across an 1854 survey map as the essay follows a mul
 
 ## Follow an argument
 
-The most useful possibilities emerge from a subject worth looking at closely. These finished stories use images as evidence, giving readers time to compare, notice, and return to the argument.
-
-### [Where the Name Comes From](https://amaranth.unm.edu/about/name-origins/)
-
-Amaranth's naming story moves between botanical illustrations, literary history, food, and agriculture. Changing images connect the meanings people give a plant to the work of a digital humanities studio.
+The most useful possibilities emerge from a subject worth looking at closely. This finished story offers another way to use images as evidence, giving readers time to compare, notice, and return to the argument.
 
 ### [A Cultural History of Arkham Asylum](https://hadas496.github.io/comics-and-Reaganomics-/)
 

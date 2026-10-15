@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Screenshots illustrate the Seedling, Forest, and Trail examples on the
+- Screenshots illustrate Amaranth's naming story and the Forest and Trail examples on the
   ScrollStories introduction, using the existing figure component.
 - Three short reading patterns on the ScrollStories introduction: a photograph
   that leaves after its text, a shared frame that fades as its first passage reaches the top,

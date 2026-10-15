@@ -86,14 +86,17 @@ Not here: the collection map (nav/map.html) — different job, different data
 
   function addData(map, geo, cfg, state) {
     state.layer = L.geoJSON(geo, {
+      interactive: cfg.interactive !== false,
       style: function (f) { return featureStyle(f, cfg, state.highlight); },
       pointToLayer: function (f, latlng) {
         return L.circleMarker(latlng, {
+          interactive: cfg.interactive !== false,
           radius: 6, weight: 2, color: cfg.markerEdge,
           fillColor: cfg.placeColor, fillOpacity: 0.95
         });
       },
       onEachFeature: function (f, layer) {
+        if (cfg.interactive === false) return;
         var p = f.properties || {};
         if (p.name) layer.bindTooltip(p.name, { sticky: true });
         if (p.description || p.url) layer.bindPopup(popupHTML(p), { maxWidth: 320 });
@@ -128,19 +131,41 @@ Not here: the collection map (nav/map.html) — different job, different data
     );
     if (!steps.length) return;
 
-    var visible = [];
+    var scheduled = false;
+    var initialCenter = map.getCenter();
+    var previous = {
+      center: [initialCenter.lat, initialCenter.lng],
+      zoom: map.getZoom(), overlay: cfg.overlay,
+      opacity: cfg.overlayOpacity === undefined ? 0.9 : cfg.overlayOpacity
+    };
+    /* Resolve inherited settings once, in reading order. Returning to an
+       earlier passage must undo a later fade or overlay swap, even after a
+       jump that skipped the intervening passages. */
+    var destinations = steps.map(function (step) {
+      var s = readJSON(step, 'data-step') || {};
+      previous = {
+        center: toLatLng(s.center) || previous.center,
+        zoom: s.zoom === undefined ? previous.zoom : parseFloat(s.zoom),
+        overlay: s.overlay || previous.overlay,
+        opacity: s.opacity === undefined ? previous.opacity : parseFloat(s.opacity),
+        highlight: s.highlight || null
+      };
+      return previous;
+    });
+    var currentOverlay = cfg.overlay;
 
     function go(step) {
-      var s = readJSON(step, 'data-step') || {};
-      var center = toLatLng(s.center);
-      var zoom = s.zoom === undefined ? map.getZoom() : parseFloat(s.zoom);
+      var s = destinations[steps.indexOf(step)];
+      var center = s.center;
+      var zoom = s.zoom;
 
       if (center) {
         if (REDUCED_MOTION) map.setView(center, zoom, { animate: false });
         else map.flyTo(center, zoom, { duration: 1.4 });
       }
-      if (s.overlay && state.overlay) {
+      if (s.overlay && state.overlay && s.overlay !== currentOverlay) {
         state.overlay.setUrl(s.overlay);
+        currentOverlay = s.overlay;
       }
       if (s.opacity !== undefined && state.overlay) {
         state.overlay.setOpacity(parseFloat(s.opacity));
@@ -153,27 +178,26 @@ Not here: the collection map (nav/map.html) — different job, different data
     }
 
     function apply() {
-      if (!visible.length) return;          // between steps: hold the last view
-      visible.sort(function (a, b) { return steps.indexOf(a) - steps.indexOf(b); });
-      if (visible[0] === state.current) return;
-      state.current = visible[0];
+      scheduled = false;
+      var current = steps[0];
+      var trigger = window.innerHeight * 0.45;
+      steps.forEach(function (step) {
+        if (step.getBoundingClientRect().top <= trigger) current = step;
+      });
+      if (current === state.current) return;
+      state.current = current;
       go(state.current);
     }
 
-    /* Same trigger band as scrollybox/bg-switch.html: rootMargin collapses the
-       viewport to a strip across the middle, and whichever step sits in that
-       strip is the current one. Percentages survive a resize and a rotation
-       without any recalculation. */
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var i = visible.indexOf(entry.target);
-        if (entry.isIntersecting && i === -1) visible.push(entry.target);
-        if (!entry.isIntersecting && i !== -1) visible.splice(i, 1);
-      });
-      apply();
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-
-    steps.forEach(function (el) { observer.observe(el); });
+    /* Read the last passed marker rather than waiting for a one-pixel marker
+       to intersect a narrow band. Page jumps and fast backward scrolling can
+       cross that band between frames; the destination must still be correct. */
+    function schedule() {
+      if (!scheduled) { scheduled = true; window.requestAnimationFrame(apply); }
+    }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    apply();
   }
 
   // --------------------------------------------------------------------- init

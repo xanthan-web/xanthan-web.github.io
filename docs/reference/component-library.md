@@ -80,8 +80,9 @@ The Xanthan homepage supplies its introduction and sample passage from an `openi
 Put a short visual story directly into a page. Each photograph stays in view
 while its passage moves through ordinary page scrolling, then gives way to the
 next scene. The [ScrollStories overview]({{ site.baseurl }}/docs/scrollstories/)
-uses it for three passages from Forest. Readers continue straight into the rest
-of the introduction without entering or leaving a separate scrolling area.
+uses it to distinguish a photograph scrolling away from one view fading into
+another. Readers continue through the introduction without entering or leaving
+a separate scrolling area.
 
 Supply an array of scenes, with `image-path`, `alt-text`, `heading`, and `text`:
 
@@ -102,6 +103,8 @@ story_scenes:
   scenes=page.story_scenes
   heading="A landscape in two views"
   id="landscape-walk"
+  transition="fade"
+  show-source=true
 %}{% endraw %}
 ```
 
@@ -113,16 +116,61 @@ story_scenes:
 | `id` | no | `story-sequence` | Unique ID for this sequence and its headings |
 | `heading-level` | no | `2` | Sequence heading level, 1–6 |
 | `scene-heading-level` | no | Next level, up to 6 | Heading level for the passages |
+| `transition` | no | `scroll` | `scroll` lets each image leave after its card clears; `fade` changes a shared frame when the next card reaches the top |
+| `show-source` | no | `false` | Add a native “See the text” disclosure with a complete copyable page |
 
 Each scene's `alt-text` describes its photograph; the scene heading is the
-fallback. Passages support Markdown. The component uses CSS alone: no nested
-scroll region, wheel or touch listener, or automatic movement. Reduced-motion
-and print views show ordinary images followed by text. Styles live in
-`story-sequence.css`; the two height tokens in `base.css` control its pacing.
+fallback. Passages support Markdown. Cards enter at the bottom and clear the
+top before a scrolling image leaves. Scroll mode uses CSS alone. Fade mode
+adds a passive page-scroll listener and opacity layers; it never captures wheel
+or touch input. The top of the reading area is below a visible navbar.
+Reduced-motion, print, and no-JavaScript views keep all the images and passages
+readable; reduced-motion and print layouts stack them without pinning.
+
+Styles live in `story-sequence.css`; the viewport-height token in `base.css`
+controls the image height and the space that lets each card cross the screen.
+`story-sequence.js` handles fade mode. “See the text” uses
+`layout/source-example.html` and displays the actual scene settings and include,
+with no code evaluated in the reader's browser.
 
 For a field report, supply photographs and observations from successive stops
 on a walk. For an exhibition, use a detail, the whole object, and its setting.
 Keep the sequence short enough to serve the argument around it.
+
+---
+
+## Source Example
+
+**File:** `layout/source-example.html`
+
+Keep a visual example readable first, with its copyable source available in a
+keyboard-operable disclosure. The ScrollStories overview uses it beneath the
+photographs and for a short map passage. The source wraps and grows with the
+page, rather than introducing another scrollable panel.
+
+```liquid
+{% raw %}{% capture example_source %}
+### At the water
+
+The same landscape takes on another scale from the shore.
+{% endcapture %}
+{% include layout/source-example.html
+  source=example_source
+  label="See the text"
+  intro="The passage above, as it appears in the page file."
+%}{% endraw %}
+```
+
+| Parameter | Required | Default | Notes |
+|-----------|----------|---------|-------|
+| `source` | yes | — | Source string, displayed as escaped text |
+| `label` | no | See the text | Native disclosure label |
+| `intro` | no | empty | Context for the fragment; Markdown supported |
+
+For source containing Liquid instructions, put those instructions inside a
+Liquid raw/endraw pair within the capture so Jekyll displays them instead of
+running them. A missing source produces a visible warning. This component
+needs no JavaScript; its styles live in `source-example.css`.
 
 ---
 
@@ -719,7 +767,7 @@ Lays a scanned map over real coordinates and draws GeoJSON on top of it. Sits in
 | `center` | no | fits the overlay | `"lat, lng"` |
 | `zoom` | no | fits the overlay | Zoom level |
 | `height` | no | `32rem` | CSS height |
-| `interactive` | no | `true` | `false` stops the reader panning and zooming |
+| `interactive` | no | `true` | `false` disables panning, zooming, tooltips, and route-marker interactions |
 | `map-id` | no | `figure-map` | Needed only if a page holds more than one map |
 | `caption` | no | --- | Printed under the map |
 
@@ -783,6 +831,9 @@ The named route stays bold; everything else dims.
 |-----------|----------|---------|-------|
 | `map-id` | **yes** | --- | Unique id; the panels use it to find this map |
 | `height` | no | `100vh` | CSS height of the pinned map |
+| `heading` | no | --- | Optional heading aligned with the introduction above the full-width map |
+| `heading-level` | no | `2` | Heading level, 1–6 |
+| `intro` | no | --- | Optional introduction; Markdown supported |
 
 `maps/story-map-panel.html`:
 
@@ -803,6 +854,8 @@ The map moves when a panel reaches the middle of the screen. Between panels it h
 For a beat with no words --- a wide view between two passages --- use `maps/story-map-step.html`, which takes the same parameters as a panel but renders nothing.
 
 See [The Old Spanish Trail](../../scrollstories/trail/) for all of it working together.
+
+The [ScrollStories introduction](../scrollstories/) uses `heading="Follow a journey"`, an `intro`, and `interactive=false` for a short, passive example. Its two panels move the view as the reader scrolls; the map has no controls or route popups to interrupt the reading.
 
 ---
 

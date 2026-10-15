@@ -1,0 +1,50 @@
+/*****************************************************
+SOURCE EXAMPLE
+
+A small, keyboard-operable disclosure for the text behind a visual example.
+Source wraps and grows with the page, so opening it creates no scroll trap.
+
+Loads:    every page
+Used by:  layout/source-example.html, scrollstory/sequence.html
+Needs:    base.css tokens
+Not here: live editing controls (editorial-demo.css, story-demo.css)
+*****************************************************/
+
+.source-example {
+  margin-block: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-body);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+}
+.source-example summary { cursor: pointer; font-weight: 600; }
+.source-example summary:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: var(--spacing-xs);
+}
+.source-example-intro { margin-top: var(--spacing-sm); }
+.source-example-intro p { margin: 0; }
+.source-example pre {
+  margin: var(--spacing-sm) 0 0;
+  padding: var(--spacing-sm);
+  color: var(--text-body);
+  background: var(--bg-editorial-note);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+.source-example code {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+@media (max-width: 600px) {
+  .source-example { padding-inline: var(--spacing-sm); }
+  .source-example pre { font-size: 1rem; }
+}

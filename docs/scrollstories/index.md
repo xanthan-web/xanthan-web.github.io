@@ -12,9 +12,73 @@ A photograph can establish a place before you write a word. A map can make the d
 
 You decide what stays in view, what changes, and when the reader encounters the next piece of evidence. Scrolling becomes part of the telling.
 {% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
-{% include scrollstory/sequence.html scenes=forest.demo-scenes heading="A walk through Forest" id="forest-walk" %}
+{% assign forest_opening = forest.demo-scenes | slice: 0, 1 %}
+{% include scrollstory/sequence.html
+  scenes=forest_opening
+  heading="Let the words move"
+  intro="Keep a photograph in view while a passage crosses it. The words travel from the bottom of the screen to the top; only then does the photograph move away."
+  id="forest-scroll"
+  show-source=true
+%}
 
-Read the full [Forest essay]({{ site.baseurl }}/scrollstories/forest/), or [try changing the passage]({{ site.baseurl }}/docs/scrollstories/try-a-story) and borrow the arrangement for your own work.
+{% assign forest_changes = forest.demo-scenes | slice: 1, 2 %}
+{% include scrollstory/sequence.html
+  scenes=forest_changes
+  heading="Change the view"
+  intro="A change of photograph can mark a change in the argument. Here the frame holds still, and the next view fades in when its passage reaches the top."
+  id="forest-fade"
+  transition="fade"
+  show-source=true
+%}
+
+{% include maps/story-map.html
+  map-id="trail-intro"
+  heading="Follow a journey"
+  intro="A map can carry the reader from one place to the next while the words explain what made the journey possible. These two stops come from the Old Spanish Trail essay."
+  overlay-image="/assets/images/maps/whipple-1854.webp"
+  overlay-bounds="32.45416, -119.73999, 37.10777, -106.34216"
+  overlay-alt="Whipple's 1854 survey map, with the routes of the Old Spanish Trail drawn across it"
+  overlay-opacity="0.92"
+  geojson="/assets/data/old-spanish-trail.geojson"
+  basemap="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  basemap-attribution="&copy; OpenStreetMap contributors"
+  attribution="Trail data: National Park Service. Historic map: Whipple survey, 1854."
+  center="35.9, -111.5"
+  zoom=7
+  interactive=false
+%}
+
+{% include maps/story-map-panel.html map-id="trail-intro" center="35.9, -111.5" zoom=7 highlight="Armijo Route" panel-align="left" %}
+### A southern crossing
+
+Antonio Armijo took sixty men and a string of mules out of Abiquiú in November 1829 and reached the San Gabriel mission the following January. His was the first commercial caravan to make the trip and return, and the route that carries his name is highlighted here.
+{% include maps/story-map-panel-end.html %}
+
+{% capture mojave_passage %}
+### Across the Mojave
+
+Between the Virgin River and the Mojave River lay a stretch that parties crossed at night, moving between springs they had to know about in advance.
+{% endcapture %}
+{% include maps/story-map-panel.html map-id="trail-intro" center="35.3, -116.0" zoom=8 highlight="Mojave Road" panel-align="left" %}
+{{ mojave_passage }}
+{% include maps/story-map-panel-end.html %}
+{% include maps/story-map-end.html %}
+
+{% capture map_passage_source %}{% raw %}{% include maps/story-map-panel.html
+  map-id="trail-intro"
+  center="35.3, -116.0"
+  zoom=8
+  highlight="Mojave Road"
+  panel-align="left"
+%}{% endraw %}
+{{ mojave_passage }}
+{% raw %}{% include maps/story-map-panel-end.html %}{% endraw %}{% endcapture %}
+{% include layout/source-example.html
+  source=map_passage_source
+  intro="This is one passage from the map above. Its place and scale tell the map where to move. The map image and route are set once, before the passages."
+%}
+
+The words, images, and places are named in a text file. Open **See the text** under an example to inspect it. Read the full [Forest]({{ site.baseurl }}/scrollstories/forest/) and [Trail]({{ site.baseurl }}/scrollstories/trail/) essays, or [try changing a passage]({{ site.baseurl }}/docs/scrollstories/try-a-story) and borrow the arrangement for your own work.
 
 ---
 

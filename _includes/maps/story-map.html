@@ -26,7 +26,11 @@
     - center:          "lat, lng" opening view (optional; defaults to the overlay)
     - zoom:            opening zoom level (optional)
     - height:          CSS height of the pinned map (default: 100vh)
-    - interactive:     false to stop the reader panning and zooming (default: true)
+    - interactive:     boolean, default true — false makes a passive map, with
+      no panning, zoom controls, or interactive route markers
+    - heading:         string, optional — heading above the full-width map
+    - heading-level:   integer 1–6, default 2 — level of the optional heading
+    - intro:           string, optional — introduction; Markdown supported
 
   Historic overlay parameters:
     - overlay-image:   the scanned map to lay on the world (optional)
@@ -66,6 +70,14 @@
    interactive=include.interactive %}
 
 {::nomarkdown}
+{% if include.heading %}
+{% assign map_heading_level = include.heading-level | default: 2 | plus: 0 %}
+{% if map_heading_level < 1 or map_heading_level > 6 %}{% assign map_heading_level = 2 %}{% endif %}
+<div class="story-map-intro">
+  <h{{ map_heading_level }}>{{ include.heading | escape }}</h{{ map_heading_level }}>
+  {% if include.intro %}{{ include.intro | markdownify }}{% endif %}
+</div>
+{% endif %}
 </div> <!-- close container so the map can run full width -->
 {:/nomarkdown}
 

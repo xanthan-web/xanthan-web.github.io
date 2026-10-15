@@ -2,8 +2,9 @@
 SCROLLSTORY SEQUENCE
 
 Full-width photographs with passages that move through the page's normal flow.
-Each photograph stays in view for its passage, then gives way to the next scene.
-There is no nested scrolling area or input handling.
+Each photograph stays in view until its passage clears the top. Scroll mode
+then lets the image leave; fade mode holds the frame and changes its layers.
+Both use ordinary page scrolling, with no wheel or touch input handling.
 
 Loads:    every page
 Used by:  scrollstory/sequence.html
@@ -24,6 +25,7 @@ Not here: the contained source editor (story-demo.css), or the older background
 }
 .story-sequence-heading { margin: 0; }
 .story-sequence-intro p { margin: var(--spacing-sm) 0 0; }
+.story-sequence-scenes { position: relative; }
 
 .story-sequence-scene {
   display: grid;
@@ -50,10 +52,9 @@ Not here: the contained source editor (story-demo.css), or the older background
   grid-area: 1 / 1;
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  min-height: var(--story-sequence-height);
-  padding: var(--spacing-xl) max(var(--spacing-md), calc((100% - var(--home-measure)) / 2));
+  /* One screen above and below the card is deliberate. When the next image
+     first enters at the bottom, the whole current card has cleared the top. */
+  padding: var(--story-sequence-view-height) max(var(--spacing-md), calc((100% - var(--home-measure)) / 2));
 }
 .story-sequence-card {
   max-width: 28rem;
@@ -71,10 +72,42 @@ Not here: the contained source editor (story-demo.css), or the older background
 .story-sequence-card p { margin: 0 0 var(--spacing-sm); text-align: left; }
 .story-sequence-card > :last-child { margin-bottom: 0; }
 
+.story-sequence-backdrop {
+  position: sticky;
+  top: 0;
+  height: var(--story-sequence-view-height);
+  margin-bottom: calc(-1 * var(--story-sequence-view-height));
+}
+.story-sequence-backdrop[hidden] { display: none; }
+.story-sequence-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+}
+.story-sequence-layer--active { opacity: 1; }
+.story-sequence--fade-ready .story-sequence-scene { display: block; position: relative; }
+/* Successive cards enter as the previous one clears; only the final card
+   needs a full trailing screen before the shared frame can leave. */
+.story-sequence--fade-ready .story-sequence-scene:not(:last-child) .story-sequence-passage {
+  padding-bottom: 0;
+}
+/* Keep each original photo in reading order for assistive technology. The
+   visible shared backdrop is decorative and excluded from that reading order. */
+.story-sequence--fade-ready .story-sequence-image {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
 @supports (height: 100svh) {
   .story-sequence {
     --story-sequence-view-height: 100svh;
-    --story-sequence-height: 120svh;
   }
 }
 
@@ -84,9 +117,19 @@ Not here: the contained source editor (story-demo.css), or the older background
 }
 
 @media print, (prefers-reduced-motion: reduce) {
-  .story-sequence-scene { display: block; }
-  .story-sequence-image { position: static; height: auto; }
+  .story-sequence .story-sequence-scene { display: block; }
+  .story-sequence .story-sequence-image {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    overflow: visible;
+  }
+  .story-sequence-backdrop { display: none; }
   .story-sequence-image img { height: auto; }
-  .story-sequence-passage { min-height: 0; padding-block: var(--spacing-lg); }
+  .story-sequence-passage,
+  .story-sequence.story-sequence--fade-ready .story-sequence-scene .story-sequence-passage {
+    padding-block: var(--spacing-lg);
+  }
   .story-sequence-card { box-shadow: none; }
 }

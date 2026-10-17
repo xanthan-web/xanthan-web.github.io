@@ -3,14 +3,34 @@ title: Visual Storytelling with ScrollStories
 layout: default
 date: 2026-10-14
 summary: Give images, maps, and words room to make an argument together, in a story whose materials you can keep and reshape.
+examples:
+  - title: "Where the Name Comes From: Amaranth"
+    thumbnail: "/assets/images/site/scrollstory-amaranth.jpg"
+    alt-text: "Amaranth's naming story opens with a large red title over a botanical illustration."
+    link: "https://amaranth.unm.edu/about/name-origins/"
+    position: 1
+  - title: "Forest: explore the possibilities"
+    thumbnail: "/assets/images/site/scrollstory-forest.jpg"
+    alt-text: "Forest's opening, with a large title and subtitle over a photograph of misty woodland."
+    link: "/scrollstories/forest/"
+    position: 2
+  - title: "Trail: a story map"
+    thumbnail: "/assets/images/site/scrollstory-trail.jpg"
+    alt-text: "Trail's historic map with a highlighted route beside the passage Armijo’s crossing, 1829."
+    link: "/scrollstories/trail/"
+    position: 3
+  - title: "A Cultural History of Arkham Asylum, by Hadas Segal"
+    thumbnail: "/assets/images/gallery/asylum.png"
+    alt-text: "A passage on superhero comics set between 1940s covers of Superman and Batman."
+    link: "https://hadas496.github.io/comics-and-Reaganomics-/"
+    position: 4
 ---
 
 # Visual Storytelling with ScrollStories
 
 {: .lede}
-A photograph establishes a place. A change of view can turn an argument. A ScrollStory lets words, images, and maps unfold together as the reader moves down the page.
+Scrollstories are built into all Xanthan starter sites, and are our open-source version of StoryMaps. A ScrollStory lets words, images, and maps unfold together as the reader moves down the page. You decide what stays in view, what changes, and when as the reader scrolls.
 
-You decide what stays in view, what changes, and when. The reader sets the pace.
 {% assign forest = site.pages | where: 'path', 'scrollstories/forest/index.md' | first %}
 {% assign forest_opening = forest.demo-scenes | slice: 0, 1 %}
 {% include scrollstory/sequence.html
@@ -82,73 +102,32 @@ Open **See the text** beneath an example to inspect the words and instructions b
 
 ---
 
-## Let the reader linger
-
-Use the form where looking closely matters: a painting, an archive, a field report, or a changing landscape. Ask what the reader should see while reading each passage. Keep movement that helps the argument, and let a still image linger when it needs time.
-
-A ScrollStory can also stay simple, with generous images, captions, and footnotes. You choose the rhythm.
-
----
-
 ## Keep the work in your hands
 
-If you know Esri's ArcGIS StoryMaps, the reading experience will feel familiar. In Xanthan, the story is part of a website whose files you control. Keep your writing, images, and design together; download the project, revise it, or move it to another host. Using the framework requires no Xanthan subscription.
+If you know Esri's ArcGIS StoryMaps, the reading experience will feel familiar. But there's one key difference. 
 
-You can publish on GitHub Pages, a university server, or another host. A future collaborator can open the same materials, understand how the story was assembled, and reuse a section in another project.
+In StoryMaps, everything you do is through their interface and stored in their proprietary platform. Stories are not portable and are tied to a particular account.
 
-That independence matters after a course, grant, or institutional account ends. An AI assistant can help arrange the materials; you remain the author and editor. Embedded maps and media still depend on their outside services.
+In Xanthan, the story is driven by simple text files that you control. You keep your writing, images, and other files together. You can always use a different host to share your story. It's a little more DIY, but there's no coding, and after a few hours, you'll be glad for the flexibility and freedom.
 
-The file names and reusable pieces give you and an assistant a shared vocabulary. Ask it to hold a photograph beside a passage or give a section more breathing room, then judge the result as an editor.
+Because Xanthan is built for GitHub Pages, collaboration is already baked in. A future collaborator can open the same files, understand how the story was assembled, and add to it.
+
+That independence truly matters after a course, grant, or institutional account ends, or for ongoing projects where contributors come and go.
+
 
 ---
 
-## Explore three examples
+## Explore examples
 
 Read these first as a visitor, then borrow an arrangement that serves your story.
 
-### [Where the Name Comes From: Amaranth](https://amaranth.unm.edu/about/name-origins/)
-
-{% include images/figure.html
-  image-path="/assets/images/site/scrollstory-amaranth.jpg"
-  image-width="100%"
-  alt-text="Amaranth's naming story opens with a large red title over a botanical illustration."
+{% include nav/gallery-grid.html
+  items=page.examples
+  variant="uniform"
+  aspect-ratio="16 / 9"
+  min-width="300px"
+  gap="var(--spacing-sm)"
 %}
-
-Botanical illustrations, literary history, and food connect a plant's changing meanings to the work of a humanities studio. Notice how the images help carry the argument.
-
-Read it as a finished essay, noticing where the changing view invites you to pause or connects one source to another.
-
-### [Forest: explore the possibilities]({{ site.baseurl }}/scrollstories/forest/)
-
-{% include images/figure.html
-  image-path="/assets/images/site/scrollstory-forest.jpg"
-  image-width="100%"
-  alt-text="Forest's opening, with a large title and subtitle over a photograph of misty woodland."
-%}
-
-Images hold still, change, and give way to other views. Forest brings the toolkit together in one essay; borrow a moment that suits your argument.
-
-Text moves beside images, and a comparison slider lets the reader inspect differences. There is no obligation to use the whole forest.
-
-### [Trail: a story map]({{ site.baseurl }}/scrollstories/trail/)
-
-{% include images/figure.html
-  image-path="/assets/images/site/scrollstory-trail.jpg"
-  image-width="100%"
-  alt-text="Trail's historic map with a highlighted route beside the passage Armijo’s crossing, 1829."
-%}
-
-Follow a mule route from Santa Fe to Los Angeles across an 1854 survey map. Places and paths come into focus as the argument develops.
-
-The route and the historic map tell different stories about the same country; their relationship becomes part of the interpretation.
-
----
-
-## Follow an argument
-
-### [A Cultural History of Arkham Asylum](https://hadas496.github.io/comics-and-Reaganomics-/)
-
-Hadas Segal puts Batman comics, personal memory, and the history of psychiatric institutions into conversation. Image comparisons and close readings make the visual sources part of the interpretation.
 
 ---
 

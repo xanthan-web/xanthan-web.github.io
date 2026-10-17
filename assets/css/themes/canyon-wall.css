@@ -22,6 +22,7 @@ CSS VARIABLE OVERRIDES
   --canyon-red-light: #aa543d;    /* Sunlit red rock for hover states */
   --ponderosa-green: #2f4938;     /* Dark rim vegetation */
   --rim-green-light: #8fa08a;     /* Pale green lichen and rim light */
+  --weathered-rock: #d0c8bd;      /* Sandstone grey out of the sun, for tinted bands */
   --shadow-gray: #293038;         /* Canyon shadow and ink */
   --granite-white: #f3efe5;       /* Pale stone / page surface */
   --limestone: #ded0b5;           /* Light cliff face */
@@ -45,8 +46,10 @@ CSS VARIABLE OVERRIDES
   --border-section-alt: color-mix(in srgb, var(--canyon-red) 18%, var(--granite-white));
   --text-section-alt-heading: var(--canyon-red-dark);
   --text-section-cool-heading: var(--ponderosa-green);
-  --bg-section-cool: linear-gradient(180deg, color-mix(in srgb, var(--rim-green-light) 32%, var(--granite-white)), color-mix(in srgb, var(--rim-green-light) 18%, var(--granite-white)));
-  --border-section-cool: color-mix(in srgb, var(--ponderosa-green) 22%, var(--granite-white));
+  /* A warm stone grey: it separates sections without competing with the
+     ponderosa bands and canyon-red rules. Green headings stay at 5.9:1. */
+  --bg-section-cool: linear-gradient(180deg, var(--weathered-rock), color-mix(in srgb, var(--weathered-rock) 70%, var(--granite-white)));
+  --border-section-cool: color-mix(in srgb, var(--shadow-gray) 15%, var(--weathered-rock));
   /* The one dark band on the page, and it is green rather than ink so it reads
      as the dark end of the same strata as the pale rim-green elsewhere, rather
      than a second unrelated interruption.

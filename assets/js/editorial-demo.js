@@ -1,18 +1,43 @@
 import { parameters, passage, markdownNodes, percentage, localImage, fitEditor } from './demo-source.js';
 
 // Editorial demo: enhance a server-rendered passage with local source edits.
-// This recognises only the three displayed examples. It never evaluates Liquid,
-// inserts visitor HTML, or writes the visitor's changes back to the site.
+// This recognises only the four displayed examples. It never evaluates Liquid,
+// inserts visitor HTML or CSS, or writes the visitor's changes back to the site.
 (function () {
   'use strict';
+
+  // The fonts view maps the two theme settings onto properties scoped to its
+  // own preview, so an edit cannot restyle anything else on the page.
+  var fontProperties = { '--font-heading': '--demo-heading-font', '--font-body': '--demo-body-font' };
+
+  // Read the :root rule in the fonts view. Each value must be a list of font
+  // names or generic families; url(), braces, and other properties are refused.
+  function fontDeclarations(source) {
+    if (source.length > 2000) throw new Error('Keep this example to the two font settings.');
+    var rule = source.replace(/\/\*[\s\S]*?\*\//g, '').match(/^\s*:root\s*\{([^{}]*)\}\s*$/);
+    if (!rule) throw new Error('Keep :root { at the start and the closing } at the end.');
+    var values = Object.create(null);
+    rule[1].split(';').forEach(function (declaration) {
+      if (!declaration.trim()) return;
+      var parts = declaration.match(/^\s*(--[a-z-]+)\s*:\s*([\s\S]*?)\s*$/);
+      if (!parts || !fontProperties[parts[1]]) throw new Error('This example sets --font-heading and --font-body. End each line with a semicolon.');
+      if (values[parts[1]] !== undefined) throw new Error('Use ' + parts[1] + ' only once.');
+      var names = parts[2].split(',').map(function (name) { return name.trim(); });
+      if (!names.every(function (name) { return /^(?:'[A-Za-z0-9 -]+'|"[A-Za-z0-9 -]+"|[A-Za-z][A-Za-z0-9 -]*)$/.test(name); })) {
+        throw new Error("List font names separated by commas, such as 'Space Grotesk', sans-serif.");
+      }
+      values[parts[1]] = names.join(', ');
+    });
+    return values;
+  }
 
   function start() {
     document.querySelectorAll('[data-editorial-demo]').forEach(function (demo) {
       if (demo.hasAttribute('data-demo-ready')) return;
       var tabs = Array.from(demo.querySelectorAll('[data-demo-tab]'));
       var panels = Array.from(demo.querySelectorAll('[data-demo-panel]'));
-      if (tabs.length !== 3 || panels.length !== 3) {
-        console.warn('Editorial demo needs its three tabs and example panels. Showing the static examples.');
+      if (tabs.length !== 4 || panels.length !== 4) {
+        console.warn('Editorial demo needs its four tabs and example panels. Showing the static examples.');
         return;
       }
       var baseurl = (demo.getAttribute('data-baseurl') || '').replace(/\/$/, '');
@@ -23,18 +48,30 @@ import { parameters, passage, markdownNodes, percentage, localImage, fitEditor }
         var page = panel.querySelector('[data-demo-page]');
         var error = panel.querySelector('[data-demo-error]');
         var kind = panel.getAttribute('data-demo-panel');
-        var figure = preview.querySelector('figure');
-        var image = preview.querySelector('img');
-        var quote = preview.querySelector('.pullquote');
-        var note = preview.querySelector('.alert');
-        var noteStyle = panel.querySelector('[data-demo-note-style]');
-        var noteLevelControl = panel.querySelector('[data-demo-note-level]');
+        var figure = preview && preview.querySelector('figure');
+        var image = preview && preview.querySelector('img');
+        var quote = preview && preview.querySelector('.pullquote');
+        var note = preview && preview.querySelector('.alert');
         var allowed = kind === 'quote' ? ['text', 'width'] : ['image-path', 'image-width', 'caption', 'alt-text'];
         if (kind === 'note') allowed = ['class', 'title', 'heading-level', 'text'];
+
+        function renderFonts() {
+          var values = fontDeclarations(editor.value);
+          Object.keys(fontProperties).forEach(function (property) {
+            if (values[property]) page.style.setProperty(fontProperties[property], values[property]);
+            else page.style.removeProperty(fontProperties[property]);
+          });
+        }
 
         function update() {
           fitEditor(editor);
           try {
+            if (kind === 'font') {
+              renderFonts();
+              editor.removeAttribute('aria-invalid');
+              error.textContent = '';
+              return;
+            }
             var content = passage(editor.value);
             var before = markdownNodes(content.before);
             var after = markdownNodes(content.after);
@@ -71,8 +108,6 @@ import { parameters, passage, markdownNodes, percentage, localImage, fitEditor }
                 noteNodes.push(noteText);
                 note.className = 'alert alert-' + noteClass;
                 note.replaceChildren(...noteNodes);
-                noteStyle.value = noteClass;
-                noteLevelControl.value = noteLevel;
               } else {
                 var imageUrl = localImage(values['image-path'], baseurl);
                 var imageWidth = percentage(values['image-width'], '40%', 100);
@@ -116,26 +151,6 @@ import { parameters, passage, markdownNodes, percentage, localImage, fitEditor }
         panel.querySelector('[data-demo-static]').hidden = true;
         panel.querySelector('[data-demo-hint]').hidden = false;
         editor.addEventListener('input', update);
-        if (kind === 'note') {
-          panel.querySelector('[data-demo-controls]').hidden = false;
-          function changeNote(name, value) {
-            try {
-              var content = passage(editor.value);
-              var values = parameters(content.include, panel.getAttribute('data-demo-include'), allowed);
-              values[name] = value;
-              var include = '{% include typography/alert.html\n';
-              ['class', 'title', 'heading-level', 'text'].forEach(function (key) {
-                if (values[key] !== undefined) include += '  ' + key + '=' + (key === 'heading-level' ? values[key] : JSON.stringify(values[key])) + '\n';
-              });
-              editor.value = content.before + include + '%}' + content.after;
-              update();
-            } catch (problem) {
-              error.textContent = 'Finish the include in the text before using these controls. Your last working preview is still shown.';
-            }
-          }
-          noteStyle.addEventListener('change', function () { changeNote('class', noteStyle.value); });
-          noteLevelControl.addEventListener('change', function () { changeNote('heading-level', noteLevelControl.value); });
-        }
         if (typeof ResizeObserver !== 'undefined') {
           new ResizeObserver(function () { fitEditor(editor); }).observe(editor);
         }

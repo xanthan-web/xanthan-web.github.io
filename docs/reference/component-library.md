@@ -16,13 +16,13 @@ Every component in Xanthan, with its parameters and copy-paste code. Drop any of
 
 **File:** `layout/editorial-demo.html`
 
-Put a passage beside its source so readers can see how ordinary writing and includes shape a page. Three views use the actual standalone figure, pull quote, and callout components. With JavaScript, readers can edit headings, paragraphs, and the include together and see local changes. Without it, all three examples and their source remain visible.
+Put a passage beside its source so readers can see how ordinary writing and includes shape a page. Three views use the actual standalone figure, pull quote, and callout components; a fourth sets the passage's fonts from two lines of theme CSS. With JavaScript, readers can edit headings, paragraphs, and the include together and see local changes. Without it, all four examples and their source remain visible.
 
 Use it on a landing page introducing Xanthan, or in a teaching page where students compare a text file with its published result.
 
 The demonstration band opens with its own heading and explanation before the tabs. Use `demo-heading` and `demo-intro` to tell readers what they are comparing and invite a small edit. `demo-heading-level` follows the opening heading by default and can be set explicitly for another page outline.
 
-The introduction stays on the page background, with a serif headline, an optional lead paragraph, and an optional illustration beside the text. The illustration uses the standard figure include and stacks below the introduction on phones. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing. The note view has style and heading-level selectors that update the same source file; source edits update the selectors in turn.
+The introduction stays on the page background, with a serif headline, an optional lead paragraph, and an optional illustration beside the text. The illustration uses the standard figure include and stacks below the introduction on phones. The tabbed examples sit in a contrasting band using the theme's warm-section colors, with a smaller source font on desktop. Phone editors retain a full-size input font for comfortable reading and editing.
 
 ```liquid
 {% raw %}{% include layout/editorial-demo.html
@@ -74,7 +74,7 @@ The introduction stays on the page background, with a serif headline, an optiona
 | `secondary-url` | no | empty | Optional second link |
 | `secondary-label` | no | Explore real sites | Second link label |
 
-The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, a heading-level integer from 1 to 6 (quoted or unquoted), images from the same site, and percentage widths. All six heading levels have distinct sizes in the preview. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
+The live editor recognises Markdown headings and paragraphs, up to one of the shown includes, quoted plain-text values, a heading-level integer from 1 to 6 (quoted or unquoted), images from the same site, and percentage widths. The fonts view accepts only `--font-heading` and `--font-body` inside `:root`, each a comma-separated list of font names; fonts the page has not loaded fall back to the next name in the list. All six heading levels have distinct sizes in the preview. Readers can reorder the include within the prose, or remove it to see the passage on its own. It does not execute visitor-supplied Liquid or HTML, and edits are never saved to the site. For full Markdown and other width units, edit the real page using the underlying components.
 
 The Xanthan homepage supplies its introduction and sample passage from an `opening` object in front matter, then passes those values to this include. Its opening illustration is a CC0 photograph of xanthan gum; the caption links to the source. For an illustrated opening, pass `intro-image-path`, `intro-alt-text`, and `intro-caption`; omit the image path to keep a text-only introduction. The component's styles live in `editorial-demo.css`; its local editor and keyboard tab behavior live in `editorial-demo.js`.
 
@@ -657,6 +657,7 @@ Image-first navigation for collections. Use it when readers are choosing among p
 | `min-width` | no | `180px` | Minimum tile width before the grid wraps, and the column width under `masonry` |
 | `gap` | no | `var(--spacing-xs)` | Space between tiles |
 | `max-height` | no | `26rem` | Under `masonry`, the tallest a tile may grow before its image crops |
+| `aspect-ratio` | no | `1 / 1` | Tile shape under `mosaic` and `uniform`; `16 / 9` keeps widescreen screenshots whole |
 | `image-field` | no | `thumbnail` | Front matter field to use for images |
 | `show-title` | no | `true` | Show titles over images |
 | `show-summary` | no | `false` | Show summaries over images |
@@ -676,8 +677,9 @@ would sit on a different left edge and the two would read as unrelated.
 
 ### The masonry variant
 
-`mosaic` and `uniform` crop every tile to a square. That is right for
-screenshots, which are all the same shape to begin with, and wrong for
+`mosaic` and `uniform` crop every tile to a square unless you set
+`aspect-ratio`. That is right for screenshots, which are all the same shape to
+begin with, and wrong for
 photographs of things: a scroll is tall, a dish is wide, and squaring them
 throws away what the picture tells you for free.
 

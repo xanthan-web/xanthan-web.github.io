@@ -124,15 +124,17 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 .editorial-demo-opening-figure figcaption a { color: var(--text-muted); opacity: 1; }
 .editorial-demo-opening-figure figcaption a:hover { color: var(--text-body); }
 
+/* Folder tabs: each choice is a visible shape on the band, and the selected
+   one shares the band's colour so it opens into the panel below the rule. */
 .editorial-demo-choices {
+  --demo-tab-line: color-mix(in srgb, var(--text-section-warm) 40%, transparent);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xs) var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
-  border-bottom: 1px solid color-mix(in srgb, var(--text-section-warm) 25%, transparent);
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--demo-tab-line);
 }
 
-.editorial-demo-controls[hidden],
 .editorial-demo-choices[hidden],
 .editorial-demo-panel[hidden],
 .editorial-demo-hint[hidden],
@@ -142,56 +144,31 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
 }
 
 .editorial-demo-choice {
-  padding: var(--spacing-xs) 0;
-  border: 0;
-  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--demo-tab-line);
+  border-bottom-color: transparent;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   font: inherit;
   color: var(--text-section-warm);
-  background: transparent;
+  background: color-mix(in srgb, var(--text-section-warm) 10%, transparent);
   cursor: pointer;
 }
 
-.editorial-demo-choice[aria-selected="true"] {
-  border-bottom-color: var(--text-section-warm);
-  font-weight: 700;
+.editorial-demo-choice:hover {
+  background: color-mix(in srgb, var(--text-section-warm) 20%, transparent);
 }
 
-.editorial-demo-choice:hover {
-  border-bottom-color: var(--text-section-warm);
+.editorial-demo-choice[aria-selected="true"] {
+  border-bottom-color: var(--bg-section-warm);
+  font-weight: 700;
+  background: var(--bg-section-warm);
+  box-shadow: inset 0 3px 0 var(--text-section-warm);
 }
 
 .editorial-demo-choice:focus-visible {
   outline: 2px solid var(--text-section-warm);
-  outline-offset: var(--spacing-xs);
-}
-
-.editorial-demo-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
-}
-
-.editorial-demo-controls > div {
-  display: grid;
-  gap: var(--spacing-xs);
-  font-size: 0.85rem;
-}
-
-.editorial-demo-controls label { margin: 0; }
-
-.editorial-demo-controls select {
-  padding: var(--spacing-xs);
-  border: 1px solid var(--text-muted);
-  border-radius: var(--radius-sm);
-  color: var(--text-body);
-  background: var(--bg-card);
-  font: inherit;
-}
-
-.editorial-demo-controls select:focus-visible {
-  outline: 2px solid var(--text-section-warm);
-  outline-offset: var(--spacing-xs);
+  outline-offset: 2px;
 }
 
 .editorial-demo-description {
@@ -262,6 +239,16 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
   font-size: 1rem;
   line-height: 1.55;
   text-align: left;
+}
+
+/* The fonts view: editorial-demo.js sets these two properties from the
+   stylesheet the visitor edits. Until then they match the other views. */
+.editorial-demo-page--fonts :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--demo-heading-font, var(--font-serif));
+}
+
+.editorial-demo-page--fonts p {
+  font-family: var(--demo-body-font, var(--font-body));
 }
 
 /* A normal page places the figure directly in the container grid. The small
@@ -415,15 +402,28 @@ Not here: ordinary figures and pull quotes (images.css, typography.css), or
     padding-inline: var(--spacing-sm);
   }
 
+  /* Three long labels would wrap into ragged rows of tabs; stack them. */
+  .editorial-demo-choices {
+    flex-direction: column;
+    border-bottom: 0;
+  }
+
   .editorial-demo-choice {
-    padding-block: var(--spacing-sm);
+    margin-bottom: 0;
+    border-bottom-color: var(--demo-tab-line);
+    border-radius: var(--radius-md);
+    text-align: left;
+  }
+
+  .editorial-demo-choice[aria-selected="true"] {
+    border-bottom-color: var(--demo-tab-line);
+    background: color-mix(in srgb, var(--text-section-warm) 22%, transparent);
+    box-shadow: inset 4px 0 0 var(--text-section-warm);
   }
 
   .editorial-demo-editor,
   .editorial-demo-static-source {
     font-size: 1rem;
   }
-
-  .editorial-demo-controls select { font-size: 1rem; }
 }
 }

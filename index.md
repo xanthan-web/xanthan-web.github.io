@@ -4,7 +4,7 @@ layout: default
 date: 2026-01-01
 summary: Open, transparent, AI-ready websites for scholars, instructors, and students. Built for public work people can understand, teach, and maintain.
 opening:
-  kicker: "Xanthan for digital scholarship"
+  kicker: ""
   title: "Academic websites that you control with simple text files."
   lead: "Xanthan gives your research, teaching, and collections a website of their own. Begin with a starter site, then shape the words, images, and reading experience around your work."
   text: |
@@ -12,7 +12,7 @@ opening:
   intro-image-path: "/assets/images/site/xanthan-gum.png"
   intro-alt-text: "A wooden bowl of xanthan gum powder with a black measuring scoop."
   intro-caption: |
-    The other xanthan. It's in a ton of shelf-stable food to improve texture and stability. A little goes a long way.
+    The other xanthan. It's in a ton of shelf-stable food to improve texture and stability. It holds everything together, just like the web framework.
 
     [Photo: Mhgunning · CC0](https://commons.wikimedia.org/wiki/File:Xanthan_gum.png)
   story-heading: "Reading a campus"
@@ -44,8 +44,8 @@ reasons:
   intro-image-path=page.opening.intro-image-path
   intro-alt-text=page.opening.intro-alt-text
   intro-caption=page.opening.intro-caption
-  demo-heading="A page, and the text behind it"
-  demo-intro="Your writing and layout choices live together in one readable document. Compare the page with the text that makes it, then choose an image, a pull quote, or a note. Change a heading or a few words to see the page respond."
+  demo-heading="Experiment for a second"
+  demo-intro="Your writing and layout choices live together in one readable document. Compare the page with the text that makes it, then choose an image, a pull quote, a note, or the fonts. Change a heading or a few words to see the page respond."
   story-heading=page.opening.story-heading
   story-text=page.opening.story-text
   image-path=page.opening.image-path
@@ -69,7 +69,7 @@ reasons:
   intro="Course archives, oral history collections, digital exhibits, scrolling narratives, mapped directories, annual reports---every one of these is a real Xanthan site, and every one of them is plain text underneath."
   variant="uniform"
   class="gallery-grid--wide"
-  min-width="190px"
+  min-width="14.5rem"
   gap="var(--spacing-md)"
   show-summary=true
 %}
@@ -110,6 +110,8 @@ You remain the editor: judging the result, asking for revisions, and deciding wh
 "
 %}
 
+{% include layout/section.html style="cool" %}
+
 ## Who is Xanthan for?
 
 **Scholars seeking public engagement.** Move your work beyond paywalls and PDFs. Build research portfolios, multimedia essays, and interactive arguments that reach broader audiences---on a site you control, not a platform that controls you.
@@ -117,6 +119,8 @@ You remain the editor: judging the result, asking for revisions, and deciding wh
 **Instructors teaching digital literacy.** Turn class projects into real public scholarship. Students build collectively around shared themes---local history archives, community documentation, thematic collections---learning web fundamentals while creating work that outlasts the semester.
 
 **Students building professional presence.** Create a portfolio that showcases your research, teaching, and digital skills. Own your academic identity rather than scattering it across platforms.
+
+{% include layout/section-end.html %}
 
 {% include layout/section.html style="warm" %}
 

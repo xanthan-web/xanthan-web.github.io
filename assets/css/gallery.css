@@ -29,7 +29,11 @@ Not here: cards, which put the caption beside or beneath the image (cards.css);
 .gallery-grid-item {
   position: relative;
   min-height: 12rem;
-  aspect-ratio: 1 / 1;
+  /* A grid item with an aspect-ratio does not stretch by default; it takes
+     its width from min-height instead and can overflow a narrow column. */
+  justify-self: stretch;
+  /* The include writes --gallery-grid-aspect from its aspect-ratio parameter. */
+  aspect-ratio: var(--gallery-grid-aspect, 1 / 1);
   overflow: hidden;
   background: var(--bg-card);
   border-radius: var(--radius-sm);

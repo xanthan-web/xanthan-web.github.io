@@ -1,9 +1,10 @@
 {% comment %}
   Editorial Demo — a landing-page opening with a rendered passage beside its include.
 
-  The initial examples use the real figure, pullquote, and alert includes.
-  JavaScript adds three keyboard-accessible views and a small, local source editor.
-  Without JavaScript, all three examples and their source remain readable.
+  The initial examples use the real figure, pullquote, and alert includes; a
+  fourth view sets the passage's fonts from a two-line theme stylesheet.
+  JavaScript adds four keyboard-accessible views and a small, local source editor.
+  Without JavaScript, all four examples and their source remain readable.
   The introduction sits above a contrasting full-width demonstration band.
 
   Heading / introduction:
@@ -45,8 +46,9 @@
     - secondary-label:     string, default "Explore real sites" — link label
 
   Live editing covers Markdown headings and paragraphs around the shown
-  includes, plain-text parameter strings, and percentage widths. It does not
-  execute Liquid or HTML supplied by visitors.
+  includes, plain-text parameter strings, percentage widths, and font names for
+  --font-heading and --font-body. It does not execute Liquid, HTML, or other CSS
+  supplied by visitors.
   Styles: assets/css/editorial-demo.css. Behavior: assets/js/editorial-demo.js.
 {% endcomment %}
 {% assign demo_id = include.id | default: 'editorial-demo' %}
@@ -119,6 +121,11 @@
 {{ section_heading_marks }} {{ section_heading }}
 
 {{ section_text }}{% endcapture %}
+{% capture font_source %}/* Your theme's stylesheet */
+:root {
+  --font-heading: 'Lora', serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}{% endcapture %}
 {::nomarkdown}
 {% if include.heading and include.image-path %}
 <section class="editorial-demo" id="{{ demo_id | escape }}" data-editorial-demo data-baseurl="{{ site.baseurl | escape }}" aria-labelledby="{{ demo_id | escape }}-heading">
@@ -144,11 +151,12 @@
         {{ demo_intro | markdownify }}
       </header>
       <div class="editorial-demo-choices" role="tablist" aria-label="Explore an editorial choice" data-demo-tabs hidden>
-        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Give an image room</button>
-        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Give a sentence weight</button>
-        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-note" aria-controls="{{ demo_id | escape }}-note" aria-selected="false" tabindex="-1" data-demo-tab="note">Make room for context</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-figure" aria-controls="{{ demo_id | escape }}-figure" aria-selected="true" data-demo-tab="figure">Control an image</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-quote" aria-controls="{{ demo_id | escape }}-quote" aria-selected="false" tabindex="-1" data-demo-tab="quote">Pull out a quote</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-note" aria-controls="{{ demo_id | escape }}-note" aria-selected="false" tabindex="-1" data-demo-tab="note">Highlight key points</button>
+        <button class="editorial-demo-choice" type="button" role="tab" id="{{ demo_id | escape }}-tab-font" aria-controls="{{ demo_id | escape }}-font" aria-selected="false" tabindex="-1" data-demo-tab="font">Change the fonts</button>
       </div>
-      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Give an image room" data-demo-panel="figure" data-demo-include="images/figure.html">
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-figure" aria-label="Control an image" data-demo-panel="figure" data-demo-include="images/figure.html">
         <p class="editorial-demo-description">A caption connects what readers see to what you want them to notice.</p>
         <div class="editorial-demo-pair">
           <div class="editorial-demo-result">
@@ -172,7 +180,7 @@
           </div>
         </div>
       </section>
-      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-quote" aria-label="Give a sentence weight" data-demo-panel="quote" data-demo-include="typography/pullquote.html">
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-quote" aria-label="Pull out a quote" data-demo-panel="quote" data-demo-include="typography/pullquote.html">
         <p class="editorial-demo-description">A pull quote lets a key thought linger in the reader's attention.</p>
         <div class="editorial-demo-pair">
           <div class="editorial-demo-result">
@@ -194,7 +202,7 @@
           </div>
         </div>
       </section>
-      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-note" aria-label="Make room for context" data-demo-panel="note" data-demo-include="typography/alert.html">
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-note" aria-label="Highlight key points" data-demo-panel="note" data-demo-include="typography/alert.html">
         <p class="editorial-demo-description">A note keeps sources, methods, or a useful aside close to the argument.</p>
         <div class="editorial-demo-pair">
           <div class="editorial-demo-result">
@@ -209,35 +217,34 @@
           </div>
           <div class="editorial-demo-source">
             <label class="editorial-demo-label" for="{{ demo_id | escape }}-note-source">The text you edit</label>
-            <div class="editorial-demo-controls" data-demo-controls hidden>
-              <div>
-                <label for="{{ demo_id | escape }}-note-style">Note style</label>
-                <select id="{{ demo_id | escape }}-note-style" data-demo-note-style>
-                  <option value="info">Information</option>
-                  <option value="warning">Warning</option>
-                  <option value="danger">Danger</option>
-                  <option value="success">Success</option>
-                </select>
-              </div>
-              <div>
-                <label for="{{ demo_id | escape }}-note-level">Heading level</label>
-                <select id="{{ demo_id | escape }}-note-level" data-demo-note-level>
-                  {% for level in (1..6) %}<option value="{{ level }}"{% if level == note_heading_level %} selected{% endif %}>Heading {{ level }}</option>{% endfor %}
-                </select>
-              </div>
-            </div>
             <pre class="editorial-demo-static-source" data-demo-static><code>{{ note_source | escape }}</code></pre>
             <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-note-source" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-note-hint {{ demo_id | escape }}-note-error" data-demo-source>{{ note_source | escape }}</textarea>
-            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>, or edit the prose around it. Edits here stay in this example.</p>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-note-hint" data-demo-hint hidden>Rewrite the note's <code>title</code> and <code>text</code>. Then change <code>class</code> to <code>"warning"</code> or <code>"success"</code>, or set <code>heading-level</code> from 1 to 6. Edits here stay in this example.</p>
             <p class="editorial-demo-error" id="{{ demo_id | escape }}-note-error" data-demo-error aria-live="polite"></p>
           </div>
         </div>
       </section>
-      <p class="editorial-demo-payoff">The starter supplies the design. Your document supplies the words, images, and editorial choices. You can edit them yourself or ask AI to help.</p>
-      <div class="editorial-demo-actions">
-        {% if include.primary-url %}{% capture primary_url %}{% include helpers/link-path.html link=include.primary-url %}{% endcapture %}<a class="btn-primary" href="{{ primary_url | strip }}">{{ include.primary-label | default: 'Choose a starter site' | escape }} <span aria-hidden="true">→</span></a>{% endif %}
-        {% if include.secondary-url %}{% capture secondary_url %}{% include helpers/link-path.html link=include.secondary-url %}{% endcapture %}<a href="{{ secondary_url | strip }}">{{ include.secondary-label | default: 'Explore real sites' | escape }}</a>{% endif %}
-      </div>
+      <section class="editorial-demo-panel" id="{{ demo_id | escape }}-font" aria-label="Change the fonts" data-demo-panel="font">
+        <p class="editorial-demo-description">Fonts are set once in your theme's stylesheet, and every page follows.</p>
+        <div class="editorial-demo-pair">
+          <div class="editorial-demo-result">
+            <p class="editorial-demo-label">The page readers see</p>
+            <article class="editorial-demo-page editorial-demo-page--fonts" data-demo-page>
+              <h{{ story_heading_level }} class="editorial-demo-story-heading">{{ story_heading | escape }}</h{{ story_heading_level }}>
+              {{ story_text | markdownify }}
+              <h{{ section_heading_level }} class="editorial-demo-section-heading">{{ section_heading | escape }}</h{{ section_heading_level }}>
+              {{ section_text | markdownify }}
+            </article>
+          </div>
+          <div class="editorial-demo-source">
+            <label class="editorial-demo-label" for="{{ demo_id | escape }}-font-source">The stylesheet you edit</label>
+            <pre class="editorial-demo-static-source" data-demo-static><code>{{ font_source | escape }}</code></pre>
+            <textarea class="editorial-demo-editor" id="{{ demo_id | escape }}-font-source" rows="6" spellcheck="false" autocapitalize="off" autocomplete="off" readonly hidden aria-describedby="{{ demo_id | escape }}-font-hint {{ demo_id | escape }}-font-error" data-demo-source>{{ font_source | escape }}</textarea>
+            <p class="editorial-demo-hint" id="{{ demo_id | escape }}-font-hint" data-demo-hint hidden>Change a font name. Try <code>'Space Grotesk'</code> for the headings, or <code>Georgia</code> or <code>'Fira Mono'</code> for the body. Edits here stay in this example.</p>
+            <p class="editorial-demo-error" id="{{ demo_id | escape }}-font-error" data-demo-error aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </section>

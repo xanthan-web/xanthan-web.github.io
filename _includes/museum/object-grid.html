@@ -21,7 +21,8 @@
 {% endif %}
 
 
-{% assign show_filters = include.filters | default: true, allow_false: true %}
+{% assign show_filters = true %}
+{% if include.filters == false %}{% assign show_filters = false %}{% endif %}
 {% assign sorted_items = museum_items | sort: "year" %}
 {% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
 {% assign all_regions = sorted_items | map: "region" | compact | uniq | sort %}

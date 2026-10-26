@@ -92,11 +92,25 @@ Choose this over Essay Collection when the object *is* the entry and the writing
 
 ## Museum Exhibit
 
+{% capture museum_exhibit_text %}
 Objects tell different stories when you put them beside one another. This starter builds a museum around those connections: themed exhibition rooms lead visitors through selected objects, essays develop the arguments, and guided routes offer a way into the collection. A timeline, gallery, and map let readers explore on their own.
 
 Choose this when curating a visitor's journey is central to the project. Object Collection begins with a catalogue; Museum Exhibit begins with the rooms and the interpretation. Both keep entries in Markdown with catalogue facts written once in the front matter.
 
-[View starter site](https://xanthan-web.github.io/museum-exhibit-template) · [Start with this one →](./?template=museum-exhibit)
+<div class="template-buttons">
+  <a class="template-btn" href="https://xanthan-web.github.io/museum-exhibit-template" target="_blank">View starter site</a>
+  <a class="template-btn primary" href="./?template=museum-exhibit">Start with this one →</a>
+</div>
+
+{% endcapture %}
+
+{% include images/figure-wrap.html
+  image-path="/assets/images/gallery/museum-astrolabe.jpg"
+  image-position="right"
+  image-width="45%"
+  alt-text="A brass planispheric astrolabe, one of the sample objects in the Museum Exhibit starter"
+  text=museum_exhibit_text
+%}
 
 ---
 

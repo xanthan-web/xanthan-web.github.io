@@ -20,7 +20,8 @@
 {% endif %}
 
 
-{% assign do_feature = include.feature | default: true, allow_false: true %}
+{% assign do_feature = true %}
+{% if include.feature == false %}{% assign do_feature = false %}{% endif %}
 {% assign sorted_items = museum_items | sort: "position" %}
 {% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
 

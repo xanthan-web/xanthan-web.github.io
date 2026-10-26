@@ -1,0 +1,32 @@
+{% comment %}
+  Essay Object — a card for an object from the collection, placed in the text.
+
+  Parameters:
+    - slug: the object's folder name under objects/ (required), e.g. "bowl-with-dragons"
+    - note: a sentence about why the object matters here (optional;
+            defaults to the object's own summary)
+
+  The picture, title, date, and link all come from the object's own page.
+
+  Example:
+    {% raw %}{% include essay/object.html slug="bowl-with-dragons" note="The dragons on this bowl arrived from China." %}{% endraw %}
+{% endcomment %}
+
+{% include helpers/find-item.html collection="objects" slug=include.slug %}
+
+{::nomarkdown}
+{% if xanthan_item %}
+  {% capture obj_url %}{% include helpers/link-path.html link=xanthan_item.url %}{% endcapture %}
+  {% capture obj_img %}{% include helpers/image-path.html image-path=xanthan_item.thumbnail page-dir=xanthan_item.dir %}{% endcapture %}
+  <a class="m-callout" href="{{ obj_url | strip }}">
+    <img src="{{ obj_img | strip }}" alt="" loading="lazy">
+    <span class="m-callout-text">
+      <span class="m-callout-kicker">From the collection{% if xanthan_item.object-date %} · {{ xanthan_item.object-date }}{% endif %}</span>
+      <span class="m-callout-title">{{ xanthan_item.title }}</span>
+      <span class="m-callout-detail">{{ include.note | default: xanthan_item.summary }}</span>
+    </span>
+  </a>
+{% else %}
+  <div class="xanthan-warning">essay/object could not find an object called "{{ include.slug }}". Check the folder name in <code>objects/</code>.</div>
+{% endif %}
+{:/nomarkdown}

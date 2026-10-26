@@ -1,0 +1,1007 @@
+/* === Museum Theme === */
+/*
+  The look of the online museum: quiet paper-and-ink neutrals with one warm
+  accent, a serif for reading and a clean sans for everything you click.
+
+  HOW TO RESTYLE THIS SITE (instructors)
+  --------------------------------------
+  You only ever need the block marked "THE PALETTE" and the one marked "THE
+  FONTS" just below. Change a colour code or a font name there and the whole
+  site follows. Everything lower in the file reads from those two blocks.
+
+  Loaded by `theme_css: museum` in _config.yml, after the Xanthan base CSS, so
+  it overrides Xanthan's presets without editing the framework files.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap');
+
+/*****************************************************
+THE PALETTE  — edit these colour codes to re-theme the site
+*****************************************************/
+:root {
+  --museum-ink: #211f1f;          /* near-black: text, nav, footer */
+  --museum-stone: #5e5653;        /* warm grey: secondary text */
+  --museum-paper: #f8f6f3;        /* page background */
+  --museum-mist: #ebe8e6;         /* cards, quiet panels */
+  --museum-line: #d9d4cf;         /* hairlines and borders */
+  --museum-slate: #4f6079;        /* cool secondary: links in dark bands, info */
+  --museum-slate-light: #a9b6c9;  /* slate for dark backgrounds */
+  --museum-blush: #f0d9d6;        /* soft wash behind highlights */
+  --museum-accent: #b4451f;       /* THE pop of colour: links, buttons, kickers */
+  --museum-accent-dark: #8a3115;  /* hover / pressed */
+  --museum-accent-light: #e4a499; /* accent on dark backgrounds */
+}
+
+/*****************************************************
+THE FONTS  — edit these names to change the type
+*****************************************************/
+:root {
+  --font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;   /* titles */
+  --font-serif:   'Newsreader', Georgia, 'Times New Roman', serif;   /* essay text */
+  --font-body:    'Manrope', 'Helvetica Neue', Arial, sans-serif;    /* menus, labels, site text */
+}
+
+/*****************************************************
+MAPPING THE PALETTE ONTO XANTHAN'S TOKENS
+*****************************************************/
+:root {
+  --bg-page: var(--museum-paper);
+  --bg-card: var(--museum-mist);
+  --bg-accent: var(--museum-blush);
+  --bg-code: var(--museum-mist);
+  --bg-code-block: var(--museum-ink);
+  --text-code-block: var(--museum-paper);
+  --bg-nav: var(--museum-ink);
+  --bg-footer: var(--museum-ink);
+  --bg-footer-bottom: var(--museum-ink);
+
+  --text-body: var(--museum-ink);
+  --text-on-dark: var(--museum-paper);
+  --text-muted: var(--museum-stone);
+  --text-footer-link: var(--museum-paper);
+  --text-footer-bottom: color-mix(in srgb, var(--museum-paper) 70%, transparent);
+  --text-lede: var(--museum-stone);
+  --text-kicker: var(--museum-accent);
+
+  --accent-primary: var(--museum-accent);
+  --accent-primary-dark: var(--museum-accent-dark);
+  --accent-border: var(--museum-line);
+  --interactive-hover: var(--museum-accent-dark);
+  --interactive-hover-bg: var(--museum-accent-dark);
+  --interactive-subtle: color-mix(in srgb, var(--museum-accent) 10%, transparent);
+  --interactive-subtle-hover: color-mix(in srgb, var(--museum-accent) 16%, transparent);
+
+  --text-h1: var(--museum-ink);
+  --text-h2: var(--museum-ink);
+  --text-h3: var(--museum-ink);
+  --text-h4: var(--museum-stone);
+  --text-h5: var(--museum-accent);
+
+  --border-light: var(--museum-line);
+  --border-medium: var(--museum-line);
+  --metadata-border: var(--museum-line);
+  --bg-field: #fff;
+
+  --bg-section-alt: var(--museum-mist);
+  --bg-section-alt-flat: var(--museum-mist);
+  --border-section-alt: transparent;
+  --text-section-alt-heading: var(--museum-ink);
+  --bg-section-cool: var(--museum-paper);
+  --border-section-cool: transparent;
+  --bg-section-warm: var(--museum-ink);
+  --text-section-warm: var(--museum-paper);
+  --text-section-warm-heading: var(--museum-paper);
+  --text-section-warm-link: var(--museum-accent-light);
+  --text-section-warm-link-hover: #fff;
+  --border-section-warm: var(--museum-accent);
+  --border-section-accent: var(--museum-accent);
+
+  --bg-feature-card: var(--museum-ink);
+  --text-feature-card: var(--museum-paper);
+  --border-feature-card: var(--museum-ink);
+  --bg-feature-band: var(--museum-ink);
+  --text-feature-band-link: var(--museum-accent-light);
+  --text-feature-band-link-hover: #fff;
+  --bg-editorial-note: var(--museum-blush);
+  --border-editorial-note: var(--museum-accent);
+
+  --card-bg: #fff;
+  --card-border: var(--museum-line);
+  --card-hover-border: var(--museum-accent);
+
+  --button-bg: var(--museum-ink);
+  --button-hover-bg: var(--museum-accent);
+  --tag-bg: transparent;
+  --tag-hover-bg: var(--museum-accent);
+  --tag-text: var(--museum-stone);
+
+  --bg-scrim: var(--museum-ink);
+  --bg-tile: var(--museum-ink);
+  --bg-page-header: var(--museum-ink);
+
+  --info: var(--museum-slate);
+  --alert-accent: var(--museum-slate);
+  --success: #3f6b57;
+  --warning: #b9801f;
+  --warning-bg: #f7ecd2;
+  --error: #a8321f;
+
+  --map-route: var(--museum-accent);
+  --map-place: var(--museum-accent);
+  --map-marker-edge: var(--museum-ink);
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --shadow-sm: 0 1px 2px rgba(33, 31, 31, 0.06);
+  --shadow-md: 0 6px 20px rgba(33, 31, 31, 0.07);
+  --shadow-lg: 0 14px 36px rgba(33, 31, 31, 0.12);
+  --shadow-hover: 0 14px 36px rgba(33, 31, 31, 0.14);
+
+  --home-measure: 72rem;
+}
+
+/*****************************************************
+TYPE
+*****************************************************/
+html, body { font-size: 1.05rem; }
+body { background: var(--museum-paper); -webkit-font-smoothing: antialiased; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 350; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 400; }
+h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); font-weight: 500; }
+h5 {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+}
+
+.lede, .lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--museum-stone);
+  text-align: left;
+  hyphens: manual;
+}
+
+a { color: var(--museum-accent); }
+a:hover { color: var(--museum-accent-dark); }
+
+.container hr {
+  border-top: 1px solid var(--museum-line);
+  margin: var(--spacing-xl) 0;
+}
+
+::selection { background: var(--museum-blush); }
+:focus-visible { outline: 2px solid var(--museum-accent); outline-offset: 3px; }
+
+/*****************************************************
+NAVIGATION & FOOTER
+*****************************************************/
+.top-nav {
+  background-color: color-mix(in srgb, var(--museum-ink) 96%, transparent);
+  backdrop-filter: blur(8px);
+  padding: 0.85rem var(--spacing-sm);
+}
+.top-nav-brand {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.top-nav-link,
+.top-nav-dropdown-toggle {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.top-nav-dropdown { background: var(--museum-ink); }
+.top-nav-dropdown-item { font-size: 0.85rem; }
+
+footer { border-top: 0; }
+.footer-bottom { padding: var(--spacing-xl) 0; }
+.footer-bottom p, .footer-bottom a { font-size: 0.85rem; }
+.footer-bottom a { color: var(--museum-accent-light); }
+.footer-tagline { opacity: 0.7; }
+
+/*****************************************************
+BUTTONS & HOME BANDS
+*****************************************************/
+.home-hero { min-height: clamp(30rem, 82vh, 52rem); }
+.home-hero h1 {
+  max-width: 14ch;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  font-size: clamp(3rem, 8vw, 6.8rem);
+}
+.home-hero--left .home-hero-image::after {
+  background:
+    linear-gradient(90deg, rgba(33, 31, 31, 0.86) 0%, rgba(33, 31, 31, 0.5) 45%, rgba(33, 31, 31, 0.08) 100%),
+    linear-gradient(0deg, rgba(33, 31, 31, 0.5) 0%, transparent 40%);
+}
+.home-hero-text { font-family: var(--font-serif); font-weight: 300; font-size: clamp(1.15rem, 2vw, 1.5rem); }
+.home-kicker, .home-section-label, .home-pick-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+}
+.home-hero .home-kicker { color: var(--museum-accent-light); }
+.home-hero-actions a, .home-hero-actions a:visited {
+  border-radius: 0;
+  background: var(--museum-paper);
+  border-color: var(--museum-paper);
+  color: var(--museum-ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.home-hero-actions a:hover, .home-hero-actions a:focus-visible {
+  background: var(--museum-accent);
+  border-color: var(--museum-accent);
+  color: #fff;
+}
+.home-hero-actions a:not(:first-child), .home-hero-actions a:not(:first-child):visited {
+  background: transparent;
+  color: var(--museum-paper);
+  border-color: rgba(248, 246, 243, 0.6);
+}
+.home-hero-actions a:not(:first-child):hover { background: var(--museum-paper); color: var(--museum-ink); border-color: var(--museum-paper); }
+
+.home-section-heading h2 { font-weight: 300; letter-spacing: -0.02em; }
+.home-picks--strip .home-pick img { transition: transform 0.6s ease; }
+.home-picks--strip .home-pick:hover img { transform: scale(1.03); }
+.home-pick-title { font-weight: 400; font-size: 1.3rem; }
+
+/*****************************************************
+MUSEUM BUTTON  — .m-button
+*****************************************************/
+.m-button, .m-button:visited {
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--museum-ink);
+  background: var(--museum-ink);
+  color: var(--museum-paper);
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.m-button:hover { background: var(--museum-accent); border-color: var(--museum-accent); color: #fff; }
+.m-button--ghost, .m-button--ghost:visited { background: transparent; color: var(--museum-ink); }
+.m-button--ghost:hover { background: var(--museum-ink); border-color: var(--museum-ink); color: var(--museum-paper); }
+
+/*****************************************************
+SHARED MUSEUM PIECES
+*****************************************************/
+.container > .m-wide { grid-column: full; }
+.container > .m-wide-wrap {
+  grid-column: full;
+  width: 100%;
+  max-width: calc(var(--home-measure) + 2 * var(--spacing-md));
+  margin: var(--spacing-lg) auto var(--spacing-xl);
+  padding-inline: var(--spacing-md);
+}
+.m-wrap { max-width: var(--home-measure); margin-inline: auto; padding-inline: var(--spacing-md); }
+
+.m-kicker {
+  display: block;
+  margin: 0 0 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--museum-accent);
+}
+
+.m-section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin: 0 0 var(--spacing-lg);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--museum-line);
+}
+.m-section-title h2 { margin: 0; font-weight: 300; }
+.m-section-title a {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; text-decoration: none; white-space: nowrap;
+}
+
+.container > .m-section { grid-column: full; padding: clamp(2.5rem, 6vw, 5rem) 0; }
+.m-section--tint { background: var(--museum-mist); }
+.m-section--dark { background: var(--museum-ink); color: var(--museum-paper); }
+.m-section--dark h2, .m-section--dark h3 { color: var(--museum-paper); }
+.m-section--dark .m-section-title { border-color: rgba(248, 246, 243, 0.2); }
+.m-section--dark a { color: var(--museum-accent-light); }
+.m-section--dark a.m-button--light, .m-section--dark a.m-button--light:visited { color: var(--museum-ink); }
+.m-section--dark a.m-button--light:hover { color: #fff; }
+.m-section--dark a.m-button--outline, .m-section--dark a.m-button--outline:visited { color: var(--museum-paper); }
+.m-section--dark a.m-button--outline:hover { color: var(--museum-ink); }
+
+/* A big opening statement, used on the home page and about page */
+.m-statement {
+  max-width: 52rem;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+}
+.m-statement em { color: var(--museum-accent); font-style: italic; }
+
+/*****************************************************
+OBJECT GRID  (museum/object-grid.html)
+*****************************************************/
+.m-filters {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin: 0 0 var(--spacing-lg);
+}
+.m-filter {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--museum-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--museum-stone);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.m-filter:hover { border-color: var(--museum-ink); color: var(--museum-ink); }
+.m-filter[aria-pressed="true"] { background: var(--museum-ink); border-color: var(--museum-ink); color: var(--museum-paper); }
+
+.m-object-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.75rem);
+}
+.m-object { margin: 0; }
+.m-object[hidden] { display: none; }
+.m-object a, .m-object a:visited { display: block; color: inherit; text-decoration: none; border: 0; }
+.m-object-image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--museum-mist);
+}
+.m-object-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.m-object a:hover .m-object-image img, .m-object a:focus-visible .m-object-image img { transform: scale(1.05); }
+.m-object-image::after {
+  content: "View object \2192";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 2.5rem 1rem 0.9rem;
+  background: linear-gradient(0deg, rgba(33, 31, 31, 0.75), transparent);
+  color: #fff;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.m-object a:hover .m-object-image::after, .m-object a:focus-visible .m-object-image::after { opacity: 1; transform: none; }
+.m-object-meta { padding-top: 0.9rem; }
+.m-object-date {
+  display: block; margin-bottom: 0.25rem;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--museum-accent);
+}
+.m-object-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.35rem; font-weight: 400; line-height: 1.15;
+  color: var(--museum-ink);
+}
+.m-object-detail { margin: 0.35rem 0 0; font-size: 0.85rem; line-height: 1.4; color: var(--museum-stone); }
+
+/*****************************************************
+ESSAY GRID  (museum/essay-grid.html)
+*****************************************************/
+.m-essay-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 2.5vw, 2rem);
+}
+.m-essay a, .m-essay a:visited { display: block; color: inherit; text-decoration: none; border: 0; }
+.m-essay-image { aspect-ratio: 3 / 2; overflow: hidden; background: var(--museum-mist); }
+.m-essay-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.m-essay a:hover .m-essay-image img { transform: scale(1.04); }
+.m-essay-body { padding-top: 1rem; }
+.m-essay-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem; font-weight: 400; line-height: 1.12; letter-spacing: -0.01em;
+  color: var(--museum-ink);
+  background: linear-gradient(var(--museum-accent), var(--museum-accent)) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.4s;
+  display: inline;
+}
+.m-essay a:hover .m-essay-title { background-size: 100% 1px; }
+.m-essay-summary { margin: 0.6rem 0 0.75rem; font-size: 0.95rem; line-height: 1.55; color: var(--museum-stone); }
+.m-essay-byline { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--museum-stone); }
+
+/* the first essay is featured at double width; the rest sit in pairs so no card is left alone */
+.m-essay-grid--feature { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.m-essay-grid--feature .m-essay:first-child { grid-column: 1 / -1; }
+.m-essay-grid--feature .m-essay:first-child a { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.m-essay-grid--feature .m-essay:first-child .m-essay-image { aspect-ratio: 16 / 10; }
+.m-essay-grid--feature .m-essay:first-child .m-essay-title { font-size: clamp(2rem, 4vw, 3rem); }
+.m-essay-grid--feature .m-essay:first-child .m-essay-summary { font-size: 1.1rem; }
+
+@media (max-width: 52rem) {
+  .m-essay-grid { grid-template-columns: 1fr; }
+  .m-essay-grid--feature .m-essay:first-child a { grid-template-columns: 1fr; }
+}
+@media (min-width: 52.01rem) and (max-width: 70rem) {
+  .m-essay-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/*****************************************************
+OBJECT PAGE  (_layouts/object.html)
+A wall label beside the object, like a gallery room.
+*****************************************************/
+.container > .object-hero { grid-column: full; background: var(--museum-mist); }
+.object-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  max-width: var(--home-measure);
+  margin-inline: auto;
+  padding: clamp(2rem, 4vw, 3rem) var(--spacing-md);
+}
+.object-hero-inner > * { min-width: 0; }
+.object-hero-media { margin: 0; text-align: center; }
+.object-hero-media > a { display: block; border: 0; cursor: zoom-in; }
+.object-hero-media img {
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto; height: auto;
+  box-shadow: var(--shadow-lg);
+}
+.object-hero-media figcaption { margin-top: 0.9rem; font-size: 0.78rem; color: var(--museum-stone); }
+.object-label h1 { margin: 0 0 1rem; font-size: clamp(2.2rem, 4.5vw, 3.6rem); }
+.object-label .object-summary {
+  margin: 0 0 var(--spacing-lg);
+  font-family: var(--font-serif);
+  font-size: 1.25rem; font-weight: 300; line-height: 1.5;
+  color: var(--museum-stone);
+}
+.object-facts { margin: 0 0 var(--spacing-md); border-top: 1px solid var(--museum-ink); }
+.object-facts > div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--museum-line);
+}
+.object-facts dt {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--museum-stone); padding-top: 0.2rem;
+}
+.object-facts dd { margin: 0; font-size: 0.95rem; line-height: 1.45; }
+.object-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 var(--spacing-sm); padding: 0; list-style: none; }
+.object-tags li {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--museum-line);
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: capitalize;
+  color: var(--museum-stone);
+}
+.object-credit { margin: 0; font-size: 0.8rem; color: var(--museum-stone); }
+.object-body { padding-top: var(--spacing-xl); }
+.object-body > p:first-child { font-size: 1.15rem; }
+.object-body h2 { margin-top: var(--spacing-xl); }
+
+@media (max-width: 52rem) {
+  .object-hero-inner { grid-template-columns: 1fr; min-height: 0; }
+  .object-facts > div { grid-template-columns: 6.5rem 1fr; }
+}
+
+/*****************************************************
+ESSAY PAGE  (_layouts/essay.html)
+A magazine opening, then long-form reading.
+*****************************************************/
+.essay-progress {
+  position: fixed; top: 0; left: 0; z-index: 120;
+  width: 100%; height: 3px;
+  background: var(--museum-accent);
+  transform: scaleX(0); transform-origin: 0 50%;
+}
+.container > .essay-hero { grid-column: full; }
+.essay-hero-inner {
+  max-width: 58rem;
+  margin-inline: auto;
+  padding: clamp(3rem, 8vw, 6.5rem) var(--spacing-md) clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+.essay-hero h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+.essay-deck {
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--museum-stone);
+  text-align: center;
+}
+.essay-byline {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--museum-line);
+  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--museum-stone);
+}
+.essay-byline strong { color: var(--museum-ink); font-weight: 700; }
+
+.container > .essay-lead { grid-column: full; margin: 0 0 var(--spacing-xl); }
+.essay-lead img { display: block; width: 100%; max-height: 80vh; object-fit: cover; }
+.essay-lead figcaption {
+  max-width: 48rem; margin: 0.75rem auto 0; padding: 0 var(--spacing-md);
+  font-size: 0.8rem; line-height: 1.5; color: var(--museum-stone);
+}
+
+/* The reading text: a serif at a comfortable size and measure */
+.essay-body { font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.7; font-weight: 400; }
+.essay-body p { line-height: 1.7; margin-bottom: 1.3em; text-align: left; hyphens: manual; }
+.essay-body > p:first-child > em:only-child, .object-body > p:first-child > em:only-child {
+  display: block; padding: 0.6rem 0.9rem; margin-bottom: 0.5rem;
+  border-left: 3px solid var(--museum-line);
+  font-family: var(--font-body); font-size: 0.85rem; font-style: normal; color: var(--museum-stone);
+}
+.essay-body .dropcap::first-letter {
+  float: left;
+  margin: 0.08em 0.12em -0.05em 0;
+  font-family: var(--font-heading);
+  font-size: 4.6em;
+  font-weight: 300;
+  line-height: 0.8;
+  color: var(--museum-accent);
+}
+.essay-body h2 {
+  margin-top: 3.2rem;
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+  font-weight: 350;
+}
+.essay-body h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem; height: 2px; margin-bottom: 1.2rem;
+  background: var(--museum-accent);
+}
+.essay-body h3 { font-weight: 500; }
+.essay-body blockquote {
+  margin: 2rem 0; padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--museum-accent);
+  font-style: italic; color: var(--museum-stone);
+}
+
+.pullquote {
+  width: auto !important;
+  max-width: 100%;
+  margin: 3rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid var(--museum-ink);
+  border-bottom: 1px solid var(--museum-ink);
+  background: none;
+}
+.pullquote p {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--museum-ink);
+}
+/* The oversized quotation mark from the base style spilled out to the left
+   and sat on top of the text; keep it small and out of the text's way. */
+.pullquote { padding-inline: 0; }
+.pullquote::before { display: none; }
+.pullquote p { position: static; text-align: left; margin: 0; }
+
+/* Keep every block inside the reading column */
+.container > * { min-width: 0; }
+.essay-body blockquote, .object-body blockquote { max-width: 100%; margin-inline: 0; font-size: 1em; }
+
+/* Figures */
+figure figcaption, .m-figure figcaption {
+  margin-top: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem; line-height: 1.5;
+  color: var(--museum-stone);
+}
+.container .m-figure { margin: 2.5rem 0; }
+.m-figure img { display: block; width: 100%; height: auto; }
+.m-figure > a { display: block; border: 0; cursor: zoom-in; }
+.container .m-figure--wide { grid-column: full; justify-self: center; width: min(56rem, calc(100% - 2rem)); margin-inline: 0; transform: none; }
+.container .m-figure--full { grid-column: full; width: 100%; margin-inline: 0; transform: none; }
+.m-figure--full figcaption { max-width: 48rem; margin-inline: auto; padding: 0 var(--spacing-md); }
+.m-figure--small { width: 60%; margin-inline: auto; }
+@media (max-width: 40rem) { .m-figure--small { width: 100%; } }
+
+/* "Look closer" — an interactive reveal */
+.m-closer {
+  margin: 2.5rem 0;
+  border: 1px solid var(--museum-line);
+  background: #fff;
+  font-family: var(--font-body);
+}
+.m-closer summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.1rem 1.4rem;
+  cursor: pointer; list-style: none;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--museum-ink);
+}
+.m-closer summary::-webkit-details-marker { display: none; }
+.m-closer summary::after { content: "+"; font-size: 1.4rem; font-weight: 300; color: var(--museum-accent); transition: transform 0.3s; }
+.m-closer[open] summary::after { transform: rotate(45deg); }
+.m-closer summary:hover { background: var(--museum-mist); }
+.m-closer-body { display: grid; gap: 1.5rem; padding: 0 1.4rem 1.4rem; font-size: 0.98rem; line-height: 1.6; }
+.m-closer-body--image { grid-template-columns: 1fr 1fr; align-items: start; }
+.m-closer-body img { width: 100%; display: block; }
+.m-closer-body p:last-child { margin-bottom: 0; }
+@media (max-width: 40rem) { .m-closer-body--image { grid-template-columns: 1fr; } }
+
+/* An object called out inside the prose */
+.m-callout {
+  display: grid; grid-template-columns: 8.5rem 1fr; gap: 1.25rem;
+  margin: 2.5rem 0; padding: 1rem;
+  border: 1px solid var(--museum-line);
+  background: #fff;
+  font-family: var(--font-body);
+  color: inherit; text-decoration: none;
+  transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+}
+a.m-callout:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: var(--museum-accent); }
+.m-callout img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.m-callout-text { align-self: center; }
+.m-callout-kicker { display: block; margin-bottom: 0.3rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--museum-accent); }
+.m-callout-title { display: block; font-family: var(--font-serif); font-size: 1.35rem; line-height: 1.15; color: var(--museum-ink); }
+.m-callout-detail { display: block; margin-top: 0.4rem; font-size: 0.85rem; line-height: 1.45; color: var(--museum-stone); }
+@media (max-width: 36rem) { .m-callout { grid-template-columns: 5.5rem 1fr; } }
+
+/* The wrappers in the layouts are invisible to the page grid, so what is inside
+   them still sits in the reading column (or spans the window) like any other
+   page content. */
+.object-body, .essay-body, .essay-end { display: contents; }
+/* Children of a display:contents wrapper are not direct children of .container,
+   so `.container > *` skips them and they fall into the narrow side columns
+   (this is what pushed the italic note to the left of the text). Put them in
+   the reading column explicitly. */
+.container .object-body > *, .container .essay-body > *, .container .room-intro > * { grid-column: content; min-width: 0; }
+.essay-end > .home-picks { grid-column: full; margin-top: var(--spacing-xl); border-top: 1px solid var(--museum-line); }
+
+/* Fade sections in as they scroll into view (museum.js adds .is-visible) */
+.js-reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.js-reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal { opacity: 1; transform: none; transition: none; }
+  .m-object-image img, .m-essay-image img, .home-pick img { transition: none; }
+}
+
+/* Image lightbox */
+.m-lightbox {
+  max-width: 96vw; max-height: 96vh;
+  padding: 0; border: 0;
+  background: transparent;
+}
+.m-lightbox::backdrop { background: rgba(20, 18, 18, 0.92); }
+.m-lightbox img { display: block; max-width: 94vw; max-height: 88vh; margin: 0 auto; }
+.m-lightbox p { margin: 0.75rem 0 0; font-size: 0.85rem; text-align: center; color: #ddd; }
+.m-lightbox button {
+  position: fixed; top: 1rem; right: 1.25rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.5); background: transparent; color: #fff;
+  font-family: var(--font-body); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  cursor: pointer;
+}
+.m-lightbox button:hover { background: #fff; color: var(--museum-ink); }
+
+/*****************************************************
+INSTRUCTION PAGES  — steps and checklists for students and instructors
+*****************************************************/
+.m-steps { counter-reset: step; margin: 2rem 0; padding: 0; list-style: none; }
+.m-steps > li {
+  position: relative;
+  margin: 0 0 1.25rem;
+  padding: 0 0 0 3.5rem;
+}
+.m-steps > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute; left: 0; top: -0.1rem;
+  display: grid; place-items: center;
+  width: 2.4rem; height: 2.4rem;
+  border-radius: 50%;
+  background: var(--museum-ink); color: var(--museum-paper);
+  font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
+}
+.container table { font-size: 0.95rem; border-collapse: collapse; }
+.container th { text-align: left; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.container th, .container td { border-bottom: 1px solid var(--museum-line); padding: 0.7rem 0.75rem; }
+.container th { background: var(--museum-mist); border-bottom: 1px solid var(--museum-ink); }
+
+/*****************************************************
+BUTTON VARIANTS ON DARK BACKGROUNDS
+*****************************************************/
+.m-button--light, .m-button--light:visited { background: var(--museum-paper); border-color: var(--museum-paper); color: var(--museum-ink); }
+.m-button--light:hover { background: var(--museum-accent); border-color: var(--museum-accent); color: #fff; }
+.m-button--outline, .m-button--outline:visited { background: transparent; border-color: rgba(248, 246, 243, 0.55); color: var(--museum-paper); }
+.m-button--outline:hover { background: var(--museum-paper); border-color: var(--museum-paper); color: var(--museum-ink); }
+
+/*****************************************************
+HOME  — dark opening with an "object of the week" spotlight
+*****************************************************/
+.container > .home-open { grid-column: full; background: var(--museum-ink); color: var(--museum-paper); }
+.home-open-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  max-width: var(--home-measure);
+  min-height: min(82vh, 46rem);
+  margin-inline: auto;
+  padding: clamp(3rem, 7vw, 6rem) var(--spacing-md);
+}
+.home-open h1 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--museum-paper);
+}
+.home-open .m-kicker { color: var(--museum-accent-light); }
+.home-open-lede { max-width: 34rem; margin: 0 0 2.25rem; font-size: 1.15rem; line-height: 1.6; color: rgba(248, 246, 243, 0.78); }
+.home-open-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; }
+.home-spotlight, .home-spotlight:visited {
+  position: relative; display: block;
+  padding: 1.25rem 1.25rem 1.5rem;
+  background: var(--museum-paper);
+  color: var(--museum-ink);
+  text-decoration: none; border: 0;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+  transform: none;
+  transition: transform 0.4s ease;
+}
+.home-spotlight:hover { transform: translateY(-4px); color: var(--museum-ink); }
+.home-spotlight-label {
+  display: block; margin-bottom: 0.9rem;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--museum-accent);
+}
+.home-spotlight img { display: block; width: 100%; max-height: 24rem; object-fit: contain; background: var(--museum-mist); }
+.home-spotlight-caption { display: block; margin-top: 1rem; }
+.home-spotlight-caption strong { display: block; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 400; }
+.home-spotlight-caption span { display: block; margin: 0.2rem 0 0.6rem; font-size: 0.82rem; color: var(--museum-stone); }
+.home-spotlight-caption em { display: block; font-family: var(--font-serif); font-size: 1rem; line-height: 1.5; color: var(--museum-stone); }
+
+.container > .home-stats { grid-column: full; background: var(--museum-accent); color: #fff; }
+.home-stats dl {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  max-width: var(--home-measure); margin: 0 auto; padding: 0 var(--spacing-md);
+}
+.home-stats dl > div { padding: 1.6rem 1rem; text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.home-stats dl > div:first-child { border-left: 0; }
+.home-stats dt { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; }
+.home-stats dd { margin: 0.2rem 0 0; font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1; }
+
+@media (max-width: 52rem) {
+  .home-open-inner { grid-template-columns: 1fr; min-height: 0; }
+  .home-spotlight { transform: none; }
+  .home-stats dl { grid-template-columns: repeat(2, 1fr); }
+  .home-stats dl > div:nth-child(3) { border-left: 0; }
+}
+
+/*****************************************************
+FILTER PANEL  — region and period
+*****************************************************/
+.m-filter-panel { display: grid; gap: 0.75rem; margin: 0 0 var(--spacing-lg); padding: 1.25rem 0; border-block: 1px solid var(--museum-line); }
+.m-filter-panel .m-filters { margin: 0; align-items: center; }
+.m-filter-label {
+  min-width: 5rem;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--museum-stone);
+}
+.m-empty { padding: 3rem 0; text-align: center; color: var(--museum-stone); }
+.m-empty[hidden] { display: none; }
+
+/*****************************************************
+ROOM CARDS  — museum/exhibition-grid.html
+*****************************************************/
+.m-room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.25rem; }
+.m-room { margin: 0; }
+.m-room a, .m-room a:visited {
+  position: relative; display: block; min-height: 24rem;
+  overflow: hidden; border: 0; color: var(--museum-paper); text-decoration: none;
+  background: var(--museum-ink);
+}
+.m-room img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.55; transition: transform 0.7s ease, opacity 0.4s;
+}
+.m-room a:hover img { transform: scale(1.05); opacity: 0.72; }
+.m-room-text {
+  position: absolute; inset: auto 0 0 0;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  padding: 1.75rem;
+  background: linear-gradient(to top, rgba(33, 31, 31, 0.92), transparent);
+}
+.m-room-number { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--museum-accent-light); }
+.m-room-title { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 300; line-height: 1.1; }
+.m-room-summary { font-size: 0.92rem; line-height: 1.45; color: rgba(248, 246, 243, 0.82); }
+.m-room-count { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248, 246, 243, 0.7); }
+
+/*****************************************************
+EXHIBITION PAGE  (_layouts/exhibition.html)
+A dark gallery: objects on black, one at a time.
+*****************************************************/
+.container > .room-hero {
+  grid-column: full;
+  position: relative;
+  background: var(--museum-ink);
+  background-image: linear-gradient(rgba(33, 31, 31, 0.72), rgba(33, 31, 31, 0.92)), var(--room-image, none);
+  background-size: cover; background-position: center;
+  color: var(--museum-paper);
+}
+.room-hero-inner { max-width: var(--home-measure); margin-inline: auto; padding: clamp(4rem, 12vw, 9rem) var(--spacing-md) clamp(3rem, 8vw, 6rem); }
+.room-hero .m-kicker { color: var(--museum-accent-light); }
+.room-hero h1 { margin: 0 0 1.25rem; max-width: 18ch; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.02; letter-spacing: -0.03em; color: var(--museum-paper); }
+.room-summary { max-width: 38rem; margin: 0 0 1.5rem; font-family: var(--font-serif); font-size: 1.35rem; font-weight: 300; line-height: 1.5; color: rgba(248, 246, 243, 0.85); }
+.room-meta { margin: 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(248, 246, 243, 0.6); }
+
+.room-intro { padding: var(--spacing-xl) 0 var(--spacing-lg); font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.7; }
+.room-intro > p:first-of-type { font-size: 1.45rem; }
+.room-intro, .room-stops, .room-reading { display: contents; }
+.container .room-intro > p:first-child > em:only-child {
+  display: block; padding: 0.6rem 0.9rem;
+  border-left: 3px solid var(--museum-line);
+  font-family: var(--font-body); font-size: 0.85rem; font-style: normal; color: var(--museum-stone);
+}
+.container .room-intro > :first-child { margin-top: var(--spacing-lg); }
+.container > .room-stops > .room-stop { grid-column: full; }
+
+.room-stop {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem); align-items: center;
+  padding: clamp(2.5rem, 6vw, 5rem) max(var(--spacing-md), calc((100% - var(--home-measure)) / 2));
+  background: var(--museum-ink); color: var(--museum-paper);
+  border-top: 1px solid rgba(248, 246, 243, 0.12);
+}
+.room-stop:nth-child(even) { background: #2a2727; }
+.room-stop:nth-child(even) .room-stop-media { order: 2; }
+.room-stop-media { display: block; border: 0; text-align: center; }
+.room-stop-media img { max-width: 100%; max-height: 30rem; width: auto; height: auto; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5); transition: transform 0.6s ease; }
+.room-stop-media:hover img { transform: scale(1.02); }
+.container .room-stop-text > * { margin-left: 0; padding-left: 0; padding-right: 0; max-width: none; }
+.room-stop-number { display: block; margin-bottom: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: var(--museum-accent-light); }
+.room-stop h2 { margin: 0 0 0.5rem; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300; }
+.room-stop h2 a, .room-stop h2 a:visited { color: var(--museum-paper); text-decoration: none; border: 0; }
+.room-stop-date { margin: 0 0 1.25rem; font-size: 0.85rem; color: rgba(248, 246, 243, 0.65); }
+.room-stop-note { margin: 0 0 1.75rem; font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.55; color: rgba(248, 246, 243, 0.88); }
+
+.container > .room-reading > .room-reading-inner { grid-column: full; }
+.room-reading-inner { max-width: var(--home-measure); margin: 0 auto; padding: var(--spacing-xl) var(--spacing-md); }
+.room-reading-list { display: grid; gap: 0; margin: var(--spacing-md) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--museum-ink); }
+.room-reading-list li { border-bottom: 1px solid var(--museum-line); }
+.room-reading-list a { display: grid; gap: 0.25rem; padding: 1.25rem 0; text-decoration: none; border: 0; color: inherit; }
+.room-reading-list strong { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 400; }
+.room-reading-list span { color: var(--museum-stone); }
+.room-reading-list a:hover strong { color: var(--museum-accent); }
+
+@media (max-width: 52rem) {
+  .room-stop { grid-template-columns: 1fr; }
+  .room-stop:nth-child(even) .room-stop-media { order: 0; }
+}
+
+/*****************************************************
+OBJECT PAGE — place in time, and the rooms an object is shown in
+*****************************************************/
+.container > .object-time { grid-column: full; background: var(--museum-ink); color: var(--museum-paper); }
+.object-time-inner {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center;
+  max-width: var(--home-measure); margin-inline: auto; padding: 1.1rem var(--spacing-md);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.object-time-label strong { display: block; margin-top: 0.15rem; color: var(--museum-accent-light); letter-spacing: 0.08em; }
+.object-time-ends { color: rgba(248, 246, 243, 0.6); }
+.object-time-bar { position: relative; height: 1px; background: rgba(248, 246, 243, 0.35); }
+.object-time-dot { position: absolute; top: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: rgba(248, 246, 243, 0.55); }
+.object-time-dot.is-current { width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px; background: var(--museum-accent); box-shadow: 0 0 0 5px rgba(180, 69, 31, 0.35); z-index: 1; }
+@media (max-width: 40rem) { .object-time-inner { grid-template-columns: 1fr; gap: 0.75rem; } }
+
+.container > .object-more { grid-column: full; margin-top: var(--spacing-xl); background: var(--museum-mist); }
+.object-more-inner { max-width: 48rem; margin-inline: auto; padding: var(--spacing-xl) var(--spacing-sm); }
+.object-more h2 { margin: 0 0 1rem; font-weight: 300; }
+.object-more-lead { margin: 0 0 1rem; color: var(--museum-stone); }
+.object-more-list { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.object-more-list a { display: block; width: 10rem; text-decoration: none; border: 0; color: inherit; }
+.object-more-list img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--museum-line); }
+.object-more-list span { display: block; margin-top: 0.5rem; font-size: 0.85rem; font-weight: 600; }
+.object-more-list a:hover span { color: var(--museum-accent); }
+
+/*****************************************************
+TIMELINE  — museum/timeline.html
+*****************************************************/
+.m-timeline-nav { position: sticky; top: 5.6rem; z-index: 5; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 var(--spacing-lg); padding: 0.75rem 0; background: var(--museum-paper); border-bottom: 1px solid var(--museum-line); }
+.m-timeline-nav a { padding: 0.45rem 0.9rem; border: 1px solid var(--museum-line); border-radius: 999px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; color: var(--museum-stone); }
+.m-timeline-nav a:hover { border-color: var(--museum-ink); color: var(--museum-ink); }
+.m-tl-era { margin-bottom: var(--spacing-xl); scroll-margin-top: 10rem; }
+.m-tl-era-title { margin: 0 0 var(--spacing-md); font-weight: 300; }
+.m-tl-list { position: relative; margin: 0; padding: 0 0 0 2rem; list-style: none; border-left: 2px solid var(--museum-ink); }
+.m-tl-item { position: relative; margin: 0 0 1.5rem; }
+.m-tl-item::before { content: ""; position: absolute; left: calc(-2rem - 7px); top: 0.35rem; width: 12px; height: 12px; border-radius: 50%; background: var(--museum-accent); border: 2px solid var(--museum-paper); }
+.m-tl-item a { display: block; text-decoration: none; border: 0; color: inherit; }
+.m-tl-date { display: block; margin-bottom: 0.5rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--museum-accent); }
+.m-tl-card { display: grid; grid-template-columns: 8rem 1fr; gap: 1.25rem; align-items: start; padding: 1rem; background: var(--museum-mist); transition: background 0.2s; }
+.m-tl-item a:hover .m-tl-card { background: var(--museum-blush); }
+.m-tl-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.m-tl-text { display: grid; gap: 0.25rem; }
+.m-tl-text strong { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 400; }
+.m-tl-text span { font-size: 0.85rem; color: var(--museum-stone); }
+.m-tl-text em { font-family: var(--font-serif); font-style: normal; color: var(--museum-stone); }
+@media (max-width: 40rem) { .m-tl-card { grid-template-columns: 1fr; } .m-tl-card img { max-width: 8rem; } }
+.container .m-tl-list, .container .m-route-list { padding-right: 0; }
+.container .m-tl-text > *, .container .m-route-head > *, .container .object-more-inner > *, .container .room-reading-inner > * { padding-left: 0; padding-right: 0; margin-left: 0; max-width: none; }
+.container .m-tl-text > strong, .container .m-tl-text > span, .container .m-tl-text > em { display: block; }
+
+/*****************************************************
+HOME RIBBON  — museum/ribbon.html
+*****************************************************/
+.m-ribbon { overflow-x: auto; padding-bottom: 1rem; scroll-snap-type: x proximity; }
+.m-ribbon:focus-visible { outline: 2px solid var(--museum-accent); outline-offset: 4px; }
+.m-ribbon-track { display: flex; align-items: flex-start; gap: 1.25rem; width: max-content; margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--museum-ink); }
+.m-ribbon-track li { position: relative; flex: 0 0 11rem; width: 11rem; margin: 0; padding-top: 1.25rem; scroll-snap-align: start; }
+.m-ribbon-date { min-height: 2.4em; line-height: 1.2; }
+.m-ribbon-title { min-height: 2.6em; }
+.m-ribbon-track li::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--museum-accent); }
+.m-ribbon-track a { display: block; text-decoration: none; border: 0; color: inherit; }
+.m-ribbon-date { display: block; margin-bottom: 0.6rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--museum-accent); }
+.m-ribbon-track img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--museum-mist); }
+.m-ribbon-title { display: block; margin-top: 0.6rem; font-family: var(--font-heading); font-size: 1.1rem; line-height: 1.2; }
+.m-ribbon-track a:hover .m-ribbon-title { color: var(--museum-accent); }
+
+/*****************************************************
+ROUTES  — museum/routes.html
+*****************************************************/
+.m-route-list { display: grid; gap: 2rem; }
+.m-route { display: grid; grid-template-columns: minmax(0, 18rem) 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--museum-ink); }
+.m-route-minutes { display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--museum-accent); border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--museum-accent); }
+.m-route-head h3 { margin: 0.9rem 0 0.5rem; font-size: 1.8rem; font-weight: 300; }
+.m-route-head p { margin: 0; color: var(--museum-stone); }
+.m-route-stops { counter-reset: stop; display: flex; gap: 0.9rem; margin: 0; padding: 0; overflow-x: auto; list-style: none; }
+.m-route-stops li { flex: 0 0 9rem; counter-increment: stop; }
+.m-route-stops a { display: block; text-decoration: none; border: 0; color: inherit; }
+.m-route-stops img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--museum-mist); }
+.m-route-stop-title { display: block; margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; line-height: 1.3; }
+.m-route-stop-title::before { content: counter(stop) ". "; color: var(--museum-accent); }
+.m-route-stops a:hover .m-route-stop-title { color: var(--museum-accent); }
+@media (max-width: 52rem) { .m-route { grid-template-columns: 1fr; gap: 1rem; } }

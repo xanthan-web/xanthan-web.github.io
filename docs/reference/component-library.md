@@ -1383,3 +1383,66 @@ All scrollybox includes that display a text box support the `box-align` paramete
 Technique guides: [Background Scroll Boxes](../scrollstories/bg-scrollbox), [Background Switching](../scrollstories/bg-switch), [Side-Scrolling Text](../scrollstories/side-scroll), and [Peekaboo Images](../scrollstories/peekaboo). For map settings, see [Story Map](#story-map).
 
 See [Forest]({{ site.baseurl }}/scrollstories/forest/) for the components in an essay and [Trail]({{ site.baseurl }}/scrollstories/trail/) for a story map. [Start Your Own Story](../scrollstories/start-your-story) walks through adapting an example.
+
+
+## Museum exhibits
+
+The Museum Exhibit starter combines Markdown entries with exhibition rooms.
+Use `theme_css: museum` for the museum presentation. Object pages use
+`layout: object`, essays `layout: essay`, and rooms `layout: exhibition`.
+Each layout builds the opening from front matter and leaves the body for Markdown.
+
+### Museum opening and sections
+
+The homepage opening reads `hero` (kicker, title, text), `spotlight` (an object
+folder name), and optional `spotlight-note` from the page's front matter.
+The section pair lets you arrange prose and collection components in bands.
+Always close a section before opening another.
+
+```liquid
+{% raw %}{% include museum/home-opening.html %}
+{% include museum/section.html tone="tint" %}
+
+## Objects and belief
+
+These objects place everyday practices beside larger claims about the world.
+
+{% include museum/exhibition-grid.html collection="exhibitions" limit=3 %}
+{% include museum/section-end.html %}{% endraw %}
+```
+
+| Include | Parameters and defaults | Use |
+|---|---|---|
+| `museum/home-opening.html` | None; reads page front matter | Homepage spotlight and collection counts |
+| `museum/section.html` | `tone`: plain (default), tint, dark | Open a band for Markdown content |
+| `museum/section-end.html` | None | Close the matching section |
+| `museum/object-grid.html` | `collection` or `items` required; `heading-level`: 2 | Browse objects with region and period filters |
+| `museum/exhibition-grid.html` | `collection` or `items` required; `limit`: all; `heading-level`: 2 | List themed rooms |
+| `museum/essay-grid.html` | `collection` or `items` required; `limit`: all; `feature`: true; `heading-level`: 2 | Present interpretive essays |
+| `museum/ribbon.html` | `collection` or `items` required | A compact chronological preview |
+| `museum/timeline.html` | `collection` or `items` required | The full chronological collection |
+| `museum/routes.html` | `limit`: all; `heading-level`: 2 | Guided routes from `_data/routes.yml` |
+| `museum/era.html` | `year` required (integer; negative for BCE); `label`: false | Period label used by museum components |
+| `museum/footer.html` | None; reads `site.museum.credit` and `site.museum.course` | Footer selected automatically when `museum:` is configured |
+
+For example, a material-culture class can curate a vessels room by adding
+object slugs and interpretive notes to an exhibition page, then show the room
+on the homepage with the exhibition grid above. Adding an object does not
+require maintaining a second list for the timeline.
+
+### Pictures and interpretation within essays
+
+```liquid
+{% raw %}{% include essay/figure.html image="images/detail.jpg" alt="Incised marks on the base" caption="Marks of ownership." size="wide" %}
+{% include essay/object.html slug="bowl-with-dragons" note="Compare the decoration with the marks on the base." %}
+{% include essay/look-closer.html title="Look closer: ownership" text="What evidence would distinguish an owner's mark from a maker's mark?" %}{% endraw %}
+```
+
+| Include | Parameters and defaults | Use |
+|---|---|---|
+| `essay/figure.html` | `image`, `alt` required; `caption` optional; `size`: normal (small, normal, wide, full) | Captioned, expandable image |
+| `essay/object.html` | `slug` required; `note`: object's summary | Link an argument back to its catalogue entry |
+| `essay/look-closer.html` | `title`, `text` required; `image`, `alt` optional (supply alt with image) | A native expandable panel with Markdown text |
+
+In an essay about ownership, show a detail photograph, ask readers to inspect
+its marks in a look-closer panel, and link back to the full object entry.

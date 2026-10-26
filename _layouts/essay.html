@@ -1,0 +1,55 @@
+---
+layout: base
+---
+{% comment %}
+  Essay layout — a magazine-style opening followed by long-form reading.
+
+  Set `layout: essay` in an essay's front matter. The headline, the byline, the
+  big lead image, and the "Objects in this essay" strip at the end are all built
+  from the front matter, so students only write the body.
+{% endcomment %}
+
+{% assign words = content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 220 | plus: 1 %}
+
+<div class="essay-progress" aria-hidden="true"></div>
+
+<header class="essay-hero">
+  <div class="essay-hero-inner">
+    <span class="m-kicker">{{ page.kicker | default: page.tags.first | default: "Essay" | replace: '-', ' ' }}</span>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="essay-deck">{{ page.summary }}</p>{% endif %}
+    <div class="essay-byline">
+      {% if page.author %}<span>By <strong>{{ page.author }}</strong></span>{% endif %}
+      {% if page.date %}<span>{{ page.date | date: "%B %Y" }}</span>{% endif %}
+      <span>{{ minutes }} min read</span>
+    </div>
+  </div>
+</header>
+
+{% if page.lead-image %}
+  {% capture lead_url %}{% include helpers/image-path.html image-path=page.lead-image %}{% endcapture %}
+  <figure class="essay-lead">
+    <img src="{{ lead_url | strip }}" alt="{{ page.lead-image-alt | default: '' | escape }}"{% if page.lead-image-position %} style="object-position: {{ page.lead-image-position }};"{% endif %}>
+    {% if page.lead-image-caption %}<figcaption>{{ page.lead-image-caption | markdownify | remove: '<p>' | remove: '</p>' }}</figcaption>{% endif %}
+  </figure>
+{% endif %}
+
+<div class="essay-body">
+{{ content }}
+</div>
+
+{% if page.objects and page.objects.size > 0 %}
+<div class="essay-end">
+{% capture essay_picks %}{% include layout/picks.html
+  items=page.objects
+  collection="objects"
+  variant="strip"
+  columns=page.objects.size
+  kicker="In the collection"
+  title="Objects in this essay"
+%}{% endcapture %}
+{% assign nm_open = "{:" | append: ":nomarkdown}" %}{% assign nm_close = "{:/nomarkdown" | append: "}" %}
+{{ essay_picks | remove: nm_open | remove: nm_close }}
+</div>
+{% endif %}

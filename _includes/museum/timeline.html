@@ -1,0 +1,65 @@
+{% comment %}
+  Timeline — every dated object laid out along one line, oldest first and
+  grouped by period.
+
+  Parameters:
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
+    - items: the object pages to show (required)
+
+  Needs `year:` in each object's front matter (a number; negative for BCE).
+  Objects without a year are listed at the end under "Undated".
+{% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
+
+
+{% assign sorted_items = museum_items | sort: "year" %}
+{% assign era_keys = "ancient,classical,medieval,modern,undated" | split: "," %}
+
+{::nomarkdown}
+<div class="m-wide-wrap m-timeline-wrap">
+  <nav class="m-timeline-nav" aria-label="Jump to a period">
+    {% for key in era_keys %}
+      {% assign count = 0 %}
+      {% for item in sorted_items %}{% capture e %}{% include museum/era.html year=item.year %}{% endcapture %}{% if e == key %}{% assign count = count | plus: 1 %}{% endif %}{% endfor %}
+      {% if count > 0 %}<a href="#era-{{ key }}">{% include museum/era.html key=key label=true %}</a>{% endif %}
+    {% endfor %}
+  </nav>
+
+  {% for key in era_keys %}
+  {% capture section_html %}
+    {% for item in sorted_items %}
+      {% capture e %}{% include museum/era.html year=item.year %}{% endcapture %}
+      {% if e == key and item.title and item.thumbnail %}
+        {% capture item_url %}{% include helpers/link-path.html link=item.url %}{% endcapture %}
+        {% capture item_img %}{% include helpers/image-path.html image-path=item.thumbnail page-dir=item.dir %}{% endcapture %}
+        <li class="m-tl-item">
+          <a href="{{ item_url | strip }}">
+            <span class="m-tl-date">{{ item.object-date | default: item.year }}</span>
+            <span class="m-tl-card">
+              <img src="{{ item_img | strip }}" alt="" loading="lazy">
+              <span class="m-tl-text">
+                <strong>{{ item.title }}</strong>
+                <span>{{ item.placename }}</span>
+                {% if item.summary %}<em>{{ item.summary }}</em>{% endif %}
+              </span>
+            </span>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  {% endcapture %}
+  {% assign section_html = section_html | strip %}
+  {% if section_html != "" %}
+  <section class="m-tl-era" id="era-{{ key }}">
+    <h2 class="m-tl-era-title">{% include museum/era.html key=key label=true %}</h2>
+    <ol class="m-tl-list">{{ section_html }}</ol>
+  </section>
+  {% endif %}
+  {% endfor %}
+</div>
+{:/nomarkdown}

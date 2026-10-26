@@ -1,0 +1,34 @@
+{% comment %}
+  Look Closer — a click-to-open panel for a detail, a definition, or a tangent.
+
+  Parameters:
+    - title: the label on the closed panel (required), e.g. "Look closer: the dragon's tail"
+    - text:  what appears when it is opened (required; markdown allowed)
+    - image: a picture to show beside the text (optional)
+    - alt:   description of that picture (required if you add one)
+
+  Example:
+    {% raw %}{% include essay/look-closer.html
+      title="Look closer: the glaze"
+      text="The glaze is a *minai* overglaze, fired twice."
+      image="images/glaze-detail.jpg"
+      alt="Close-up of crackled blue glaze"
+    %}{% endraw %}
+{% endcomment %}
+
+{::nomarkdown}
+{% if include.title and include.text %}
+<details class="m-closer">
+  <summary>{{ include.title }}</summary>
+  <div class="m-closer-body{% if include.image %} m-closer-body--image{% endif %}">
+    {% if include.image %}
+      {% capture closer_url %}{% include helpers/image-path.html image-path=include.image %}{% endcapture %}
+      <img src="{{ closer_url | strip }}" alt="{{ include.alt | default: '' | escape }}" loading="lazy">
+    {% endif %}
+    <div>{{ include.text | markdownify }}</div>
+  </div>
+</details>
+{% else %}
+<div class="xanthan-warning">essay/look-closer needs a <code>title</code> and some <code>text</code>.</div>
+{% endif %}
+{:/nomarkdown}

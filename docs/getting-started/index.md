@@ -67,6 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
       liveUrl: 'https://amaranth.unm.edu/silk-road/'
     },
     {
+      id: 'museum-exhibit',
+      name: 'Museum Exhibit',
+      description: 'Curate objects into themed exhibition rooms, with interpretive essays, a timeline, and guided routes through the collection.',
+      repoName: 'xanthan-web/museum-exhibit-template',
+      repoUrl: 'https://github.com/xanthan-web/museum-exhibit-template',
+      webUrl: 'https://xanthan-web.github.io/museum-exhibit-template',
+      liveUrl: 'https://allisonrlove.github.io/museum-of-energy/'
+    },
+    {
       id: 'scrollstory',
       name: 'Single Story',
       description: 'A StoryMaps-style site for an immersive scrolling narrative, built from editable text files instead of a proprietary platform.',
@@ -294,7 +303,7 @@ sarah-martinez.github.io
 {:/nomarkdown}
 
 {::nomarkdown}
-<div class="template-guidance class-project object-collection scrollstory" style="display: none;">
+<div class="template-guidance class-project object-collection museum-exhibit scrollstory" style="display: none;">
 {:/nomarkdown}
 
 Your repository name becomes part of your website address, so choose something simple and descriptive. This site is a Xanthan site itself: its repository is named `xanthan` under the `xanthan-web` account, which is why it lives at

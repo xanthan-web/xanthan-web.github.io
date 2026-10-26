@@ -2,7 +2,7 @@
 layout: default
 title: Choose a Starter Site
 date: 2026-02-14
-summary: "Four starter sites, one per shape of project: a portfolio, a collection of writing, a collection of objects, or a single continuous narrative."
+summary: "Five starter sites, one per shape of project: a portfolio, a collection of writing, a collection of objects, a curated exhibit, or a single continuous narrative."
 ---
 
 {% include nav/scrollspy-toc.html %}
@@ -10,7 +10,7 @@ summary: "Four starter sites, one per shape of project: a portfolio, a collectio
 # Choose a Starter Site
 
 {: .lede}
-Xanthan offers four starter sites, each a different shape of project: one person's work, a collection of writing, a collection of objects, or a single continuous narrative. Pick the closest one---you can always add features later.
+Xanthan offers five starter sites, each a different shape of project: one person's work, a collection of writing, a collection of objects, a curated exhibit, or a single continuous narrative. Pick the closest one---you can always add features later.
 
 Browse the options below. See a live example, explore the clean starter site, then start with the one closest to your project. GitHub calls the final step "Use this template," which is the green button you will click there.
 
@@ -86,6 +86,33 @@ Choose this over Essay Collection when the object *is* the entry and the writing
   image-width="45%"
   alt-text="Material Objects of the Silk Road, a finished site of this shape"
   text=object_collection_text
+%}
+
+---
+
+## Museum Exhibit
+
+{% capture museum_exhibit_text %}
+Objects tell different stories when you put them beside one another. This starter builds a museum around those connections: themed exhibition rooms lead visitors through selected objects, essays develop the arguments, and guided routes offer a way into the collection. A timeline, gallery, and map let readers explore on their own.
+
+Choose this when curating a visitor's journey is central to the project. Object Collection begins with a catalogue; Museum Exhibit begins with the rooms and the interpretation. Both keep entries in Markdown with catalogue facts written once in the front matter.
+
+<div class="template-buttons">
+  <div class="template-btn-row">
+    <a class="template-btn" href="https://allisonrlove.github.io/museum-of-energy/" target="_blank">Live example</a>
+    <a class="template-btn" href="https://xanthan-web.github.io/museum-exhibit-template" target="_blank">View starter site</a>
+  </div>
+  <a class="template-btn primary" href="./?template=museum-exhibit">Start with this one →</a>
+</div>
+
+{% endcapture %}
+
+{% include images/figure-wrap.html
+  image-path="/assets/images/gallery/museum-astrolabe.jpg"
+  image-position="right"
+  image-width="45%"
+  alt-text="A brass planispheric astrolabe, one of the sample objects in the Museum Exhibit starter"
+  text=museum_exhibit_text
 %}
 
 ---

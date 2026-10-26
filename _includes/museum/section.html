@@ -1,0 +1,7 @@
+{% comment %}
+Museum section opening; always pair with museum/section-end.html.
+Parameters: tone (string, default plain): plain, tint, or dark.
+Content between the includes is Markdown.
+{% endcomment %}
+<section class="m-section{% if include.tone == 'tint' %} m-section--tint{% elsif include.tone == 'dark' %} m-section--dark{% endif %}" markdown="1">
+<div class="m-wrap" markdown="1">

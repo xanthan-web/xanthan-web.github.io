@@ -1,0 +1,33 @@
+{%- comment -%}
+  Era — turns a year into a period name. Used by the object grid, the timeline,
+  and the object page, so the periods are defined in exactly one place.
+
+  Parameters:
+    - year:  a number, negative for BCE (e.g. -1350 for 1350 BCE)
+    - key:   a period key (ancient, classical, medieval, modern) instead of a year
+    - label: true to print the readable name (default: print the short key)
+
+  To change the periods, edit the numbers below and keep the keys in step with
+  the lists in museum/object-grid.html and museum/timeline.html.
+{%- endcomment -%}
+{%- if include.key -%}
+  {%- assign era_key = include.key -%}
+{%- elsif include.year == nil or include.year == "" -%}
+  {%- assign era_key = "undated" -%}
+{%- else -%}
+  {%- assign era_year = include.year | plus: 0 -%}
+  {%- if era_year < -500 -%}{%- assign era_key = "ancient" -%}
+  {%- elsif era_year < 500 -%}{%- assign era_key = "classical" -%}
+  {%- elsif era_year < 1500 -%}{%- assign era_key = "medieval" -%}
+  {%- else -%}{%- assign era_key = "modern" -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if include.label -%}
+  {%- case era_key -%}
+    {%- when "ancient" -%}Before 500 BCE
+    {%- when "classical" -%}500 BCE to 500 CE
+    {%- when "medieval" -%}500 to 1500 CE
+    {%- when "modern" -%}After 1500 CE
+    {%- else -%}Undated
+  {%- endcase -%}
+{%- else -%}{{ era_key }}{%- endif -%}

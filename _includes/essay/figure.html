@@ -1,0 +1,35 @@
+{% comment %}
+  Essay Figure — a picture with a caption, in four sizes.
+
+  Parameters:
+    - image:   path to the picture (required). Relative to the essay's folder
+               (images/my-photo.jpg) or from the site root (/objects/bowl/images/bowl.jpg)
+    - alt:     a short description of the picture for people who cannot see it (required)
+    - caption: what the picture shows, and where it came from (optional; links allowed)
+    - size:    small | normal | wide | full (default: normal)
+               normal = the width of the text; wide = a little wider; full = edge to edge
+
+  Clicking the picture opens it large.
+
+  Example:
+    {% raw %}{% include essay/figure.html
+      image="images/bowl.jpg"
+      alt="A glazed bowl with two coiled dragons"
+      caption="Bowl with Dragons, 1210. [The Met](https://www.metmuseum.org), open access."
+      size="wide"
+    %}{% endraw %}
+{% endcomment %}
+
+{% capture fig_url %}{% include helpers/image-path.html image-path=include.image %}{% endcapture %}
+{% assign fig_size = include.size | default: "normal" %}
+
+{::nomarkdown}
+{% if include.image and include.alt %}
+<figure class="m-figure m-figure--{{ fig_size }}">
+  <a href="{{ fig_url | strip }}" class="m-zoom"><img src="{{ fig_url | strip }}" alt="{{ include.alt | escape }}" loading="lazy"></a>
+  {% if include.caption %}<figcaption>{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' }}</figcaption>{% endif %}
+</figure>
+{% else %}
+<div class="xanthan-warning">essay/figure needs both an <code>image</code> and an <code>alt</code> description.</div>
+{% endif %}
+{:/nomarkdown}

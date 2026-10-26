@@ -1,0 +1,12 @@
+<footer>
+  <div class="footer-bottom">
+    <div class="container">
+      <p class="footer-museum">{{ site.title }}</p>
+      {% if site.museum.credit %}<p>{{ site.museum.credit }}</p>{% endif %}
+      {% if site.museum.course %}<p class="footer-tagline">{{ site.museum.course }}</p>{% endif %}
+      <p class="footer-tagline">
+        Built with <a href="https://xanthan-web.github.io">Xanthan</a> · <a href="{{ site.baseurl }}/instructions">Student guide</a> · <a href="{{ site.baseurl }}/instructors">Instructor guide</a>
+      </p>
+    </div>
+  </div>
+</footer>

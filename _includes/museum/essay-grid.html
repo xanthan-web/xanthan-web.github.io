@@ -1,0 +1,57 @@
+{% comment %}
+  Essay Grid — essays as a magazine-style grid.
+
+  Parameters:
+    - heading-level: integer, default 2; level for card titles.
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
+    - items:   the essay pages to show (required)
+    - feature: true | false — show the first essay large (default: true)
+    - limit:   show only the first N essays (optional)
+
+  Order is set by `position:` in each essay's front matter (1 first).
+  Each card reads title, summary, thumbnail, author, and first tag from the
+  essay's own front matter.
+{% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
+
+
+{% assign do_feature = true %}
+{% if include.feature == false %}{% assign do_feature = false %}{% endif %}
+{% assign sorted_items = museum_items | sort: "position" %}
+{% if include.limit %}{% assign sorted_items = sorted_items | slice: 0, include.limit %}{% endif %}
+
+{::nomarkdown}
+{% if sorted_items.size > 0 %}
+<div class="m-wide-wrap">
+<div class="m-essay-grid{% if do_feature and sorted_items.size > 1 %} m-essay-grid--feature{% endif %}">
+  {% for item in sorted_items %}
+  {% if item.title %}
+    {% capture item_url %}{% include helpers/link-path.html link=item.url %}{% endcapture %}
+    {% assign item_image = item.thumbnail | default: item.lead-image %}
+    <article class="m-essay">
+      <a href="{{ item_url | strip }}">
+        {% if item_image %}
+        {% capture item_img %}{% include helpers/image-path.html image-path=item_image page-dir=item.dir %}{% endcapture %}
+        <div class="m-essay-image"><img src="{{ item_img | strip }}" alt="" loading="lazy"></div>
+        {% endif %}
+        <div class="m-essay-body">
+          <span class="m-kicker">{{ item.kicker | default: item.tags.first | default: "Essay" | replace: '-', ' ' }}</span>
+          <h{{ include.heading-level | default: 2 }} class="m-essay-title">{{ item.title }}</h{{ include.heading-level | default: 2 }}>
+          {% if item.summary %}<p class="m-essay-summary">{{ item.summary }}</p>{% endif %}
+          {% if item.author %}<span class="m-essay-byline">By {{ item.author }}</span>{% endif %}
+        </div>
+      </a>
+    </article>
+  {% endif %}
+  {% endfor %}
+</div>
+</div>
+{% else %}
+  <div class="xanthan-warning">No essays yet. Add a folder to <code>essays/</code> and it will appear here.</div>
+{% endif %}
+{:/nomarkdown}

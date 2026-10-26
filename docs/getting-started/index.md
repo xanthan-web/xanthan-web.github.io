@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
       repoName: 'xanthan-web/museum-exhibit-template',
       repoUrl: 'https://github.com/xanthan-web/museum-exhibit-template',
       webUrl: 'https://xanthan-web.github.io/museum-exhibit-template',
-      liveUrl: 'https://xanthan-web.github.io/museum-exhibit-template'
+      liveUrl: 'https://allisonrlove.github.io/museum-of-energy/'
     },
     {
       id: 'scrollstory',

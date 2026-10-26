@@ -98,7 +98,10 @@ Objects tell different stories when you put them beside one another. This starte
 Choose this when curating a visitor's journey is central to the project. Object Collection begins with a catalogue; Museum Exhibit begins with the rooms and the interpretation. Both keep entries in Markdown with catalogue facts written once in the front matter.
 
 <div class="template-buttons">
-  <a class="template-btn" href="https://xanthan-web.github.io/museum-exhibit-template" target="_blank">View starter site</a>
+  <div class="template-btn-row">
+    <a class="template-btn" href="https://allisonrlove.github.io/museum-of-energy/" target="_blank">Live example</a>
+    <a class="template-btn" href="https://xanthan-web.github.io/museum-exhibit-template" target="_blank">View starter site</a>
+  </div>
   <a class="template-btn primary" href="./?template=museum-exhibit">Start with this one →</a>
 </div>
 

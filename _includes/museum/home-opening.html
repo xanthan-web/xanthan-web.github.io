@@ -1,0 +1,58 @@
+{% comment %}
+Museum opening. No parameters; reads page.hero (kicker, title, text),
+page.spotlight (object folder name), and optional page.spotlight-note.
+The object must exist in objects/. Follow with Markdown sections.
+{% endcomment %}
+{::nomarkdown}
+
+
+{% include helpers/find-item.html collection="objects" slug=page.spotlight %}
+{% assign spot = xanthan_item %}
+{% assign all_objects = site.pages | where_exp: "p", "p.path contains 'objects/'" | where_exp: "p", "p.path != 'objects.md'" %}
+{% assign all_rooms = site.pages | where_exp: "p", "p.path contains 'exhibitions/'" | where_exp: "p", "p.path != 'exhibitions/index.md'" %}
+{% assign all_essays = site.pages | where_exp: "p", "p.path contains 'essays/'" | where_exp: "p", "p.path != 'essays/index.md'" %}
+{% assign dated = all_objects | where_exp: "p", "p.year" | sort: "year" %}
+{% assign oldest = dated | first %}
+{% assign newest = dated | last %}
+{% assign span_years = newest.year | minus: oldest.year %}
+
+{% if spot %}
+{% capture spot_url %}{% include helpers/link-path.html link=spot.url %}{% endcapture %}
+{% capture spot_img %}{% include helpers/image-path.html image-path=spot.thumbnail page-dir=spot.dir %}{% endcapture %}
+<section class="home-open">
+<div class="home-open-inner">
+<div class="home-open-text">
+<span class="m-kicker">{{ page.hero.kicker }}</span>
+<h1>{{ page.hero.title }}</h1>
+<p class="home-open-lede">{{ page.hero.text }}</p>
+<p class="home-open-actions">
+<a class="m-button m-button--light" href="{{ site.baseurl }}/exhibitions">Enter the rooms</a>
+<a class="m-button m-button--outline" href="{{ site.baseurl }}/visit">Plan your visit</a>
+</p>
+</div>
+<a class="home-spotlight" href="{{ spot_url | strip }}">
+<span class="home-spotlight-label">Object of the week</span>
+<img src="{{ spot_img | strip }}" alt="{{ spot.image-alt | default: spot.title | escape }}">
+<span class="home-spotlight-caption">
+<strong>{{ spot.title }}</strong>
+<span>{{ spot.object-date }}{% if spot.placename %} · {{ spot.placename }}{% endif %}</span>
+<em>{{ page.spotlight-note | default: spot.summary }}</em>
+</span>
+</a>
+</div>
+</section>
+{% else %}
+<div class="xanthan-warning">Choose an existing object folder in this page’s spotlight field.</div>
+{% endif %}
+
+<section class="home-stats">
+<dl>
+<div><dt>Objects</dt><dd>{{ all_objects.size }}</dd></div>
+<div><dt>Exhibitions</dt><dd>{{ all_rooms.size }}</dd></div>
+<div><dt>Essays</dt><dd>{{ all_essays.size }}</dd></div>
+<div><dt>Years covered</dt><dd>{{ span_years | default: 0 }}</dd></div>
+</dl>
+</section>
+
+
+{:/nomarkdown}

@@ -1,0 +1,83 @@
+---
+layout: base
+---
+{% comment %}
+  Exhibition layout — a themed "room" that gathers objects and essays.
+
+  Set `layout: exhibition` in an exhibition's front matter. The hero, the
+  numbered stops, and the reading list are built from these lines, so students
+  and instructors only ever fill in the front matter and write the introduction.
+
+    thumbnail:  a picture for the room's card and hero
+    objects:    the stops, in the order a visitor should see them
+      - slug: bowl-with-dragons
+        note: Why this object is in this room.
+    essays:     essay folder names to recommend at the end
+{% endcomment %}
+
+{% assign room_image = page.image | default: page.thumbnail %}
+{% capture room_url %}{% include helpers/image-path.html image-path=room_image %}{% endcapture %}
+{% assign stops = page.objects %}
+
+<section class="room-hero"{% if room_image %} style="--room-image: url('{{ room_url | strip }}')"{% endif %}>
+  <div class="room-hero-inner">
+    <span class="m-kicker">{{ page.kicker | default: "Exhibition" }}</span>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="room-summary">{{ page.summary }}</p>{% endif %}
+    <p class="room-meta">
+      {{ stops.size }} object{% if stops.size != 1 %}s{% endif %}
+      {% if page.curator %} · Curated by {{ page.curator }}{% endif %}
+    </p>
+  </div>
+</section>
+
+<div class="room-intro">
+{{ content }}
+</div>
+
+<section class="room-stops">
+  {% for stop in stops %}
+    {% include helpers/find-item.html collection="objects" slug=stop.slug %}
+    {% if xanthan_item %}
+      {% capture stop_url %}{% include helpers/link-path.html link=xanthan_item.url %}{% endcapture %}
+      {% capture stop_img %}{% include helpers/image-path.html image-path=xanthan_item.thumbnail page-dir=xanthan_item.dir %}{% endcapture %}
+      <article class="room-stop">
+        <a class="room-stop-media" href="{{ stop_url | strip }}">
+          <img src="{{ stop_img | strip }}" alt="{{ xanthan_item.image-alt | default: xanthan_item.title | escape }}" loading="lazy">
+        </a>
+        <div class="room-stop-text">
+          <span class="room-stop-number">{{ forloop.index }} / {{ stops.size }}</span>
+          <h2><a href="{{ stop_url | strip }}">{{ xanthan_item.title }}</a></h2>
+          <p class="room-stop-date">{{ xanthan_item.object-date }}{% if xanthan_item.placename %} · {{ xanthan_item.placename }}{% endif %}</p>
+          <p class="room-stop-note">{{ stop.note | default: xanthan_item.summary }}</p>
+          <a class="m-button m-button--light" href="{{ stop_url | strip }}">Look closely</a>
+        </div>
+      </article>
+    {% else %}
+      <div class="xanthan-warning">This exhibition could not find an object called "{{ stop.slug }}". Check the folder name in <code>objects/</code>.</div>
+    {% endif %}
+  {% endfor %}
+</section>
+
+{% if page.essays and page.essays.size > 0 %}
+<section class="room-reading">
+  <div class="room-reading-inner">
+    <span class="m-kicker">Keep reading</span>
+    <h2>Essays from this room</h2>
+    <ul class="room-reading-list">
+      {% for slug in page.essays %}
+        {% include helpers/find-item.html collection="essays" slug=slug %}
+        {% if xanthan_item %}
+          {% capture essay_url %}{% include helpers/link-path.html link=xanthan_item.url %}{% endcapture %}
+          <li>
+            <a href="{{ essay_url | strip }}">
+              <strong>{{ xanthan_item.title }}</strong>
+              <span>{{ xanthan_item.summary }}</span>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

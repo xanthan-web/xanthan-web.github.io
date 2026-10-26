@@ -1,0 +1,44 @@
+{% comment %}
+  Routes — suggested walks through the museum, read from _data/routes.yml.
+
+  Parameters:
+    - heading-level: integer, default 2; level for card titles.
+    - limit: show only the first N routes (optional)
+
+  Each route shows a row of the objects on it, so a visitor can see the walk
+  before they take it.
+{% endcomment %}
+
+{% assign routes = site.data.routes %}
+{% if include.limit %}{% assign routes = routes | slice: 0, include.limit %}{% endif %}
+
+{::nomarkdown}
+<div class="m-wide-wrap">
+<div class="m-route-list">
+  {% for route in routes %}
+  <article class="m-route">
+    <header class="m-route-head">
+      <span class="m-route-minutes">{{ route.minutes }} min</span>
+      <h{{ include.heading-level | default: 2 }}>{{ route.title }}</h{{ include.heading-level | default: 2 }}>
+      <p>{{ route.description }}</p>
+    </header>
+    <ol class="m-route-stops">
+      {% for slug in route.stops %}
+        {% include helpers/find-item.html collection="objects" slug=slug %}
+        {% if xanthan_item %}
+          {% capture stop_url %}{% include helpers/link-path.html link=xanthan_item.url %}{% endcapture %}
+          {% capture stop_img %}{% include helpers/image-path.html image-path=xanthan_item.thumbnail page-dir=xanthan_item.dir %}{% endcapture %}
+          <li>
+            <a href="{{ stop_url | strip }}">
+              <img src="{{ stop_img | strip }}" alt="" loading="lazy">
+              <span class="m-route-stop-title">{{ xanthan_item.title }}</span>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </article>
+  {% endfor %}
+</div>
+</div>
+{:/nomarkdown}

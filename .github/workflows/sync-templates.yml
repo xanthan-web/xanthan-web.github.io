@@ -307,3 +307,60 @@ jobs:
           git push
 
           echo "✓ Changes pushed to object-collection-template"
+
+  sync-museum-exhibit-template:
+    if: github.event.inputs.template == 'all' || github.event.inputs.template == 'museum-exhibit' || github.event.inputs.template == ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout xanthan main
+        uses: actions/checkout@v4
+        with:
+          path: xanthan-source
+          fetch-depth: 2
+
+      - name: Checkout museum-exhibit-template
+        uses: actions/checkout@v4
+        with:
+          repository: xanthan-web/museum-exhibit-template
+          token: ${{ secrets.SYNC_TOKEN }}
+          path: museum-exhibit-template
+
+      - name: Sync core files to museum-exhibit-template
+        run: |
+          bash xanthan-source/scripts/sync-core-files.sh \
+            xanthan-source museum-exhibit-template museum-exhibit
+
+          cd museum-exhibit-template
+          git status -s
+
+      - name: Create PR or push changes
+        run: |
+          cd museum-exhibit-template
+
+          if [[ -z $(git status -s) ]]; then
+            echo "✓ No changes to commit"
+            exit 0
+          fi
+
+          if [[ "${{ github.event.inputs.dry_run }}" == "true" ]]; then
+            git diff --stat
+            exit 0
+          fi
+
+          git add -A
+          cd ../xanthan-source
+          git log -1 --pretty=%B HEAD > /tmp/commit-msg.txt
+          cd ../museum-exhibit-template
+
+          {
+            cat /tmp/commit-msg.txt
+            echo ""
+            echo "Synced from xanthan commit: ${{ github.sha }}"
+            echo ""
+            echo "[skip ci]"
+          } > /tmp/final-commit-msg.txt
+
+          git commit -F /tmp/final-commit-msg.txt
+          git push
+
+          echo "✓ Changes pushed to museum-exhibit-template"

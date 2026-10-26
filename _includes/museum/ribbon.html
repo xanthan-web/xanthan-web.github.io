@@ -1,0 +1,39 @@
+{% comment %}
+  Ribbon — the collection as one sideways strip of small cards, oldest first.
+  Scroll sideways to travel through time.
+
+  Parameters:
+    - collection: folder name (optional); discovers entries automatically.
+      Use collection or items. Collection index pages are excluded.
+    - items: the object pages to show (required)
+
+  Needs `year:` in each object's front matter.
+{% endcomment %}
+{% assign museum_items = include.items %}
+{% if include.collection %}
+  {% assign museum_prefix = include.collection | append: '/' %}
+  {% assign museum_items = site.pages | where_exp: "p", "p.dir contains museum_prefix" | where_exp: "p", "p.layout != 'default'" %}
+{% endif %}
+
+
+{% assign sorted_items = museum_items | sort: "year" %}
+
+{::nomarkdown}
+<div class="m-ribbon" tabindex="0" role="region" aria-label="Objects in date order. Scroll sideways.">
+  <ol class="m-ribbon-track">
+    {% for item in sorted_items %}
+    {% if item.title and item.thumbnail %}
+      {% capture item_url %}{% include helpers/link-path.html link=item.url %}{% endcapture %}
+      {% capture item_img %}{% include helpers/image-path.html image-path=item.thumbnail page-dir=item.dir %}{% endcapture %}
+      <li>
+        <a href="{{ item_url | strip }}">
+          <span class="m-ribbon-date">{{ item.object-date | default: item.year }}</span>
+          <img src="{{ item_img | strip }}" alt="" loading="lazy">
+          <span class="m-ribbon-title">{{ item.title }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {% endfor %}
+  </ol>
+</div>
+{:/nomarkdown}

@@ -1,0 +1,115 @@
+---
+layout: base
+---
+{% comment %}
+  Object layout — the page for one object in the collection.
+
+  Set `layout: object` in an object's front matter. The picture and the "wall
+  label" at the top are built from the front matter, so students never touch
+  this file. Whatever they write in the body of their page appears underneath.
+{% endcomment %}
+
+{% assign hero_image = page.image | default: page.thumbnail %}
+{% capture hero_url %}{% include helpers/image-path.html image-path=hero_image %}{% endcapture %}
+
+<section class="object-hero">
+  <div class="object-hero-inner">
+    <figure class="object-hero-media">
+      {% if hero_image %}
+      <a href="{{ hero_url | strip }}" class="m-zoom" aria-label="View a larger image of {{ page.title | escape }}">
+        <img src="{{ hero_url | strip }}" alt="{{ page.image-alt | default: page.title | escape }}">
+      </a>
+      {% if page.image-credit %}<figcaption>{{ page.image-credit | markdownify | remove: '<p>' | remove: '</p>' }}</figcaption>{% endif %}
+      {% endif %}
+    </figure>
+
+    <div class="object-label">
+      <span class="m-kicker">{{ page.category | default: "Object" }}</span>
+      <h1>{{ page.title }}</h1>
+      {% if page.summary %}<p class="object-summary">{{ page.summary }}</p>{% endif %}
+
+      <dl class="object-facts">
+        {% if page.object-date %}<div><dt>Date</dt><dd>{{ page.object-date }}</dd></div>{% endif %}
+        {% if page.maker %}<div><dt>Maker</dt><dd>{{ page.maker }}</dd></div>{% endif %}
+        {% if page.placename %}<div><dt>Place</dt><dd>{{ page.placename }}</dd></div>{% endif %}
+        {% if page.medium %}<div><dt>Medium</dt><dd>{{ page.medium }}</dd></div>{% endif %}
+        {% if page.dimensions %}<div><dt>Dimensions</dt><dd>{{ page.dimensions }}</dd></div>{% endif %}
+        {% if page.collection %}<div><dt>Held by</dt><dd>{{ page.collection }}</dd></div>{% endif %}
+        {% if page.accession %}<div><dt>Accession</dt><dd>{{ page.accession }}</dd></div>{% endif %}
+      </dl>
+
+      {% if page.tags and page.tags.size > 0 %}
+      <ul class="object-tags" aria-label="Themes">
+        {% for tag in page.tags %}<li>{{ tag | replace: '-', ' ' }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if page.author %}<p class="object-credit">Entry by <strong>{{ page.author }}</strong></p>{% endif %}
+    </div>
+  </div>
+</section>
+
+{% if page.year != nil and page.year != "" %}
+{% assign dated = site.pages | where_exp: "p", "p.path contains 'objects/'" | where_exp: "p", "p.year" | sort: "year" %}
+{% assign first_obj = dated | first %}{% assign last_obj = dated | last %}
+{% assign first_year = first_obj.year %}
+{% assign last_year = last_obj.year %}
+{% assign span = last_year | minus: first_year %}
+{% capture page_era %}{% include museum/era.html year=page.year label=true %}{% endcapture %}
+<section class="object-time" aria-label="Where this object falls in the collection's timeline">
+  <div class="object-time-inner">
+    <span class="object-time-label">In time <strong>{{ page_era | strip }}</strong></span>
+    <div class="object-time-bar" role="img" aria-label="{{ page.object-date | default: page.year }} on a timeline from the oldest to the newest object in the museum">
+      {% for d in dated %}
+        {% if span > 0 %}{% assign dpos = d.year | minus: first_year | times: 100.0 | divided_by: span | round: 1 %}{% else %}{% assign dpos = 50 %}{% endif %}
+        <i class="object-time-dot{% if d.url == page.url %} is-current{% endif %}" style="left: {{ dpos }}%"></i>
+      {% endfor %}
+    </div>
+    <span class="object-time-ends">{{ first_year | abs }} {% if first_year < 0 %}BCE{% else %}CE{% endif %} to {{ last_year | abs }} {% if last_year < 0 %}BCE{% else %}CE{% endif %}</span>
+  </div>
+</section>
+{% endif %}
+
+<div class="object-body">
+{{ content }}
+</div>
+
+{% comment %} Which rooms is this object shown in? Found by reading each exhibition's list. {% endcomment %}
+{% assign obj_slug = page.dir | split: "/" | last %}
+{% assign my_rooms = "" | split: "" %}
+{% assign all_rooms = site.pages | where_exp: "p", "p.path contains 'exhibitions/'" | where_exp: "p", "p.objects" %}
+{% for room in all_rooms %}
+  {% for stop in room.objects %}{% if stop.slug == obj_slug %}{% assign my_rooms = my_rooms | push: room %}{% endif %}{% endfor %}
+{% endfor %}
+
+{% if my_rooms.size > 0 %}
+{% assign neighbours = "" | split: "" %}
+{% assign first_room = my_rooms | first %}
+{% for stop in first_room.objects %}
+  {% unless stop.slug == obj_slug %}
+    {% include helpers/find-item.html collection="objects" slug=stop.slug %}
+    {% if xanthan_item %}{% assign neighbours = neighbours | push: xanthan_item %}{% endif %}
+  {% endunless %}
+{% endfor %}
+<section class="object-more">
+  <div class="object-more-inner">
+    <span class="m-kicker">Seen in {{ my_rooms.size }} exhibition{% if my_rooms.size != 1 %}s{% endif %}</span>
+    <h2>{% for room in my_rooms %}{% capture room_url %}{% include helpers/link-path.html link=room.url %}{% endcapture %}<a href="{{ room_url | strip }}">{{ room.title }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</h2>
+    {% if neighbours.size > 0 %}
+    <p class="object-more-lead">Also in {{ first_room.title }}:</p>
+    <ul class="object-more-list">
+      {% for n in neighbours %}
+        {% capture n_url %}{% include helpers/link-path.html link=n.url %}{% endcapture %}
+        {% capture n_img %}{% include helpers/image-path.html image-path=n.thumbnail page-dir=n.dir %}{% endcapture %}
+        <li>
+          <a href="{{ n_url | strip }}">
+            <img src="{{ n_img | strip }}" alt="" loading="lazy">
+            <span>{{ n.title }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</section>
+{% endif %}

@@ -43,7 +43,7 @@ Your image is now in your repository at `assets/images/your-image.jpg`.
 
 ## Add it to a page
 
-1. Press **`.`** on your repository page to open the code editor
+1. Press **`.`** on your repository page (or change `github.com` to `github.dev` in the address bar) to open the code editor
 2. Open the page where you want the image (e.g., `index.md`)
 3. Paste this code where you want the image to appear:
 

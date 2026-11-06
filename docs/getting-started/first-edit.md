@@ -23,6 +23,8 @@ GitHub has a built-in code editor--right in your browser, so you can do all the 
 
 That's it. GitHub opens a code editor in your browser, with your file tree on the left and an editor on the right. Easy to see your files and make quick changes!
 
+If the key does nothing (it depends on your browser and keyboard layout), change `github.com` to `github.dev` in the address bar, so `github.com/YOUR-USERNAME/YOUR-REPO` becomes `github.dev/YOUR-USERNAME/YOUR-REPO`, and press Enter. It opens the same editor.
+
 ---
 
 ## Make a change

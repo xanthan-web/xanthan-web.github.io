@@ -92,7 +92,7 @@ Horizontal lines inside a dropdown help organize long menus:
 
 The top menu is controlled by one data file, `_data/nav-top.yml`.
 
-1. Press `.` on your repository page to open the browser editor
+1. Press `.` on your repository page (or change `github.com` to `github.dev` in the address bar) to open the browser editor
 2. Open `_data/nav-top.yml`
 3. Follow the pattern of the existing entries:
    ```yaml

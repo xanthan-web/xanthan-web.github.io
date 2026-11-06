@@ -14,7 +14,7 @@ Every page on your site is a plain text file with an `.md` extension. The file h
 
 ## Adding a new page
 
-In GitHub's browser editor (press `.` on your repository page):
+In GitHub's browser editor (press `.` on your repository page, or change `github.com` to `github.dev` in the address bar):
 
 1. Right-click in the file tree and choose **"New File"**
 2. Name it ending in `.md` (e.g. `my-new-page.md`)
